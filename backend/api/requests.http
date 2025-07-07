@@ -1,0 +1,66 @@
+### Get all competitions
+GET http://localhost:8080/api/competitions
+
+### Get active competitions
+GET http://localhost:8080/api/competitions/active
+
+### Get status of competitions for the selected school year
+GET http://localhost:8080/api/competitions/status/2324
+
+
+
+### Create a new competition
+POST http://localhost:8080/api/competitions
+
+{
+    "user_id":
+    "name":
+    "link":
+    "deadline":
+    "prize":
+    "information_material":
+    "submission_forms":
+    "contact":
+    "is_active":
+    "date_created":
+}
+
+### Update a competition
+PUT http://localhost:8080/api/competitions
+
+{
+    "id":
+    "user_id":
+    "name":
+    "link":
+    "deadline":
+    "prize":
+    "information_material":
+    "submission_forms":
+    "contact":
+    "is_active":
+    "date_created":
+}
+
+
+### Add a Project to a competition
+POST http://localhost:8080/api/projects
+
+{
+    "competition_id":
+    "name":
+    "status":
+    "next_step":
+    "contributors":
+}
+
+### Update a Project
+POST http://localhost:8080/api/projects
+
+{
+    "id":
+    "name":
+    "status":
+    "next_step":
+    "contributors":
+}
