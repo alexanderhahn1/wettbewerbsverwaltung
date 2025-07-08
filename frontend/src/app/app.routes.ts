@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {NotFoundComponent} from './not-found/not-found.component';
+import {HomeComponent} from './components/home/home.component';
+import {NotFoundComponent} from './components/not-found/not-found.component';
+import {ListComponent} from './components/list/list.component';
+import {AuthGuard} from './guard/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     title: 'Wettbewerbsverwaltung'
+  },
+  {
+    path: 'list',
+    component: ListComponent,
+    title: 'List',
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
