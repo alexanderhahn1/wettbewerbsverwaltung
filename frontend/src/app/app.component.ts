@@ -5,9 +5,9 @@ import {NavBarComponent} from './nav-bar/nav-bar.component';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NavBarComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
-export class App {
-  protected title = 'frontend';
+export class AppComponent {
+  title = 'frontend';
 }
