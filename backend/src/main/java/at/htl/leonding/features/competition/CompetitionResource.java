@@ -1,5 +1,6 @@
 package at.htl.leonding.features.competition;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -16,6 +17,7 @@ public class CompetitionResource {
     CompetitionMapper competitionMapper;
 
     @GET
+    @PermitAll
     public Response getAllCompetitions() {
         var competitions = competitionRepository.getAll();
         return Response.ok(competitions

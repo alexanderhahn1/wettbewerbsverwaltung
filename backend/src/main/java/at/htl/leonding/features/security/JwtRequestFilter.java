@@ -1,11 +1,13 @@
 package at.htl.leonding.features.security;
 
 import com.auth0.jwt.algorithms.Algorithm;
+import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.annotation.Priority;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
@@ -37,8 +39,18 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 
     private static final String REALM_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA807Sg8RdQUQxLkbWNgf9UPtCIpkFexHntpg/9xEykb1rKp8pKBC0fOgqrXpPgoT4bQVznd7gx28VLqZtWm1kDyI7BPjLox8PBIyEKIHcUgJ6r8Gx7z9FGmdxT1HxcEpetjqgplIxDm/8qMTDdcP7XMaVCuev6gXq0HQrnQvl3mOf7ZkUF8vByDXCHm+knvhnK8KASSFD390bMys6jf1Y+AkCvZoBTza4Ad+zhBm23HoWSDfkdT6DrPDnk0L4OVNtdhl6PiQ5BWh1dVmDEEmRIWAZtOAzImdfj4Kqri6aMjyoKfLQnwtAbwbzc2sa6h82shfKCYEBsFtpRu+ZBZGc3wIDAQAB"; // Paste Keycloak realm public key (modulus format, not PEM)
 
+    @Context
+    private ResourceInfo resourceInfo; // Inject ResourceInfo to access method/class annotations
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+
+        if (resourceInfo.getResourceMethod().isAnnotationPresent(PermitAll.class) ||
+                resourceInfo.getResourceClass().isAnnotationPresent(PermitAll.class)) {
+            // If @PermitAll is present, skip authentication
+            return;
+        }
+
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
