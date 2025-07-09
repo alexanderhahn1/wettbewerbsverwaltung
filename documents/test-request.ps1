@@ -2,7 +2,7 @@
 $response = Invoke-RestMethod -Method Post `
     -Uri "http://localhost:8081/realms/demo/protocol/openid-connect/token" `
     -ContentType "application/x-www-form-urlencoded" `
-    -Body "grant_type=password&client_id=quarkus-client&username=IT210157&password=Hoppel.110406"
+    -Body "grant_type=password&client_id=quarkus-client&username=IT210157&password=admin"
 
 # Step 2: Store the access token
 $accessToken = $response.access_token

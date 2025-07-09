@@ -1,9 +1,13 @@
 package at.htl.leonding.features.security;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import jakarta.annotation.security.PermitAll;
-import jakarta.ws.rs.container.ContainerRequestContext;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.Priority;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -11,48 +15,35 @@ import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.io.IOException;
-import java.math.BigInteger;
+import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
-import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.security.GeneralSecurityException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class JwtRequestFilter implements ContainerRequestFilter {
 
-    private static final String REALM_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA807Sg8RdQUQxLkbWNgf9UPtCIpkFexHntpg/9xEykb1rKp8pKBC0fOgqrXpPgoT4bQVznd7gx28VLqZtWm1kDyI7BPjLox8PBIyEKIHcUgJ6r8Gx7z9FGmdxT1HxcEpetjqgplIxDm/8qMTDdcP7XMaVCuev6gXq0HQrnQvl3mOf7ZkUF8vByDXCHm+knvhnK8KASSFD390bMys6jf1Y+AkCvZoBTza4Ad+zhBm23HoWSDfkdT6DrPDnk0L4OVNtdhl6PiQ5BWh1dVmDEEmRIWAZtOAzImdfj4Kqri6aMjyoKfLQnwtAbwbzc2sa6h82shfKCYEBsFtpRu+ZBZGc3wIDAQAB"; // Paste Keycloak realm public key (modulus format, not PEM)
+    private static final String REALM_PUBLIC_KEY = ConfigProvider.getConfig().getValue("keycloakRealmPublicKey", String.class);
 
     @Context
-    private ResourceInfo resourceInfo; // Inject ResourceInfo to access method/class annotations
+    private ResourceInfo resourceInfo;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
-        if (resourceInfo.getResourceMethod().isAnnotationPresent(PermitAll.class) ||
-                resourceInfo.getResourceClass().isAnnotationPresent(PermitAll.class)) {
-            // If @PermitAll is present, skip authentication
+        // Skip authentication for @PermitAll
+        if (isPermitAll()) {
             return;
         }
 
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             abortWithUnauthorized(requestContext);
             return;
@@ -61,21 +52,23 @@ public class JwtRequestFilter implements ContainerRequestFilter {
         String token = authHeader.substring("Bearer ".length());
 
         try {
-            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) getPublicKey(REALM_PUBLIC_KEY), null);
+            Algorithm algorithm = Algorithm.RSA256(getPublicKey(REALM_PUBLIC_KEY), null);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
 
-            // Optionally: extract claims
             String username = jwt.getClaim("preferred_username").asString();
             String fullName = jwt.getClaim("given_name").asString();
-            List<String> roles = List.of();
-            Map<String, Object> realmAccess = jwt.getClaim("realm_access").asMap();
-            if (realmAccess != null && realmAccess.get("roles") instanceof List<?> rawRoles) {
-                roles = rawRoles.stream().map(String::valueOf).toList();
+
+            List<String> userRoles = extractRoles(jwt);
+
+            // Check @RolesAllowed
+            Set<String> requiredRoles = getRolesAllowed();
+            if (!requiredRoles.isEmpty() && Collections.disjoint(userRoles, requiredRoles)) {
+                abortWithUnauthorized(requestContext);
+                return;
             }
 
-            // Optional: Set security context
-            requestContext.setSecurityContext(new CustomSecurityContext(username, roles, fullName));
+            requestContext.setSecurityContext(new CustomSecurityContext(username, userRoles, fullName));
             requestContext.setProperty("first_name", fullName);
 
         } catch (JWTVerificationException | GeneralSecurityException e) {
@@ -84,8 +77,31 @@ public class JwtRequestFilter implements ContainerRequestFilter {
         }
     }
 
+    private boolean isPermitAll() {
+        return resourceInfo.getResourceMethod().isAnnotationPresent(PermitAll.class)
+                || resourceInfo.getResourceClass().isAnnotationPresent(PermitAll.class);
+    }
+
+    private Set<String> getRolesAllowed() {
+        RolesAllowed rolesAnnotation = resourceInfo.getResourceMethod().getAnnotation(RolesAllowed.class);
+        if (rolesAnnotation == null) {
+            rolesAnnotation = resourceInfo.getResourceClass().getAnnotation(RolesAllowed.class);
+        }
+        return rolesAnnotation != null
+                ? new HashSet<>(Arrays.asList(rolesAnnotation.value()))
+                : Collections.emptySet();
+    }
+
+    private List<String> extractRoles(DecodedJWT jwt) {
+        Map<String, Object> realmAccess = jwt.getClaim("realm_access").asMap();
+        if (realmAccess != null && realmAccess.get("roles") instanceof List<?> rawRoles) {
+            return rawRoles.stream().map(String::valueOf).toList();
+        }
+        return List.of();
+    }
+
     private void abortWithUnauthorized(ContainerRequestContext context) {
-        context.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Invalid token").build());
+        context.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Access Denied").build());
     }
 
     private RSAPublicKey getPublicKey(String base64PublicKey) throws GeneralSecurityException {
@@ -94,5 +110,4 @@ public class JwtRequestFilter implements ContainerRequestFilter {
         KeyFactory factory = KeyFactory.getInstance("RSA");
         return (RSAPublicKey) factory.generatePublic(spec);
     }
-
 }

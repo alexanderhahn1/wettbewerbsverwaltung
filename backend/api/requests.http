@@ -7,23 +7,36 @@ GET http://localhost:8080/api/competitions/active
 ### Get status of competitions for the selected school year
 GET http://localhost:8080/api/competitions/status/2324
 
+### Get access Token for creating and updating
 
+POST http://localhost:8081/realms/demo/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id=quarkus-client&
+username=IT210157&
+password=admin
+
+> {% client.global.set("access_token", response.body.access_token); %}
 
 ### Create a new competition
+
 POST http://localhost:8080/api/competitions
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "user_id":
-    "name":
-    "link":
-    "deadline":
-    "prize":
-    "information_material":
-    "submission_forms":
-    "contact":
-    "is_active":
-    "date_created":
+  "name": "Project Award",
+  "link": "https://htl-leonding.ac.at",
+  "deadline": "Noch nicht freigegeben",
+  "prize": "5€ mci Gutschein auf Bauer sein Nacken",
+  "information_material": "https://edufs.edu.htl-leonding.ac.at",
+  "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",
+  "contact": "p.bauer@htl-leonding.ac.at",
+  "is_active": true,
+  "school_year": "2526"
 }
+
 
 ### Update a competition
 PUT http://localhost:8080/api/competitions

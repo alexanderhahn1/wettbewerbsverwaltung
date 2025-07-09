@@ -45,13 +45,63 @@ public class Competition {
     LocalDate dateCreated;
     @Column(name = "school_year")
     String schoolYear;
+    @Column(name = "created_by")
+    String createdBy;
 
     public LocalDate getLastChangeDate() {
-        if (changes.isEmpty()) {
+        if (changes == null || changes.isEmpty()) {
             return dateCreated;
         } else {
             return changes.getLast().getDate();
         }
+    }
+
+    public Competition() {}
+
+    public Competition(String competitionName, String link, String deadline, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy) {
+        this.competitionName = competitionName;
+        this.link = link;
+        this.deadline = deadline;
+        this.prize = prize;
+        this.informationMaterial = informationMaterial;
+        this.submissionForms = submissionForms;
+        this.contact = contact;
+        this.isActive = isActive;
+        this.schoolYear = schoolYear;
+        this.createdBy = createdBy;
+        this.dateCreated = LocalDate.now();
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public List<Change> getChanges() {
+        return changes;
+    }
+
+    public void setChanges(List<Change> changes) {
+        this.changes = changes;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Long getId() {
