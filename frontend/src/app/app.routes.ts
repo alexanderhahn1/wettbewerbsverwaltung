@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
-import {ListComponent} from './components/list/list.component';
 import {AuthGuard} from './guard/auth.guard';
+import {CompetitionsListComponent} from './components/competitions-list/competitions-list.component';
 
 export const routes: Routes = [
   {
@@ -12,9 +12,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'list',
-    component: ListComponent,
-    title: 'List',
+    path: 'competitions',
+    component: CompetitionsListComponent,
+    title: 'Wettbewerbe',
     canActivate: [AuthGuard]
   },
   {

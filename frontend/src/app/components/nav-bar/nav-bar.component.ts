@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
 import {NgIf} from '@angular/common';
 import {KeycloakOperationService} from '../../services/keycloak.service';
 
@@ -7,7 +7,8 @@ import {KeycloakOperationService} from '../../services/keycloak.service';
   selector: 'app-nav-bar',
   imports: [
     RouterLink,
-    NgIf
+    NgIf,
+    RouterLinkActive
   ],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
