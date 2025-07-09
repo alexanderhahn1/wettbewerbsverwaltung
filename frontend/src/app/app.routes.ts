@@ -8,7 +8,8 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Wettbewerbsverwaltung'
+    title: 'Wettbewerbsverwaltung',
+    canActivate: [AuthGuard],
   },
   {
     path: 'list',
@@ -19,6 +20,7 @@ export const routes: Routes = [
   {
     path: '**',
     component: NotFoundComponent,
-    title: 'Not Found'
+    title: 'Not Found',
+    canActivate: [AuthGuard]
   }
 ];
