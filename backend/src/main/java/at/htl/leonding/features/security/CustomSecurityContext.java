@@ -9,15 +9,21 @@ public class CustomSecurityContext implements SecurityContext {
 
     private final String username;
     private final List<String> roles;
+    private final String fullName;
 
-    public CustomSecurityContext(String username, List<String> roles) {
+    public CustomSecurityContext(String username, List<String> roles, String fullName) {
         this.username = username;
         this.roles = roles;
+        this.fullName = fullName;
     }
 
     @Override
     public Principal getUserPrincipal() {
         return () -> username;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override

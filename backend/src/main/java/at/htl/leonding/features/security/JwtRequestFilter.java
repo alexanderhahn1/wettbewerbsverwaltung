@@ -67,6 +67,7 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 
             // Optionally: extract claims
             String username = jwt.getClaim("preferred_username").asString();
+            String fullName = jwt.getClaim("given_name").asString();
             List<String> roles = List.of();
             Map<String, Object> realmAccess = jwt.getClaim("realm_access").asMap();
             if (realmAccess != null && realmAccess.get("roles") instanceof List<?> rawRoles) {
@@ -74,7 +75,8 @@ public class JwtRequestFilter implements ContainerRequestFilter {
             }
 
             // Optional: Set security context
-            requestContext.setSecurityContext(new CustomSecurityContext(username, roles));
+            requestContext.setSecurityContext(new CustomSecurityContext(username, roles, fullName));
+            requestContext.setProperty("first_name", fullName);
 
         } catch (JWTVerificationException | GeneralSecurityException e) {
             e.printStackTrace();
