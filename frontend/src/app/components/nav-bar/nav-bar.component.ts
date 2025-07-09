@@ -1,13 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {NgIf} from '@angular/common';
-import {KeycloakOperationService} from '../../services/keycloak.service';
+import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-nav-bar',
   imports: [
     RouterLink,
-    NgIf,
     RouterLinkActive
   ],
   templateUrl: './nav-bar.component.html',
@@ -18,10 +16,12 @@ export class NavBarComponent implements OnInit{
   isMobileMenuOpen = false
   keycloakService: KeycloakOperationService = inject(KeycloakOperationService);
   userProfile: any | null = null;
+  userInitials: string | null = null;
 
   ngOnInit() {
     this.keycloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
+      this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
       console.table(this.userProfile);
     })
   }

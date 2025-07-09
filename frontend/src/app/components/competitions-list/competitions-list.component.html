@@ -1,1 +1,5 @@
-<p>competitions-list works!</p>
+<div class="grid justify-center gap-4 m-10">
+  @for (competition of competitions; track competition.name) {
+    <app-competition-card [competition]="competition"></app-competition-card>
+  }
+</div>

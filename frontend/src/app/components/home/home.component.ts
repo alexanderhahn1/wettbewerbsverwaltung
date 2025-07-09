@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {KeycloakOperationService} from '../../services/keycloak.service';
+import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 import {NavBarComponent} from '../nav-bar/nav-bar.component';
 import {RouterOutlet} from '@angular/router';
 import {CommonModule} from '@angular/common';
