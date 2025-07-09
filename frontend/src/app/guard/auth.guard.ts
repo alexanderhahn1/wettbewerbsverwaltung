@@ -10,7 +10,7 @@ import {KeycloakAuthGuard, KeycloakService} from 'keycloak-angular';
   providedIn: 'root'
 })
 
-export class AuthGuard implements KeycloakAuthGuard {
+export class AuthGuard extends KeycloakAuthGuard {
   constructor(
     protected override readonly router: Router,
     protected readonly keycloak: KeycloakService

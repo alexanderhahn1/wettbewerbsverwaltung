@@ -4,8 +4,8 @@ import { KeycloakService} from 'keycloak-angular';
 @Injectable({
   providedIn: 'root'
 })
-export class KeycloakService {
-  constructor(private readonly keycloak: KeycloakService) {}
+export class KeycloakOperationService {
+  constructor(private readonly keycloak: KeycloakService) { }
 
   isLoggedIn(): boolean {
     return this.keycloak.isLoggedIn();

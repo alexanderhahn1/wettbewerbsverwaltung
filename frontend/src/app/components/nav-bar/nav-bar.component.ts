@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {NgIf} from '@angular/common';
+import {KeycloakOperationService} from '../../services/keycloak.service';
 
 @Component({
   selector: 'app-nav-bar',
