@@ -8,12 +8,13 @@ export function initializeKeycloak(keycloak: KeycloakService) {
         realm: 'demo',
         clientId: 'demo-client',
       },
+
+      initOptions: {
+        onLoad: 'login-required',
+        checkLoginIframe: false,
+      },
       enableBearerInterceptor: true,
       bearerPrefix: 'Bearer',
       bearerExcludedUrls: ['/assets'],
-      /*initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-      }*/
     })
 }

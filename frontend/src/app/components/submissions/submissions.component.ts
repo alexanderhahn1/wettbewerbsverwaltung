@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-submissions',
@@ -7,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrl: './submissions.component.css'
 })
 export class SubmissionsComponent {
-
 }

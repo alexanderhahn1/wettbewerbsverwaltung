@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {filter, Observable, Subject} from 'rxjs';
+import {filter, map, Observable, Subject} from 'rxjs';
 import {Competition} from '../../models/competition';
 
 @Injectable({
@@ -14,5 +14,9 @@ export class CompetitionService {
 
   getAllCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions`);
+  }
+
+  getActiveCompetitions(): Observable<Competition[]> {
+    return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`);
   }
 }
