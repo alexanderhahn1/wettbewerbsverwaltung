@@ -19,4 +19,12 @@ export class CompetitionService {
   getActiveCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`);
   }
+
+  addCompetition(competition: Competition): Observable<number> {
+    return this.httpClient.post(`${this.BASE_URL}/competitions`, competition, {
+      observe: 'response'
+    }).pipe(
+      map(response => response.status)
+    )
+  }
 }
