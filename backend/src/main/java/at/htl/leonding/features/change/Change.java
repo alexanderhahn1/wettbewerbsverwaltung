@@ -20,6 +20,27 @@ public class Change {
     @Column(name = "new_name")
     String newValue;
     LocalDate date;
+    @Column(name = "changed_by")
+    String changedBy;
+
+    public Change() {}
+
+    public Change(Competition competition, String attribute, String oldValue, String newValue, LocalDate date, String changedBy) {
+        this.competition = competition;
+        this.attribute = attribute;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+        this.date = date;
+        this.changedBy = changedBy;
+    }
+
+    public String getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(String changedBy) {
+        this.changedBy = changedBy;
+    }
 
     public Long getId() {
         return id;

@@ -3,10 +3,7 @@ package at.htl.leonding.features.competition;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
@@ -52,6 +49,15 @@ public class CompetitionResource {
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
+    }
+
+    @PUT
+    @Path("/{competitionId}")
+    @RolesAllowed({"admin"})
+    public Response updateCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx, @PathParam("competitionId") Long competitionId) {
+        Competition competition = competitionRepository.update(dto, competitionId, ctx.getUserPrincipal().getName());
+
+        return Response.ok().entity(competitionMapper.toResource(competition)).build();
     }
 
 }

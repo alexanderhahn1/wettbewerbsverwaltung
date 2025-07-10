@@ -80,19 +80,3 @@ INSERT INTO project (competition_id, name, status, next_step, contributors) VALU
 
 -- Projekte für Young Engineers Challenge (ID vermutlich 5)
 (5, 'Energieeffizientes Minihaus', 'Idee eingereicht', 'Pläne finalisieren', 'Laura Steiner, Markus Weber');
-
-
-INSERT INTO change (competition_id, attribute, old_name, new_name, date) VALUES
--- Änderung am ACSC Wettbewerb (ID = 1)
-(1, 'deadline', '31.08.2023', '15.09.2023', '2023-09-01'),
-(1, 'prize', 'NA', 'Sachpreise und Gutscheine', '2023-09-02'),
-
--- Änderung am Austrian Skills Wettbewerb (ID = 2)
-(2, 'deadline', '4.–7.10.2023 in Wels und 23.–26.11.2023 in Salzburg', '4.–7.10.2023 in Wels', '2023-09-03'),
-(2, 'prize', 'Gewinner kommt zum World Skills, zweiter zu Euro Skills', 'Nur Teilnahme an Euro Skills', '2023-09-04'),
-
--- Änderung beim HTL Coding Cup (ID = 3)
-(3, 'informationMaterial', 'https://htlcodingcup.at/downloads/broschuere.pdf', 'https://htlcodingcup.at/downloads/broschuere_v2.pdf', '2025-07-07'),
-
--- Änderung beim Young Engineers Challenge (ID = 5)
-(5, 'isActive', 'false', 'true', '2025-07-01');

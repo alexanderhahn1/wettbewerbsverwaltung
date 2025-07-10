@@ -26,7 +26,7 @@ public class Competition {
     @OneToMany(mappedBy = "competition")
     List<Project> projects;
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER)
     List<Change> changes;
 
     @Column(name = "name")

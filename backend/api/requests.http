@@ -39,20 +39,20 @@ Authorization: Bearer {{access_token}}
 
 
 ### Update a competition
-PUT http://localhost:8080/api/competitions
+PUT http://localhost:8080/api/competitions/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "id":
-    "user_id":
-    "name":
-    "link":
-    "deadline":
-    "prize":
-    "information_material":
-    "submission_forms":
-    "contact":
-    "is_active":
-    "date_created":
+  "name": "Project Award",
+  "link": "https://htl-leonding.ac.at",
+  "deadline": "Noch nicht freigegeben",
+  "prize": "5€ mci Gutschein auf Bauer sein Nacken",
+  "information_material": "https://edufs.edu.htl-leonding.ac.at",
+  "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",
+  "contact": "p.bauer@htl-leonding.ac.at",
+  "is_active": true,
+  "school_year": "2526"
 }
 
 
