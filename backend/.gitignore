@@ -6,6 +6,9 @@ pom.xml.versionsBackup
 release.properties
 .flattened-pom.xml
 
+#local properties
+src/main/resources/application-dev.properties
+
 # Eclipse
 .project
 .classpath

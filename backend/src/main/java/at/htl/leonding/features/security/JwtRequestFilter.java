@@ -17,6 +17,7 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -30,7 +31,8 @@ import java.util.*;
 @Priority(Priorities.AUTHENTICATION)
 public class JwtRequestFilter implements ContainerRequestFilter {
 
-    private static final String REALM_PUBLIC_KEY = ConfigProvider.getConfig().getValue("keycloakRealmPublicKey", String.class);
+    @ConfigProperty(name = "keycloak.realm.public.key")
+    String REALM_PUBLIC_KEY;
 
     @Context
     private ResourceInfo resourceInfo;
