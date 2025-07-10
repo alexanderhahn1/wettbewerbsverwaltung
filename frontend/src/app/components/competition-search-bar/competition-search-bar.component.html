@@ -1,0 +1,32 @@
+<form [formGroup]="searchCompetitionsForm" (ngSubmit)="searchCompetitions()" class="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5">
+  <div class="flex space-x-2">
+    <input
+      type="text"
+      id="competitionName"
+      formControlName="competitionName"
+      class="flex-1 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Wettbewerbsnamen eingeben"
+    >
+    <button
+      class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+      type="submit"
+      [disabled]="searchCompetitionsForm.invalid"
+    >
+      Suchen
+    </button>
+  </div>
+  @if (searchCompetitionsForm.value.competitionName) {
+    <div class="mt-2 flex items-center space-x-2 text-sm text-gray-700">
+      <span class="bg-gray-100 px-3 py-1 rounded-md">
+        {{ searchCompetitionsForm.value.competitionName }}
+      </span>
+      <button
+        type="button"
+        class="text-red-500 hover:text-red-700 font-semibold"
+        (click)="resetSearch()"
+      >
+        ×
+      </button>
+    </div>
+  }
+</form>

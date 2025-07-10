@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {filter, Observable, Subject} from 'rxjs';
 import {Competition} from '../../models/competition';
 
 @Injectable({
@@ -9,6 +9,8 @@ import {Competition} from '../../models/competition';
 export class CompetitionService {
   private readonly BASE_URL = 'http://localhost:8080/api';
   httpClient: HttpClient = inject(HttpClient);
+  public searchCompetitionsSubject = new Subject<String>()
+  public resetSearchCompetitionsSubject = new Subject<boolean>()
 
   getAllCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions`);

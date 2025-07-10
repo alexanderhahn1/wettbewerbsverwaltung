@@ -25,6 +25,15 @@
             <a routerLink="/submissions"
                routerLinkActive="bg-gray-900 text-white"
                class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Einreichungen</a>
+            @if (isUserAdmin){
+              <a routerLink="/add-competition"
+                 routerLinkActive="bg-gray-900 text-white"
+                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Wettbewerb hinzufügen</a>
+              <a routerLink="/add-project"
+                 routerLinkActive="bg-gray-900 text-white"
+                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projekt hinzufügen</a>
+            }
+
           </div>
         </div>
       </div>

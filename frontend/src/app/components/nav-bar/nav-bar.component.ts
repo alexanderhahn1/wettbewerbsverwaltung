@@ -17,12 +17,16 @@ export class NavBarComponent implements OnInit{
   keycloakService: KeycloakOperationService = inject(KeycloakOperationService);
   userProfile: any | null = null;
   userInitials: string | null = null;
+  isUserAdmin: boolean = false;
 
   ngOnInit() {
     this.keycloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
       console.table(this.userProfile);
+      if (this.userProfile.username == "admin") {
+        this.isUserAdmin = true;
+      }
     })
   }
 

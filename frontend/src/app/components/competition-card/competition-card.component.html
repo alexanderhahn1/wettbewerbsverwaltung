@@ -1,11 +1,11 @@
-<div class="max-w-xl rounded-lg border border-gray-300 bg-white p-6 shadow-sm">
+<div class="max-w-xl rounded-lg border border-gray-300 bg-white p-6 shadow-sm min-w-4xl">
   <h2 class="text-lg font-semibold text-gray-900">{{ competition.name }}</h2>
-  <p class="italic text-sm text-gray-600 mb-4">erstellt von: ?</p>
+  <p class="italic text-sm text-gray-600 mb-4">erstellt von: {{ competition.created_by }}</p>
 
   <span [innerHTML]="competition.link | linkify"></span>
 
   <div class="mt-4 space-y-1 text-sm text-gray-800">
-    <p><span class="font-semibold">Schuljahr:</span> 20{{ competition.schoolYear }}</p>
+    <p><span class="font-semibold">Schuljahr:</span> {{ competition.schoolYear | formatSchoolYear}}</p>
     <p><span class="font-semibold">Einreichfrist:</span> {{competition.deadline}}</p>
 
     <p><span class="font-semibold">Preis:</span><br>

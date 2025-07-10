@@ -1,5 +1,9 @@
+<app-competition-search-bar></app-competition-search-bar>
 <div class="grid justify-center gap-4 m-10">
   @for (competition of competitions; track competition.name) {
     <app-competition-card [competition]="competition"></app-competition-card>
+  }
+  @if (competitions.length == 0) {
+    <p>Es wurde kein Wettbewerb mit diesem Name gefunden!</p>
   }
 </div>
