@@ -4,8 +4,10 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 
 import java.util.List;
 
@@ -28,8 +30,16 @@ public class ProjectResource {
 
     @POST
     @RolesAllowed({"admin"})
-    public Response createProject(ProjectDTO dto) {
-        Project project = projectRepository.create(projectMapper.toProject(dto));
+    public Response createProject(ProjectDTO dto, @Context SecurityContext ctx) {
+        Project project = projectRepository.create(projectMapper.toProject(dto), ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(projectMapper.toResource(project)).build();
+    }
+
+    @PUT
+    @Path("/{projectId}")
+    @RolesAllowed({"admin"})
+    public Response updateProject(@PathParam("projectId") long projectId, ProjectDTO dto, @Context SecurityContext ctx) {
+        Project project = projectRepository.update(dto, projectId, ctx.getUserPrincipal().getName());
+        return Response.ok(projectMapper.toResource(project)).build();
     }
 }

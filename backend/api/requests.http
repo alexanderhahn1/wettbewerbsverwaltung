@@ -14,7 +14,7 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=password&
 client_id=quarkus-client&
-username=admin&
+username=it210157&
 password=admin
 
 > {% client.global.set("access_token", response.body.access_token); %}
@@ -70,12 +70,14 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Update a Project
-POST http://localhost:8080/api/projects
+PUT http://localhost:8080/api/projects/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "id":
-    "name":
-    "status":
-    "next_step":
-    "contributors":
+  "competition_id": 1,
+  "name": "Test Project",
+  "status": "Abgeschlossen",
+  "next_step": "Abgabe",
+  "contributors": "Philip Pfarrhofer, Hahn Alexander"
 }

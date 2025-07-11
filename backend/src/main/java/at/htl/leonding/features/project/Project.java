@@ -29,6 +29,13 @@ public class Project {
         this.contributors = contributors;
     }
 
+    public void setEverything(String projectName, String status, String nextStep, String contributors) {
+        this.projectName = projectName;
+        this.status = status;
+        this.nextStep = nextStep;
+        this.contributors = contributors;
+    }
+
     public Long getId() {
         return id;
     }

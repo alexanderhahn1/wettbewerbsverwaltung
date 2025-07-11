@@ -19,6 +19,7 @@ public class ChangeResource {
     ChangeMapper changeMapper;
 
     @GET
+    @PermitAll
     public Response getAllChanges() {
         return Response.ok(changeRepository.findAll().stream().map(changeMapper::toResource)).build();
     }
