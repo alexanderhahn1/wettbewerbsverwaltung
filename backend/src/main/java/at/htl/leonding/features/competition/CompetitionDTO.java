@@ -3,6 +3,7 @@ package at.htl.leonding.features.competition;
 import java.time.LocalDate;
 
 public record CompetitionDTO(
+        long id,
         String name,
         String link,
         String deadline,

@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class CompetitionMapper {
 
     public CompetitionDTO toResource(final Competition competition) {
-        return new CompetitionDTO(competition.competitionName, competition.link, competition.deadline, competition.prize, competition.informationMaterial,
+        return new CompetitionDTO(competition.id, competition.competitionName, competition.link, competition.deadline, competition.prize, competition.informationMaterial,
                 competition.submissionForms, competition.contact, competition.isActive, competition.dateCreated, competition.getLastChangeDate(),
                 competition.schoolYear, competition.createdBy);
     }
