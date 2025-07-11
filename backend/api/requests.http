@@ -58,13 +58,15 @@ Authorization: Bearer {{access_token}}
 
 ### Add a Project to a competition
 POST http://localhost:8080/api/projects
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 {
-    "competition_id":
-    "name":
-    "status":
-    "next_step":
-    "contributors":
+    "competition_id": 1,
+    "name": "Test Project",
+    "status": "Abgeschlossen",
+    "next_step": "Abgabe",
+    "contributors": "Philip Pfarrhofer, Hahn Alexander"
 }
 
 ### Update a Project

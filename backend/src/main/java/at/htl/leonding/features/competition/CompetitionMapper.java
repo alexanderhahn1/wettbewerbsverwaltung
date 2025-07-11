@@ -1,6 +1,6 @@
 package at.htl.leonding.features.competition;
 
-import at.htl.leonding.features.project.ProjectDTO;
+import at.htl.leonding.features.project.ProjectStatusDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -14,7 +14,7 @@ public class CompetitionMapper {
 
     public StatusDTO toStatusResource(final Competition competition) {
         return new StatusDTO(competition.competitionName, competition.getLastChangeDate(),
-                competition.projects.stream().map(ProjectDTO::toResource).toList());
+                competition.projects.stream().map(ProjectStatusDTO::toResource).toList());
     }
 
     public Competition toCompetition(final CompetitionCreateDTO dto, String createdBy) {

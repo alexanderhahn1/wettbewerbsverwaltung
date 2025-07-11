@@ -19,6 +19,16 @@ public class Project {
     String nextStep;
     String contributors;
 
+    public Project() {}
+
+    public Project(Competition competition, String projectName, String status, String nextStep, String contributors) {
+        this.competition = competition;
+        this.projectName = projectName;
+        this.status = status;
+        this.nextStep = nextStep;
+        this.contributors = contributors;
+    }
+
     public Long getId() {
         return id;
     }

@@ -2,14 +2,15 @@ package at.htl.leonding.features.change;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
 @Path("/changes")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ChangeResource {
 
     @Inject
