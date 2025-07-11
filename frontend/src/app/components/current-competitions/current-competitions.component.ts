@@ -6,10 +6,7 @@ import {CompetitionSearchBarComponent} from '../competition-search-bar/competiti
 
 @Component({
   selector: 'app-current-competitions',
-  imports: [
-    CompetitionCardComponent,
-    CompetitionSearchBarComponent
-  ],
+  imports: [ CompetitionCardComponent ],
   templateUrl: './current-competitions.component.html',
   styleUrl: './current-competitions.component.css'
 })

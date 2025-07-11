@@ -1,8 +1,8 @@
 import {APP_INITIALIZER, ApplicationConfig} from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {provideRouter} from '@angular/router';
 
-import { routes } from './app.routes';
-import {KeycloakService, KeycloakBearerInterceptor} from 'keycloak-angular';
+import {routes} from './app.routes';
+import {KeycloakBearerInterceptor, KeycloakService} from 'keycloak-angular';
 import {provideClientHydration} from '@angular/platform-browser';
 import {initializeKeycloak} from './init/keycloak.init.factory';
 import {

@@ -14,7 +14,7 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=password&
 client_id=quarkus-client&
-username=IT210157&
+username=admin&
 password=admin
 
 > {% client.global.set("access_token", response.body.access_token); %}
