@@ -33,7 +33,11 @@ export class AddCompetitionComponent implements OnInit{
 
   addCompetition(): void {
     const competition: Competition = this.addCompetitionForm.value;
-    console.log(this.competitionService.addCompetition(competition).subscribe());
+    this.competitionService.addCompetition(competition).subscribe(
+      (createdCompetition: Competition) => {
+        console.log(createdCompetition);
+      }
+    );
     console.log(this.addCompetitionForm.value);
   }
 }

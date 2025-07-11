@@ -14,6 +14,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
         checkLoginIframe: false,
       },
       enableBearerInterceptor: true,
-      bearerPrefix: 'Bearer'
+      bearerPrefix: 'Bearer',
+      bearerExcludedUrls: ['/assets', '/public']
     })
 }

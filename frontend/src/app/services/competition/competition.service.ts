@@ -2,11 +2,13 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {filter, map, Observable, Subject} from 'rxjs';
 import {Competition} from '../../models/competition';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompetitionService {
+  keycloakService: KeycloakService = inject(KeycloakService);
   private readonly BASE_URL = 'http://localhost:8080/api';
   httpClient: HttpClient = inject(HttpClient);
   public searchCompetitionsSubject = new Subject<String>()
@@ -19,12 +21,15 @@ export class CompetitionService {
   getActiveCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`);
   }
-
-  addCompetition(competition: Competition): Observable<number> {
-    return this.httpClient.post(`${this.BASE_URL}/competitions`, competition, {
-      observe: 'response'
-    }).pipe(
-      map(response => response.status)
-    )
+  /*
+  getRandomCompetition(): Observable<Competition> {
+    return null;
+  }
+  */
+  addCompetition(competition: Competition): Observable<Competition> {
+    const headers = {
+      Authorization: `Bearer ${this.keycloakService.getToken()}`
+    };
+    return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, competition, { headers });
   }
 }
