@@ -24,8 +24,8 @@ export class AddCompetitionComponent implements OnInit{
       ]),
       deadline: new FormControl('', [Validators.required]),
       prize: new FormControl('', [Validators.required]),
-      informationMaterial: new FormControl('', [Validators.required]),
-      submissionForms: new FormControl('', [Validators.required]),
+      information_material: new FormControl('', [Validators.required]),
+      submission_forms: new FormControl('', [Validators.required]),
       contact: new FormControl('', [Validators.required]),
       link: new FormControl('', [Validators.required])
     })

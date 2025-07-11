@@ -35,17 +35,17 @@
   </div>
 
   <div>
-    <label for="informationMaterial" class="block font-medium text-gray-700 mb-1">Broschüren, Infomaterial</label>
-    <textarea id="informationMaterial" formControlName="informationMaterial" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-    @if (addCompetitionForm.get('informationMaterial')?.invalid && addCompetitionForm.get('informationMaterial')?.touched) {
+    <label for="information_material" class="block font-medium text-gray-700 mb-1">Broschüren, Infomaterial</label>
+    <textarea id="information_material" formControlName="information_material" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    @if (addCompetitionForm.get('information_material')?.invalid && addCompetitionForm.get('information_material')?.touched) {
       <div class="text-red-500 text-sm mt-1">Broschüren und Infomaterial sind verpflichtend</div>
     }
   </div>
 
   <div>
-    <label for="submissionForms" class="block font-medium text-gray-700 mb-1">Einreichformulare</label>
-    <textarea id="submissionForms" formControlName="submissionForms" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-    @if (addCompetitionForm.get('submissionForms')?.invalid && addCompetitionForm.get('submissionForms')?.touched) {
+    <label for="submission_forms" class="block font-medium text-gray-700 mb-1">Einreichformulare</label>
+    <textarea id="submission_forms" formControlName="submission_forms" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    @if (addCompetitionForm.get('submission_forms')?.invalid && addCompetitionForm.get('submission_forms')?.touched) {
       <div class="text-red-500 text-sm mt-1">Einreichformulare sind verpflichtend</div>
     }
   </div>
