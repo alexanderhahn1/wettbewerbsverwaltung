@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit{
       this.userProfile = data;
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
       console.table(this.userProfile);
-      if (this.userProfile.username == "admin") {
+      if (this.keycloakService.getUserRoles().includes('admin')) {
         this.isUserAdmin = true;
       }
     })

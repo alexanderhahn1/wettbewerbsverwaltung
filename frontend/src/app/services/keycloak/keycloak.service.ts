@@ -16,5 +16,8 @@ export class KeycloakOperationService {
   getUserProfile():any {
     return this.keycloak.loadUserProfile();
   }
+  getUserRoles(): string[] {
+    return this.keycloak.getKeycloakInstance().realmAccess?.roles || [];
+  }
 
 }
