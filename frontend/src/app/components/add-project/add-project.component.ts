@@ -43,7 +43,11 @@ export class AddProjectComponent implements OnInit{
 
   addProject(): void {
     const project: Project = this.addProjectForm.value;
-    console.log(this.projectService.addProject(project).subscribe());
+    this.projectService.addProject(project).subscribe(
+      (createdProject: Project) => {
+        console.log(createdProject);
+      }
+    )
     console.log(project);
   }
 }
