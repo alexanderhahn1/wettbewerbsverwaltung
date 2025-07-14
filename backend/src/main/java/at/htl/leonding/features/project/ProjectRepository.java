@@ -18,7 +18,7 @@ public class ProjectRepository implements PanacheRepository<Project> {
     @Transactional
     public Project create(Project project, String changedBy) {
         persist(project);
-        changeRepository.create(new Change(project.competition, "project (" + project.getProjectName() + ")", "", "", LocalDate.now(), changedBy));
+        changeRepository.create(new Change(project.competition, "created project (" + project.getProjectName() + ")", "", "", LocalDate.now(), changedBy));
         return project;
     }
 
@@ -26,7 +26,7 @@ public class ProjectRepository implements PanacheRepository<Project> {
     public Project update(ProjectDTO dto, long projectId, String changedBy) {
         Project project = findById(projectId);
 
-        changeRepository.create(new Change(project.competition, "project (" + dto.name() + ")", "", "", LocalDate.now(), changedBy));
+        changeRepository.create(new Change(project.competition, "updated project (" + dto.name() + ")", "", "", LocalDate.now(), changedBy));
 
         project.setEverything(dto.name(), dto.status(), dto.next_step(), dto.contributors());
         persist(project);

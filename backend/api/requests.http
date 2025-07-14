@@ -76,8 +76,8 @@ Authorization: Bearer {{access_token}}
 
 {
   "competition_id": 1,
-  "name": "Test Project",
-  "status": "Abgeschlossen",
-  "next_step": "Abgabe",
-  "contributors": "Philip Pfarrhofer, Hahn Alexander"
+  "name": "Updated Project",
+  "status": "In Progress",
+  "next_step": "Scram Meeting",
+  "contributors": "Philip Pfarrhofer, Alexander Hahn"
 }
