@@ -8,5 +8,12 @@ import {Response} from '../../models/response';
   styleUrl: './response.component.css'
 })
 export class ResponseComponent {
-  @Input() response!: Response;
+  @Input() message = '';
+  show = false;
+
+  trigger(message: string, duration: number = 3000) {
+    this.message = message;
+    this.show = true;
+    setTimeout(() => this.show = false, duration);
+  }
 }
