@@ -7,6 +7,7 @@ import {CurrentCompetitionsComponent} from './components/current-competitions/cu
 import {AddCompetitionComponent} from './components/add-competition/add-competition.component';
 import {AddProjectComponent} from './components/add-project/add-project.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {ExportComponent} from './components/export/export.component';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,12 @@ export const routes: Routes = [
     path: 'add-project',
     component: AddProjectComponent,
     title: 'Projekt hinzufügen',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'export',
+    component: ExportComponent,
+    title: 'Export',
     canActivate: [AuthGuard]
   },
   {
