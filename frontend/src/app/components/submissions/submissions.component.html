@@ -1,1 +1,8 @@
-<p>submissions works!</p>
+<div class="grid justify-center gap-4 m-10">
+  @for (submission of submissions; track submission.name) {
+    <app-submission-card [submission]="submission"></app-submission-card>
+  }
+  @if (submissions.length == 0) {
+    <p>Es wurde kein Wettbewerb mit diesem Name gefunden!</p>
+  }
+</div>

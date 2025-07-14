@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable, Subject} from 'rxjs';
+import {filter, map, Observable, Subject} from 'rxjs';
 import {Project} from '../../models/project';
 import {KeycloakService} from 'keycloak-angular';
 
@@ -21,5 +21,11 @@ export class ProjectService {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
     };
     return this.httpClient.post<Project>(`${this.BASE_URL}/projects`, project, { headers });
+  }
+
+  getProjectsForCompetitions(id: number): Observable<Project[]> {
+    return this.httpClient.get<Project[]>(`${this.BASE_URL}/projects`).pipe(
+     map((projects) => projects.filter(project => project.competition_id === id))
+    );
   }
 }

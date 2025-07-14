@@ -40,6 +40,7 @@ export class AddCompetitionComponent implements OnInit{
       next: (createdCompetition: Competition) => {
         if (createdCompetition && createdCompetition.name) {
           this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!')
+          this.addCompetitionForm.reset();
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }

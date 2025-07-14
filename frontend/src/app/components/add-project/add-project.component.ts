@@ -5,12 +5,14 @@ import {Competition} from '../../models/competition';
 import {Project} from '../../models/project';
 import {ProjectService} from '../../services/project/project.service';
 import {ResponseComponent} from '../response/response.component';
+import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school-year.pipe';
 
 @Component({
   selector: 'app-add-project',
   imports: [
     ReactiveFormsModule,
-    ResponseComponent
+    ResponseComponent,
+    FormatSchoolYearPipe
   ],
   templateUrl: './add-project.component.html',
   styleUrl: './add-project.component.css'
@@ -45,6 +47,7 @@ export class AddProjectComponent implements OnInit{
         next: (createdProject: Project) => {
           if (createdProject && createdProject.name) {
             this.responseComponent.trigger('Projekt erfolgreich hinzugefügt!')
+            this.addProjectForm.reset();
           } else {
             this.responseComponent.trigger('Etwas hat nicht funktioniert!')
           }
