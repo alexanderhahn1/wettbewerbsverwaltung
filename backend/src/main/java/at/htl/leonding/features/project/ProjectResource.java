@@ -20,7 +20,6 @@ public class ProjectResource {
     @Inject
     ProjectMapper projectMapper;
 
-    @PermitAll
     @GET
     public Response getAllProjects() {
         return Response.ok(projectRepository.findAll()

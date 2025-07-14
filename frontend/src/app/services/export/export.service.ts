@@ -12,7 +12,7 @@ export class ExportService {
 
   exportToExcel(competitions: Competition[]): void {
 
-    let data = competitions;
+    const data = competitions;
 
     //for (const competition of competitions) {
     //  data.push({ Name: competition.name, Link: competition.link, Deadline: competition.deadline,  })

@@ -21,7 +21,6 @@ public class CompetitionResource {
     CompetitionMapper competitionMapper;
 
     @GET
-    @PermitAll
     public Response getAllCompetitions() {
         var competitions = competitionRepository.getAll();
         return Response.ok(competitions
@@ -31,7 +30,6 @@ public class CompetitionResource {
 
     @GET
     @Path("/{competitionId}")
-    @PermitAll
     public Response getCompetitionById(@PathParam("competitionId") long competitionId) {
         return Response.ok(competitionMapper.toResource(competitionRepository.findById(competitionId))).build();
     }
