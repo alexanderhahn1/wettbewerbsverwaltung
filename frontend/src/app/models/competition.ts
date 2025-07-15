@@ -10,6 +10,6 @@ export interface Competition {
   is_active: boolean,
   date_created: Date,
   last_update: Date,
-  schoolYear: string,
+  school_year: string,
   created_by: string
 }

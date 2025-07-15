@@ -21,7 +21,7 @@ export class AddCompetitionComponent implements OnInit{
   ngOnInit() {
     this.addCompetitionForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      schoolYear: new FormControl('', [
+      school_year: new FormControl('', [
         Validators.required,
         Validators.pattern('[0-9]{4}'),
       ]),

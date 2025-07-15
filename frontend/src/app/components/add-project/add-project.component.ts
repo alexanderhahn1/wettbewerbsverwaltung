@@ -28,6 +28,7 @@ export class AddProjectComponent implements OnInit{
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
         this.competitions = competitions;
+        console.log(this.competitions);
       }
     )
 
@@ -38,6 +39,12 @@ export class AddProjectComponent implements OnInit{
       contributors: new FormControl('', Validators.required),
       competition_id: new FormControl('', Validators.required),
     })
+
+    this.projectService.getAllProjects().subscribe(
+      (projects: Project[]) => {
+        console.log(projects);
+      }
+    )
   }
 
   addProject(): void {

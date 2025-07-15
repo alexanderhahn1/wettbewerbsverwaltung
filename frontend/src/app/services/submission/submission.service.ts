@@ -1,4 +1,4 @@
-import { inject, Injectable, OnInit } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Submission } from '../../models/submission';
 import {forkJoin, map, Observable, switchMap} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -8,15 +8,11 @@ import { ProjectService } from '../project/project.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SubmissionService implements OnInit{
+export class SubmissionService {
   private readonly BASE_URL = 'http://localhost:8080/api';
   httpClient: HttpClient = inject(HttpClient);
   projectsService: ProjectService = inject(ProjectService)
   submissions: Submission[] = [];
-
-  ngOnInit() {
-
-  }
 
   /**
    * Explanation:
@@ -27,7 +23,7 @@ export class SubmissionService implements OnInit{
    * 5. forkJoin is used to wait for all the individual project-fetching observables to complete.
    */
   getAllSubmissions(): Observable<Submission[]> {
-    return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`).pipe(
+    return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/`).pipe(
       switchMap(competitions => {
         if(competitions.length === 0) {
           return new Observable<Submission[]>(observer => observer.next([]));
@@ -37,13 +33,13 @@ export class SubmissionService implements OnInit{
           this.projectsService.getProjectsForCompetitions(competition.id).pipe(
             map(projects => ({
               name: competition.name,
-              schoolYear: competition.schoolYear,
+              school_year: competition.school_year,
               last_update: competition.last_update,
               projects: projects
             }))
           )
         );
-
+        console.log(submissionObservables);
         return forkJoin(submissionObservables);
       })
     );

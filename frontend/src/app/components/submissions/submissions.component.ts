@@ -23,6 +23,7 @@ export class SubmissionsComponent implements OnInit{
     this.submissionService.getAllSubmissions().subscribe(
       (submissions: Submission[]) => {
         this.submissions = submissions;
+        console.log(this.submissions);
       }
     )
   }
