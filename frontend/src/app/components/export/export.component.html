@@ -1,2 +1,9 @@
-<p>export works!</p>
-<button (click)="exportTest()">Test Export</button>
+<div #pdfContent id="pdf-content" class="p-6 bg-white rounded-xl shadow-md text-center">
+  <h1 class="text-2xl font-bold text-blue-600 mb-4">My Tailwind PDF</h1>
+  <p class="text-gray-700">This content will be exported as a PDF with Tailwind styles.</p>
+</div>
+
+<button (click)="generatePdf()" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  Download PDF
+</button>
+

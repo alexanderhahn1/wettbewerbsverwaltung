@@ -10,13 +10,7 @@ export class ExportService {
 
   constructor() { }
 
-  exportToExcel(competitions: Competition[]): void {
-
-    const data = competitions;
-
-    //for (const competition of competitions) {
-    //  data.push({ Name: competition.name, Link: competition.link, Deadline: competition.deadline,  })
-    //}
+  exportToExcel(data: Competition[]): void {
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
 
@@ -35,6 +29,5 @@ export class ExportService {
     });
 
     saveAs(blob, 'people.xlsx');
-
   }
 }
