@@ -9,14 +9,17 @@ Authorization: Bearer {{access_token}}
 GET http://localhost:8080/api/competitions/status/2324
 Authorization: Bearer {{access_token}}
 
-### Get access Token for creating and updating
+### Get Random Competition
+GET http://localhost:8080/api/competitions/random
+Authorization: Bearer {{access_token}}
 
+### Get access Token for creating and updating
 POST http://localhost:8081/realms/demo/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=password&
 client_id=quarkus-client&
-username=it210157&
+username=admin&
 password=admin
 
 > {% client.global.set("access_token", response.body.access_token); %}

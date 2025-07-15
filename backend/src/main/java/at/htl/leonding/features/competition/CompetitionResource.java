@@ -44,6 +44,12 @@ public class CompetitionResource {
     }
 
     @GET
+    @Path("/random")
+    public Response getRandomCompetition() {
+        return Response.ok(competitionMapper.toResource(competitionRepository.getRandom())).build();
+    }
+
+    @GET
     @Path("/status/{schoolYear}")
     public Response getStatusBySchoolYear(@PathParam("schoolYear") String schoolYear) {
         var competitions = competitionRepository.getBySchoolYear(schoolYear);

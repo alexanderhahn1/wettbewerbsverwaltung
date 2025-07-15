@@ -10,12 +10,14 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @ApplicationScoped
 public class CompetitionRepository implements PanacheRepository<Competition> {
 
     @Inject
     ChangeRepository changeRepository;
+    Random random = new Random();
 
     public List<Competition> getAll() {
         return getEntityManager().createNamedQuery(Competition.FIND_ALL, Competition.class).getResultList();
@@ -28,6 +30,14 @@ public class CompetitionRepository implements PanacheRepository<Competition> {
     public List<Competition> getBySchoolYear(String schoolYear) {
         return getEntityManager().createNamedQuery(Competition.FIND_BY_SCHOOL_YEAR, Competition.class)
                 .setParameter("year", schoolYear).getResultList();
+    }
+
+    public Competition getRandom() {
+        List<Competition> all = listAll();
+        if (all.isEmpty()) {
+            return null;
+        }
+        return all.get(random.nextInt(all.size()));
     }
 
     @Transactional
