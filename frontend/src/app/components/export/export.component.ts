@@ -1,7 +1,7 @@
 import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 import {ExportService} from '../../services/export/export.service';
 import {CompetitionService} from '../../services/competition/competition.service';
-import * as html2pdf from 'html2pdf.js';
+import html2pdf from 'html2pdf.js';
 import {Competition} from '../../models/competition';
 
 @Component({
@@ -24,15 +24,7 @@ export class ExportComponent {
   }
 
   generatePdf() {
-    const options = {
-      margin: 0.5,
-      filename: 'my-document.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
-
-    const content: Element = this.pdfContent.nativeElement;
-    html2pdf().from(content).set(options).save();
+    print();
+    //this.exportService.exportToPDF(this.pdfContent.nativeElement);
   }
 }

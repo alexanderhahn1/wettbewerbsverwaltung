@@ -3,9 +3,11 @@ GET http://localhost:8080/api/competitions
 
 ### Get active competitions
 GET http://localhost:8080/api/competitions/active
+Authorization: Bearer {{access_token}}
 
 ### Get status of competitions for the selected school year
 GET http://localhost:8080/api/competitions/status/2324
+Authorization: Bearer {{access_token}}
 
 ### Get access Token for creating and updating
 
