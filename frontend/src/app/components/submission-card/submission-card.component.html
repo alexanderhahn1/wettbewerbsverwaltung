@@ -2,16 +2,18 @@
   <h2 class="text-lg font-semibold text-gray-900">{{ submission.name }}</h2>
   <p class="italic text-sm text-gray-600 mb-4">letztes Update: {{ submission.last_update }}</p>
 
-  <table class="min-w-full table-auto border border-gray-300 mt-4">
-    <thead class="bg-gray-100">
-    <tr>
-      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
-      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
-      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nächster Schritt</th>
-      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Mitwirkende</th>
-    </tr>
-    </thead>
-    <tbody>
+  @if (submission.projects.length > 0) {
+    <table class="min-w-full table-auto border border-gray-300 mt-4">
+      <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nächster Schritt</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Mitwirkende</th>
+      </tr>
+      </thead>
+
+      <tbody>
       @for (project of submission.projects; track project.name) {
         <tr class="border-t">
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.name }}</td>
@@ -20,6 +22,11 @@
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.contributors }}</td>
         </tr>
       }
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  } @else {
+    <p class="mt-4 text-sm text-gray-700 italic bg-yellow-50 border border-yellow-200 rounded-md p-4">
+      Hier gibt es noch keine Projekte – vielleicht möchtest du den Anfang machen?
+    </p>
+  }
 </div>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Submission } from '../../models/submission';
-import {forkJoin, map, Observable, switchMap} from 'rxjs';
+import {forkJoin, map, Observable, Subject, switchMap} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Competition } from '../../models/competition';
 import { ProjectService } from '../project/project.service';
@@ -13,6 +13,7 @@ export class SubmissionService {
   httpClient: HttpClient = inject(HttpClient);
   projectsService: ProjectService = inject(ProjectService)
   submissions: Submission[] = [];
+  public filterSubmissionsSubject = new Subject<string>()
 
   /**
    * Explanation:
@@ -39,7 +40,6 @@ export class SubmissionService {
             }))
           )
         );
-        console.log(submissionObservables);
         return forkJoin(submissionObservables);
       })
     );

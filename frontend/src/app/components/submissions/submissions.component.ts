@@ -4,13 +4,14 @@ import {CompetitionSearchBarComponent} from "../competition-search-bar/competiti
 import {SubmissionCardComponent} from '../submission-card/submission-card.component';
 import {Submission} from '../../models/submission';
 import {SubmissionService} from '../../services/submission/submission.service';
+import {SubmissionFilterBarComponent} from '../submission-filter-bar/submission-filter-bar.component';
+import {filter} from 'rxjs';
 
 @Component({
   selector: 'app-submissions',
   imports: [
-    CompetitionCardComponent,
-    CompetitionSearchBarComponent,
-    SubmissionCardComponent
+    SubmissionCardComponent,
+    SubmissionFilterBarComponent
   ],
   templateUrl: './submissions.component.html',
   styleUrl: './submissions.component.css'
@@ -20,10 +21,31 @@ export class SubmissionsComponent implements OnInit{
   submissions: Submission[] = [];
 
   ngOnInit() {
+    this.getAllSubmissions()
+
+    this.submissionService.filterSubmissionsSubject.subscribe(
+      (year) => {
+        if (year) {
+          this.getYearsSubmission(year);
+        } else {
+          this.getAllSubmissions()
+        }
+      }
+    )
+  }
+
+  getAllSubmissions() {
     this.submissionService.getAllSubmissions().subscribe(
       (submissions: Submission[]) => {
         this.submissions = submissions;
-        console.log(this.submissions);
+      }
+    )
+  }
+
+  getYearsSubmission(year: string) {
+    this.submissionService.getAllSubmissions().subscribe(
+      (submissions: Submission[]) => {
+        this.submissions = submissions.filter(submission => submission.school_year === year);
       }
     )
   }

@@ -32,4 +32,13 @@ export class CompetitionService {
     };
     return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, competition, { headers });
   }
+
+  getAllSchoolYears(): Observable<string[]> {
+    return this.getAllCompetitions().pipe(
+      map(competitions => {
+        const schoolYears = competitions.map(c => c.school_year);
+        return Array.from(new Set(schoolYears));
+      })
+    );
+  }
 }

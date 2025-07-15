@@ -27,7 +27,6 @@ export class CompetitionsListComponent implements OnInit{
         this.getAllCompetitions();
       }
     );
-
   }
 
   getAllCompetitions() {
@@ -37,6 +36,4 @@ export class CompetitionsListComponent implements OnInit{
       }
     )
   }
-
-
 }

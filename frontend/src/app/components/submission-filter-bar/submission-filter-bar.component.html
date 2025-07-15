@@ -1,0 +1,28 @@
+<div class="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md mt-5">
+  <label class="block text-sm font-medium text-gray-700">Nach Schuljahr:</label>
+  <div class="flex flex-wrap gap-4 items-center">
+    <label class="flex items-center gap-2 text-sm text-gray-700">
+      <input
+        type="radio"
+        name="schoolYear"
+        [checked]="selectedSchoolYears.length === 0"
+        (change)="selectSchoolYear('')"
+        class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+      />
+      <span>Alle</span>
+    </label>
+
+    @for (year of schoolYears; track year) {
+      <label class="flex items-center gap-2 text-sm text-gray-700">
+        <input
+          type="radio"
+          name="schoolYear"
+          [checked]="selectedSchoolYears.includes(year)"
+          (change)="selectSchoolYear(year)"
+          class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+        />
+        <span>{{ year | formatSchoolYear}}</span>
+      </label>
+    }
+  </div>
+</div>
