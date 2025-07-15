@@ -36,7 +36,7 @@
     <select id="competition_id" formControlName="competition_id" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
       <option value="" disabled selected>Bitte auswählen</option>
       @for (competition of competitions; track competition) {
-        <option [ngValue]="competition.id">{{ competition.name }} {{ competition.schoolYear | formatSchoolYear}}</option>
+        <option [ngValue]="competition.id">{{ competition.name }} {{ competition.school_year | formatSchoolYear}}</option>
       }
     </select>
     @if (addProjectForm.get('competitions')?.invalid && addProjectForm.get('competitions')?.touched) {
