@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Competition} from '../../models/competition';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ResponseComponent} from '../response/response.component';
+import {HttpClient} from '@angular/common/http';
+import {CompetitionService} from '../../services/competition/competition.service';
 
 @Component({
   selector: 'app-edit-competition',
@@ -14,6 +16,8 @@ import {ResponseComponent} from '../response/response.component';
   styleUrl: './edit-competition.component.css'
 })
 export class EditCompetitionComponent implements OnInit{
+  @ViewChild('response') responseComponent!: ResponseComponent;
+  competitionService: CompetitionService = inject(CompetitionService);
   @Input() competition!: Competition;
   @Output() closeModal = new EventEmitter<void>();
   editCompetitionForm!: FormGroup;
@@ -36,6 +40,18 @@ export class EditCompetitionComponent implements OnInit{
   }
 
   saveCompetition() {
-
+    this.competitionService.updateCompetition(this.editCompetitionForm.value).subscribe({
+      next: (updatedCompetition: Competition) => {
+        if (updatedCompetition && updatedCompetition.name) {
+          this.responseComponent.trigger('Wettbewerb erfolgreich bearbeitet!')
+          this.closeModal.emit();
+        } else {
+          this.responseComponent.trigger('Etwas hat nicht funktioniert!')
+        }
+      },
+      error: (err) => {
+        this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.')
+      }
+    })
   }
 }

@@ -41,4 +41,11 @@ export class CompetitionService {
       })
     );
   }
+
+  updateCompetition(competition: Competition): Observable<Competition> {
+    const headers = {
+      Authorization: `Bearer ${this.keycloakService.getToken()}`
+    }
+    return this.httpClient.put<Competition>(`${this.BASE_URL}/competitions/${competition.id}`, competition, { headers });
+  }
 }
