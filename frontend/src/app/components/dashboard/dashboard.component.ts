@@ -14,10 +14,12 @@ import {CompetitionService} from '../../services/competition/competition.service
 })
 export class DashboardComponent implements OnInit{
   competitionService: CompetitionService = inject(CompetitionService);
-  //randomCompetition: Competition | null = null;
+  randomCompetition!: Competition;
 
   ngOnInit() {
-    //this.competitionService.getRandomCompetition().subscribe()
+    this.competitionService.getRandomCompetition().subscribe( c => {
+      this.randomCompetition = c;
+    })
   }
 
 }

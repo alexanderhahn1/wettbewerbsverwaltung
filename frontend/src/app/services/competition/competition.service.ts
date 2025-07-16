@@ -21,11 +21,11 @@ export class CompetitionService {
   getActiveCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`);
   }
-  /*
+
   getRandomCompetition(): Observable<Competition> {
-    return null;
+    return this.httpClient.get<Competition>(`${this.BASE_URL}/competitions/random`);
   }
-  */
+
   addCompetition(competition: Competition): Observable<Competition> {
     const headers = {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
