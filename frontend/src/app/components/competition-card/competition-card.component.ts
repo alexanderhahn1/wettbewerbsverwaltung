@@ -17,12 +17,13 @@ import {EditCompetitionComponent} from '../edit-competition/edit-competition.com
 })
 export class CompetitionCardComponent implements OnInit {
   @Input() competition!: Competition;
+  @Input() isEditable!: boolean;
   keycloakService: KeycloakService = inject(KeycloakService);
   showEditImage: boolean = false;
   isModalOpen: boolean = false;
 
   ngOnInit() {
-    if (this.keycloakService.getUserRoles().includes('admin')) {
+    if (this.keycloakService.getUserRoles().includes('admin') && this.isEditable) {
       this.showEditImage = true;
     }
   }
