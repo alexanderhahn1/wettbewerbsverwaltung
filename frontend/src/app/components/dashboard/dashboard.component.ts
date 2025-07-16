@@ -6,9 +6,7 @@ import {CompetitionService} from '../../services/competition/competition.service
 
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    CompetitionCardComponent
-  ],
+  imports: [],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

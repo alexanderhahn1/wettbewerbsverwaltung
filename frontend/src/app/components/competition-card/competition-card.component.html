@@ -1,5 +1,10 @@
 <div class="max-w-xl rounded-lg border border-gray-300 bg-white p-6 shadow-sm min-w-4xl">
   <h2 class="text-lg font-semibold text-gray-900">{{ competition.name }}</h2>
+  @if (showEditImage) {
+    <button class="ml-2 inline-flex items-center rounded bg-gray-500 px-3 py-1 text-sm text-white hover:bg-gray-600 transition-all cursor-pointer" (click)="handleBtnEditCompetition()">
+      📝 Bearbeiten
+    </button>
+  }
   <p class="italic text-sm text-gray-600 mb-4">erstellt von: {{ competition.created_by }}</p>
 
   <span [innerHTML]="competition.link | linkify"></span>
@@ -22,3 +27,7 @@
     </p>
   </div>
 </div>
+@if (isModalOpen) {
+  <app-edit-competition [competition]="competition" (closeModal)="isModalOpen = false"></app-edit-competition>
+}
+

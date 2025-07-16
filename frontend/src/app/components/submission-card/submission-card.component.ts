@@ -5,10 +5,7 @@ import {Submission} from '../../models/submission';
 
 @Component({
   selector: 'app-submission-card',
-  imports: [
-    FormatSchoolYearPipe,
-    LinkifyPipe
-  ],
+  imports: [],
   templateUrl: './submission-card.component.html',
   styleUrl: './submission-card.component.css'
 })
