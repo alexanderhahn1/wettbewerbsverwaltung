@@ -16,11 +16,18 @@ export class ExportComponent {
   exportService: ExportService = inject(ExportService);
   competitionService: CompetitionService = inject(CompetitionService);
 
+  generatePowerPoint(): void {
+    this.competitionService.getAllCompetitions().subscribe(s => {
+      this.exportService.exportToPowerPoint(s);
+    });
+  }
+
   exportTest(): void {
 
     this.competitionService.getAllCompetitions().subscribe(s => {
       this.exportService.exportToExcel(s);
     });
+
   }
 
   generatePdf() {
