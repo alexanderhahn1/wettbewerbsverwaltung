@@ -37,8 +37,13 @@ export class CompetitionService {
   getAllSchoolYears(): Observable<string[]> {
     return this.getAllCompetitions().pipe(
       map(competitions => {
-        const schoolYears = competitions.map(c => c.school_year);
-        return Array.from(new Set(schoolYears));
+        const schoolYears = competitions
+          .map(c => c.school_year)
+          .filter(year => /^[0-9]{4}$/.test(year))
+          .map(year => parseInt(year, 10))
+          .sort((a, b) => b - a)
+          .map(year => year.toString())
+        return Array.from(new Set(schoolYears))
       })
     );
   }

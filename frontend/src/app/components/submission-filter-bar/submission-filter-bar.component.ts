@@ -21,7 +21,7 @@ export class SubmissionFilterBarComponent implements OnInit{
   ngOnInit() {
     this.competitionService.getAllSchoolYears().subscribe(
       (schoolYears: string[]) => {
-        this.schoolYears = schoolYears.reverse();
+        this.schoolYears = schoolYears;
       }
     )
   }
