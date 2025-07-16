@@ -27,6 +27,11 @@ export class CompetitionsListComponent implements OnInit{
         this.getAllCompetitions();
       }
     );
+
+    this.competitionService.refreshCompetitionList.subscribe(
+      refreshCompetitions => {
+        this.getAllCompetitions()
+    })
   }
 
   getAllCompetitions() {

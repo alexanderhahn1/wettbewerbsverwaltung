@@ -13,6 +13,7 @@ export class CompetitionService {
   httpClient: HttpClient = inject(HttpClient);
   public searchCompetitionsSubject = new Subject<String>()
   public resetSearchCompetitionsSubject = new Subject<boolean>()
+  public refreshCompetitionList = new Subject<boolean>()
 
   getAllCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions`);

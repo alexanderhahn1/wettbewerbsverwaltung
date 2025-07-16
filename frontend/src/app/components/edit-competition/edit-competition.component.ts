@@ -40,11 +40,19 @@ export class EditCompetitionComponent implements OnInit{
   }
 
   saveCompetition() {
-    this.competitionService.updateCompetition(this.editCompetitionForm.value).subscribe({
+    const updatedCompetition = {
+      ...this.editCompetitionForm.value,
+      id: this.competition.id
+    }
+
+    this.competitionService.updateCompetition(updatedCompetition).subscribe({
       next: (updatedCompetition: Competition) => {
         if (updatedCompetition && updatedCompetition.name) {
           this.responseComponent.trigger('Wettbewerb erfolgreich bearbeitet!')
-          this.closeModal.emit();
+          setTimeout(() => {
+            this.closeModal.emit()
+            this.competitionService.refreshCompetitionList.next(true);
+          }, 3000)
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }
