@@ -4,13 +4,15 @@ import {LinkifyPipe} from '../../pipes/linkify/linkify.pipe';
 import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school-year.pipe';
 import {KeycloakService} from 'keycloak-angular';
 import {EditCompetitionComponent} from '../edit-competition/edit-competition.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-competition-card',
   imports: [
     LinkifyPipe,
     FormatSchoolYearPipe,
-    EditCompetitionComponent
+    EditCompetitionComponent,
+    RouterLink
   ],
   templateUrl: './competition-card.component.html',
   styleUrl: './competition-card.component.css'

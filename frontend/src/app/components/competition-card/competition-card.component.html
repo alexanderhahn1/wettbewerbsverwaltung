@@ -4,6 +4,9 @@
     <button class="ml-2 inline-flex items-center rounded bg-gray-500 px-3 py-1 text-sm text-white hover:bg-gray-600 transition-all cursor-pointer" (click)="handleBtnEditCompetition()">
       📝 Bearbeiten
     </button>
+    <button [routerLink]="['/changes', competition.id]" class="ml-2 inline-flex items-center rounded bg-gray-500 px-3 py-1 text-sm text-white hover:bg-gray-600 transition-all cursor-pointer">
+      🗂️ Versionen
+    </button>
   }
   <p class="italic text-sm text-gray-600 mb-4">erstellt von: {{ competition.created_by }}</p>
 

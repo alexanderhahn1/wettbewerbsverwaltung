@@ -19,6 +19,10 @@ export class CompetitionService {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions`);
   }
 
+  getCompetitionById(competitionId: string): Observable<Competition> {
+    return this.httpClient.get<Competition>(`${this.BASE_URL}/competitions/${competitionId}`)
+  }
+
   getActiveCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions/active`);
   }

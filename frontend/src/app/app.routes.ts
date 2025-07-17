@@ -8,6 +8,7 @@ import {AddCompetitionComponent} from './components/add-competition/add-competit
 import {AddProjectComponent} from './components/add-project/add-project.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ExportComponent} from './components/export/export.component';
+import {ChangesComponent} from './components/changes/changes.component';
 
 export const routes: Routes = [
   {
@@ -57,6 +58,13 @@ export const routes: Routes = [
     path: 'export',
     component: ExportComponent,
     title: 'Export',
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'changes/:id',
+    component: ChangesComponent,
+    title: 'Versionen',
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }
   },
