@@ -5,23 +5,23 @@
 </header>
 <div class="overflow-x-auto mt-4 w-4xl ml-auto mr-auto">
   @if (changes.length > 0) {
-  <table class="min-w-full table-auto border border-gray-300 mt-4">
+  <table class="min-w-full table-auto border border-gray-100 mt-4">
     <thead class="bg-gray-100">
       <tr>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-r border-gray-300">Datum</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-r border-gray-300">Verändert von</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-r border-gray-300">Attribute</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-r border-gray-300">Alter Wert</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Datum</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Verändert von</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Attribute</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Alter Wert</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Neuer Wert</th>
       </tr>
     </thead>
     <tbody>
       @for (change of changes; track change) {
-        <tr>
-          <td class="px-4 py-2 text-sm text-gray-900 border-r border-gray-200">{{ change.date}}</td>
-          <td class="px-4 py-2 text-sm text-gray-900 border-r border-gray-200">{{ change.changed_by }}</td>
-          <td class="px-4 py-2 text-sm text-gray-900 border-r border-gray-200">{{ change.attribute }}</td>
-          <td class="px-4 py-2 text-sm text-gray-900 border-r border-gray-200">{{ change.old_value }}</td>
+        <tr class="border-t border-gray-200">
+          <td class="px-4 py-2 text-sm text-gray-900">{{ change.date}}</td>
+          <td class="px-4 py-2 text-sm text-gray-900">{{ change.changed_by }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900">{{ change.attribute }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900">{{ change.old_value }}</td>
           <td class="px-4 py-2 text-sm text-gray-900">{{ change.new_value }}</td>
         </tr>
       }

@@ -1,0 +1,48 @@
+<div class="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative">
+    <h2 class="text-xl font-semibold mb-4">Projekt bearbeiten</h2>
+
+    <form [formGroup]="editProjectForm">
+      <div>
+        <label for="name" class="block font-medium text-gray-700 mb-1">Wettbewerbsname</label>
+        <input type="text" id="name" formControlName="name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        @if (editProjectForm.get('name')?.invalid && editProjectForm.get('name')?.touched) {
+          <div class="text-red-500 text-sm mt-1">Name ist verpflichtend</div>
+        }
+      </div>
+
+      <div>
+        <label for="status" class="block font-medium text-gray-700 mb-1">Status</label>
+        <input type="text" id="status" formControlName="status" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        @if (editProjectForm.get('status')?.invalid && editProjectForm.get('status')?.touched) {
+          <div class="text-red-500 text-sm mt-1">Status ist verpflichtend</div>
+        }
+      </div>
+
+      <div>
+        <label for="next_step" class="block font-medium text-gray-700 mb-1">Nächster Schritt</label>
+        <input type="text" id="next_step" formControlName="next_step" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        @if (editProjectForm.get('next_step')?.invalid && editProjectForm.get('next_step')?.touched) {
+          <div class="text-red-500 text-sm mt-1">Nächster Schritt ist verpflichtend</div>
+        }
+      </div>
+
+      <div>
+        <label for="contributors" class="block font-medium text-gray-700 mb-1">Eingereicht von</label>
+        <textarea id="contributors" formControlName="contributors" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        @if (editProjectForm.get('contributors')?.invalid && editProjectForm.get('contributors')?.touched) {
+          <div class="text-red-500 text-sm mt-1">Eingereicht von ist verpflichtend</div>
+        }
+      </div>
+
+      <div class="mt-4 flex justify-end space-x-2">
+        <button type="button" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-all active:bg-red-700" (click)="deleteProject()">Projekt löschen</button>
+        <button type="button" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-all active:bg-gray-500" (click)="close()">Abbrechen</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all active:bg-blue-800" (click)="saveProject()">Speichern</button>
+      </div>
+    </form>
+
+    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800" (click)="close()">✖</button>
+  </div>
+</div>
+<app-response #response></app-response>

@@ -10,6 +10,7 @@
         <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nächster Schritt</th>
         <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Mitwirkende</th>
+        <th></th>
       </tr>
       </thead>
 
@@ -20,7 +21,13 @@
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.status }}</td>
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.next_step }}</td>
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.contributors }}</td>
+          @if (showEditImage) {
+            <td><button (click)="handleBtnEditProject()" >📝</button></td>
+          }
         </tr>
+        @if (isModalOpen) {
+          <app-edit-project [project]="project" (closeModal)="isModalOpen = false"></app-edit-project>
+        }
       }
       </tbody>
     </table>
@@ -30,3 +37,5 @@
     </p>
   }
 </div>
+
+

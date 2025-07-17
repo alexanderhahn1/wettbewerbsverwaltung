@@ -28,7 +28,6 @@ export class AddProjectComponent implements OnInit{
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
         this.competitions = competitions;
-        console.log(this.competitions);
       }
     )
 
@@ -39,17 +38,10 @@ export class AddProjectComponent implements OnInit{
       contributors: new FormControl('', Validators.required),
       competition_id: new FormControl('', Validators.required),
     })
-
-    this.projectService.getAllProjects().subscribe(
-      (projects: Project[]) => {
-        console.log(projects);
-      }
-    )
   }
 
   addProject(): void {
     const project: Project = this.addProjectForm.value;
-
     this.projectService.addProject(project).subscribe({
         next: (createdProject: Project) => {
           if (createdProject && createdProject.name) {
@@ -63,5 +55,7 @@ export class AddProjectComponent implements OnInit{
           this.responseComponent.trigger('Fehler beim Hinzufügen des Projekts. Bitte versuche es erneut.')
         }
     })
+    console.log(this.addProjectForm.value);
+    console.log(project)
   }
 }

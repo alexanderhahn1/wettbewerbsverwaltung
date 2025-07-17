@@ -53,7 +53,7 @@ export class EditCompetitionComponent implements OnInit{
           setTimeout(() => {
             this.closeModal.emit()
             this.competitionService.refreshCompetitionList.next(true);
-          }, 3000)
+          }, 500)
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }
@@ -62,5 +62,11 @@ export class EditCompetitionComponent implements OnInit{
         this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.')
       }
     })
+  }
+
+  deleteCompetition() {
+    this.competitionService.deleteCompetition(this.competition)
+    this.competitionService.refreshCompetitionList.next(true);
+    this.closeModal.emit()
   }
 }

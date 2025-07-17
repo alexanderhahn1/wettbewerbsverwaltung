@@ -6,6 +6,7 @@ import {Submission} from '../../models/submission';
 import {SubmissionService} from '../../services/submission/submission.service';
 import {SubmissionFilterBarComponent} from '../submission-filter-bar/submission-filter-bar.component';
 import {filter} from 'rxjs';
+import {ProjectService} from '../../services/project/project.service';
 
 @Component({
   selector: 'app-submissions',
@@ -18,6 +19,7 @@ import {filter} from 'rxjs';
 })
 export class SubmissionsComponent implements OnInit{
   submissionService: SubmissionService = inject(SubmissionService);
+  projectService: ProjectService = inject(ProjectService)
   submissions: Submission[] = [];
 
   ngOnInit() {
@@ -30,6 +32,12 @@ export class SubmissionsComponent implements OnInit{
         } else {
           this.getAllSubmissions()
         }
+      }
+    )
+
+    this.projectService.refreshProjectList.subscribe(
+      refresh => {
+        this.getAllSubmissions()
       }
     )
   }

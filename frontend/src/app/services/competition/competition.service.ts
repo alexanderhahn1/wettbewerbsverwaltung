@@ -58,4 +58,11 @@ export class CompetitionService {
     }
     return this.httpClient.put<Competition>(`${this.BASE_URL}/competitions/${competition.id}`, competition, { headers });
   }
+
+  deleteCompetition(competition: Competition) {
+    const headers = {
+      Authorization: `Bearer ${this.keycloakService.getToken()}`
+    }
+    this.httpClient.delete(`${this.BASE_URL}/competitions/${competition.id}`, { headers }).subscribe();
+  }
 }
