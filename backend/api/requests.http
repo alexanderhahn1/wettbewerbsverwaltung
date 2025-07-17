@@ -1,5 +1,6 @@
 ### Get all competitions
 GET http://localhost:8080/api/competitions
+Authorization: Bearer {{access_token}}
 
 ### Get active competitions
 GET http://localhost:8080/api/competitions/active
@@ -25,7 +26,6 @@ password=admin
 > {% client.global.set("access_token", response.body.access_token); %}
 
 ### Create a new competition
-
 POST http://localhost:8080/api/competitions
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
@@ -42,6 +42,9 @@ Authorization: Bearer {{access_token}}
   "school_year": "2526"
 }
 
+### Delete competition
+DELETE http://localhost:8080/api/competitions/1
+Authorization: Bearer {{access_token}}
 
 ### Update a competition
 PUT http://localhost:8080/api/competitions/1
@@ -60,6 +63,10 @@ Authorization: Bearer {{access_token}}
   "school_year": "2526"
 }
 
+
+### Get all Projects
+GET http://localhost:8080/api/projects
+Authorization: Bearer {{access_token}}
 
 ### Add a Project to a competition
 POST http://localhost:8080/api/projects
@@ -86,3 +93,16 @@ Authorization: Bearer {{access_token}}
   "next_step": "Scram Meeting",
   "contributors": "Philip Pfarrhofer, Alexander Hahn"
 }
+
+### Delete a Project
+DELETE http://localhost:8080/api/projects/1
+Authorization: Bearer {{access_token}}
+
+
+### Get all Changes
+GET http://localhost:8080/api/changes
+Authorization: Bearer {{access_token}}
+
+### Get all Changes for a competition
+GET http://localhost:8080/api/changes/competition/1
+Authorization: Bearer {{access_token}}

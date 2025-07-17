@@ -41,6 +41,15 @@ public class CompetitionRepository implements PanacheRepository<Competition> {
     }
 
     @Transactional
+    public void deleteCompetition(Long id) {
+        Competition competition = findById(id);
+
+        if (competition != null) {
+            delete(competition);
+        }
+    }
+
+    @Transactional
     public Competition save(Competition competition) {
         persist(competition);
         return competition;

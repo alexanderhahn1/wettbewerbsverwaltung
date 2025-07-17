@@ -11,7 +11,7 @@ public class Change {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     Competition competition;
 
     String attribute;

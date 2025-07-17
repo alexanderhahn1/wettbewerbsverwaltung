@@ -3,6 +3,7 @@ package at.htl.leonding.features.project;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -32,6 +33,15 @@ public class ProjectResource {
     public Response createProject(ProjectDTO dto, @Context SecurityContext ctx) {
         Project project = projectRepository.create(projectMapper.toProject(dto), ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(projectMapper.toResource(project)).build();
+    }
+
+    @DELETE
+    @Path("/{projectId}")
+    @RolesAllowed({"admin"})
+    @Transactional
+    public Response deleteProject(@PathParam("projectId") Long projectId) {
+        projectRepository.deleteById(projectId);
+        return Response.noContent().build();
     }
 
     @PUT

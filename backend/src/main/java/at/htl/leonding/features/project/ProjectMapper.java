@@ -10,7 +10,7 @@ public class ProjectMapper {
     CompetitionRepository competitionRepository;
 
     public ProjectDTO toResource(Project project) {
-        return new ProjectDTO(project.getCompetition().getId(), project.getProjectName(), project.getStatus(), project.getNextStep(), project.getContributors());
+        return new ProjectDTO(project.getId(), project.getCompetition().getId(), project.getProjectName(), project.getStatus(), project.getNextStep(), project.getContributors());
     }
 
     public Project toProject(ProjectDTO dto) {

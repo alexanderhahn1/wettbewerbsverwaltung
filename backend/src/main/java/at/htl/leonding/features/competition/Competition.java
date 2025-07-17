@@ -23,10 +23,10 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.REMOVE)
     List<Project> projects;
 
-    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     List<Change> changes;
 
     @Column(name = "name")

@@ -3,6 +3,7 @@ package at.htl.leonding.features.competition;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -63,6 +64,14 @@ public class CompetitionResource {
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
+    }
+
+    @DELETE
+    @Path("/{competitionId}")
+    @RolesAllowed({"admin"})
+    public Response deleteCompetition(@PathParam("competitionId") Long competitionId) {
+        competitionRepository.deleteCompetition(competitionId);
+        return Response.noContent().build();
     }
 
     @PUT
