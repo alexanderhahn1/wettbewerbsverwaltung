@@ -18,7 +18,6 @@ export class CurrentCompetitionsComponent implements OnInit{
     this.competitionService.getActiveCompetitions().subscribe(
       (competitions: Competition[]) => {
         this.competitions = competitions;
-        console.log(this.competitions);
       }
     )
   }
