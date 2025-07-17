@@ -42,7 +42,8 @@ export class EditCompetitionComponent implements OnInit{
   saveCompetition() {
     const updatedCompetition = {
       ...this.editCompetitionForm.value,
-      id: this.competition.id
+      id: this.competition.id,
+      is_active: this.competition.is_active
     }
 
     this.competitionService.updateCompetition(updatedCompetition).subscribe({
