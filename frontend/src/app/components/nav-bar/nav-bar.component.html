@@ -32,6 +32,9 @@
               <a routerLink="/add-project"
                  routerLinkActive="bg-gray-900 text-white"
                  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projekt hinzufügen</a>
+              <a routerLink="/export"
+                 routerLinkActive="bg-gray-900 text-white"
+                 class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Exportieren</a>
             }
 
           </div>
@@ -96,18 +99,26 @@
            [routerLinkActiveOptions]="{exact: true}"
            class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
            aria-current="page">Dashboard</a>
-
         <a routerLink="/competitions"
            routerLinkActive="bg-gray-900 text-white"
            class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Wettbewerbsliste</a>
-
         <a routerLink="/current-competitions"
            routerLinkActive="bg-gray-900 text-white"
            class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Aktuelle Wettbewerbe</a>
-
         <a routerLink="/submissions"
            routerLinkActive="bg-gray-900 text-white"
            class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Einreichungen</a>
+        @if (isUserAdmin){
+          <a routerLink="/add-competition"
+             routerLinkActive="bg-gray-900 text-white"
+             class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Wettbewerb hinzufügen</a>
+          <a routerLink="/add-project"
+             routerLinkActive="bg-gray-900 text-white"
+             class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projekt hinzufügen</a>
+          <a routerLink="/export"
+             routerLinkActive="bg-gray-900 text-white"
+             class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Exportieren</a>
+        }
       </div>
       <div class="border-t border-gray-700 pt-4 pb-3">
         <div class="flex items-center px-5">

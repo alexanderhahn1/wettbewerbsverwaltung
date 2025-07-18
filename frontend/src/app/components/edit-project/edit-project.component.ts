@@ -42,6 +42,7 @@ export class EditProjectComponent implements OnInit{
   }
 
   close() {
+    this.editProjectForm.reset();
     this.closeModal.emit();
   }
 
@@ -57,6 +58,7 @@ export class EditProjectComponent implements OnInit{
         if (updatedProject && updatedProject.name) {
           this.responseComponent.trigger('Projekt erfolgreich bearbeitet!')
           setTimeout(() => {
+            this.editProjectForm.reset()
             this.closeModal.emit()
             this.projectService.refreshProjectList.next(true);
           }, 500)

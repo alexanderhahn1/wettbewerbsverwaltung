@@ -15,6 +15,7 @@ export class SubmissionService {
   submissions: Submission[] = [];
   public filterSubmissionsSubject = new Subject<string>()
 
+
   /**
    * Explanation:
    * 1. All competitions are fetched.
