@@ -95,7 +95,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Delete a Project
-DELETE http://localhost:8080/api/projects/1
+DELETE http://localhost:8080/api/projects/2
 Authorization: Bearer {{access_token}}
 
 

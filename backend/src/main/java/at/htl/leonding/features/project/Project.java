@@ -9,7 +9,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     Competition competition;
 
     @Column(name = "name")
