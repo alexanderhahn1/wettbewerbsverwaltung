@@ -14,7 +14,7 @@ export class SubmissionService {
   projectsService: ProjectService = inject(ProjectService)
   submissions: Submission[] = [];
   public filterSubmissionsSubject = new Subject<string>()
-
+  public closeEditModalSubject = new Subject<boolean>();
 
   /**
    * Explanation:

@@ -29,6 +29,12 @@ export class SubmissionFilterBarComponent implements OnInit{
         this.schoolYears = schoolYears;
       }
     )
+
+    this.submissionService.closeEditModalSubject.subscribe(
+      result => {
+        this.selectedSchoolYear = 'all'
+      }
+    )
   }
 
   selectSchoolYear(year: string): void {

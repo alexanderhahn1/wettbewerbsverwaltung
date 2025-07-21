@@ -3,6 +3,7 @@ import {Submission} from '../../models/submission';
 import {EditProjectComponent} from '../edit-project/edit-project.component';
 import {KeycloakService} from 'keycloak-angular';
 import {Project} from '../../models/project';
+import {SubmissionService} from '../../services/submission/submission.service';
 
 @Component({
   selector: 'app-submission-card',
@@ -15,6 +16,7 @@ import {Project} from '../../models/project';
 export class SubmissionCardComponent implements OnInit{
   @Input() submission!: Submission;
   keycloakService: KeycloakService = inject(KeycloakService);
+  submissionService: SubmissionService = inject(SubmissionService);
   isModalOpen: boolean = false;
   showEditImage = false;
   selectedProjectForEdit: Project | null = null;
@@ -30,5 +32,6 @@ export class SubmissionCardComponent implements OnInit{
 
   closeEditModal() {
     this.selectedProjectForEdit = null
+    this.submissionService.closeEditModalSubject.next(true)
   }
 }
