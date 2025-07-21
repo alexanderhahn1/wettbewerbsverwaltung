@@ -2,6 +2,7 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import {Submission} from '../../models/submission';
 import {EditProjectComponent} from '../edit-project/edit-project.component';
 import {KeycloakService} from 'keycloak-angular';
+import {Project} from '../../models/project';
 
 @Component({
   selector: 'app-submission-card',
@@ -16,12 +17,18 @@ export class SubmissionCardComponent implements OnInit{
   keycloakService: KeycloakService = inject(KeycloakService);
   isModalOpen: boolean = false;
   showEditImage = false;
+  selectedProjectForEdit: Project | null = null;
 
   ngOnInit() {
     this.keycloakService.getUserRoles().includes('admin') ? this.showEditImage = true : this.showEditImage = false;
   }
 
-  handleBtnEditProject() {
+  handleBtnEditProject(project: Project) {
+    this.selectedProjectForEdit = project
     this.isModalOpen = true;
+  }
+
+  closeEditModal() {
+    this.selectedProjectForEdit = null
   }
 }

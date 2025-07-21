@@ -22,12 +22,10 @@
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.next_step }}</td>
           <td class="px-4 py-2 text-sm text-gray-900">{{ project.contributors }}</td>
           @if (showEditImage) {
-            <td><button (click)="handleBtnEditProject()" >📝</button></td>
+            <td><button (click)="handleBtnEditProject(project)" >📝</button></td>
           }
         </tr>
-        @if (isModalOpen) {
-          <app-edit-project [project]="project" (closeModal)="isModalOpen = false"></app-edit-project>
-        }
+
       }
       </tbody>
     </table>
@@ -38,4 +36,6 @@
   }
 </div>
 
-
+@if (selectedProjectForEdit) {
+  <app-edit-project [project]="selectedProjectForEdit" (closeModal)="closeEditModal()"></app-edit-project>
+}

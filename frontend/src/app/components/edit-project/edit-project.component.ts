@@ -39,6 +39,8 @@ export class EditProjectComponent implements OnInit{
       next_step: new FormControl(this.project.next_step, [Validators.required]),
       contributors: new FormControl(this.project.contributors, [Validators.required])
     })
+
+    console.log(this.project)
   }
 
   close() {
