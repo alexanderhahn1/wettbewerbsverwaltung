@@ -18,7 +18,7 @@ public class ProjectRepository implements PanacheRepository<Project> {
 
     @Transactional
     public Project create(ProjectDTO dto, String changedBy) {
-        Project project = new Project(getEntityManager().find(Competition.class, dto.competition_id()), dto.name(), dto.status(), dto.next_step(), changedBy);
+        Project project = new Project(getEntityManager().find(Competition.class, dto.competition_id()), dto.name(), dto.status(), dto.next_step(), dto.contributors());
         persist(project);
         changeRepository.create(new Change(project.competition, "created project (" + project.getProjectName() + ")", "", "", LocalDate.now(), changedBy));
         return project;
