@@ -13,7 +13,7 @@ public class ProjectMapper {
         return new ProjectDTO(project.getId(), project.getCompetition().getId(), project.getProjectName(), project.getStatus(), project.getNextStep(), project.getContributors());
     }
 
-    public Project toProject(ProjectDTO dto) {
-        return new Project(competitionRepository.findById(dto.competition_id()), dto.name(), dto.status(), dto.next_step(), dto.contributors());
-    }
+    //public Project toProject(ProjectDTO dto) {
+    //    return new Project(competitionRepository.findById(dto.competition_id()), dto.name(), dto.status(), dto.next_step(), dto.contributors());
+    //}
 }

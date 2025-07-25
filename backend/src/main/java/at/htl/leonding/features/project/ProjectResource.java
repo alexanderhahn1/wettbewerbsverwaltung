@@ -31,7 +31,7 @@ public class ProjectResource {
     @POST
     @RolesAllowed({"admin"})
     public Response createProject(ProjectDTO dto, @Context SecurityContext ctx) {
-        Project project = projectRepository.create(projectMapper.toProject(dto), ctx.getUserPrincipal().getName());
+        Project project = projectRepository.create(dto, ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(projectMapper.toResource(project)).build();
     }
 

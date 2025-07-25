@@ -2,6 +2,7 @@ package at.htl.leonding.features.project;
 
 import at.htl.leonding.features.change.Change;
 import at.htl.leonding.features.change.ChangeRepository;
+import at.htl.leonding.features.competition.Competition;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -16,7 +17,8 @@ public class ProjectRepository implements PanacheRepository<Project> {
     ChangeRepository changeRepository;
 
     @Transactional
-    public Project create(Project project, String changedBy) {
+    public Project create(ProjectDTO dto, String changedBy) {
+        Project project = new Project(getEntityManager().find(Competition.class, dto.competition_id()), dto.name(), dto.status(), dto.next_step(), changedBy);
         persist(project);
         changeRepository.create(new Change(project.competition, "created project (" + project.getProjectName() + ")", "", "", LocalDate.now(), changedBy));
         return project;
