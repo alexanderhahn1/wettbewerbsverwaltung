@@ -50,7 +50,7 @@
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <div class="size-8 rounded-full flex items-center justify-center bg-gray-600 text-white font-bold text-sm">
-                  {{ userInitials }}
+                  {{ userInitials?.toUpperCase()}}
                 </div>
               </button>
             </div>
@@ -124,7 +124,7 @@
         <div class="flex items-center px-5">
           <div class="shrink-0">
             <div class="size-10 rounded-full flex items-center justify-center bg-gray-600 text-white font-bold text-lg">
-              {{ userInitials }}
+              {{ userInitials?.toUpperCase() }}
             </div>
           </div>
           <div class="ml-3">
