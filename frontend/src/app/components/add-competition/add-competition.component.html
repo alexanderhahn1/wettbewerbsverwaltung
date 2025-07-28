@@ -10,6 +10,7 @@
   <div>
     <label for="school_year" class="block font-medium text-gray-700 mb-1">Schuljahr</label>
     <input type="text" id="school_year" formControlName="school_year" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <p class="text-sm text-gray-500 mt-1">Format: z. B. 2526 für das Schuljahr 2025/26</p>
     @if (addCompetitionForm.get('school_year')?.errors?.['required'] && addCompetitionForm.get('school_year')?.touched) {
       <div class="text-red-500 text-sm mt-1">Schuljahr ist verpflichtend</div>
     }

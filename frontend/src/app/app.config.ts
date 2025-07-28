@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideHttpClient(
-      withInterceptorsFromDi() // tell httpClient to use interceptors from DI
+      withInterceptorsFromDi() // tell httpClient to use interceptors
     )
   ]
 };
