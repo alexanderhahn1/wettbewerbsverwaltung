@@ -9,6 +9,7 @@ import {AddProjectComponent} from './components/add-project/add-project.componen
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ExportComponent} from './components/export/export.component';
 import {ChangesComponent} from './components/changes/changes.component';
+import {ImageUploadComponent} from './components/image-upload/image-upload.component';
 
 export const routes: Routes = [
   {
@@ -67,6 +68,12 @@ export const routes: Routes = [
     title: 'Versionen',
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }
+  },
+  {
+    path: 'image-upload',
+    component: ImageUploadComponent,
+    title: 'Image Upload',
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

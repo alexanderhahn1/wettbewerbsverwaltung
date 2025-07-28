@@ -1,6 +1,7 @@
 package at.htl.leonding.features.competition;
 
 import at.htl.leonding.features.change.Change;
+import at.htl.leonding.features.competitionImage.CompetitionImage;
 import at.htl.leonding.features.project.Project;
 import jakarta.persistence.*;
 
@@ -28,6 +29,9 @@ public class Competition {
 
     @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     List<Change> changes;
+
+    @OneToMany(mappedBy = "competition")
+    List<CompetitionImage> images;
 
     @Column(name = "name")
     String competitionName;
@@ -70,6 +74,14 @@ public class Competition {
         this.schoolYear = schoolYear;
         this.createdBy = createdBy;
         this.dateCreated = LocalDate.now();
+    }
+
+    public List<CompetitionImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<CompetitionImage> images) {
+        this.images = images;
     }
 
     public List<Project> getProjects() {

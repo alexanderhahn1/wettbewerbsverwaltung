@@ -2,6 +2,7 @@ package at.htl.leonding.features.competition;
 
 import at.htl.leonding.features.change.Change;
 import at.htl.leonding.features.change.ChangeRepository;
+import at.htl.leonding.features.competitionImage.CompetitionImage;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -38,6 +39,15 @@ public class CompetitionRepository implements PanacheRepository<Competition> {
             return null;
         }
         return all.get(random.nextInt(all.size()));
+    }
+
+    public List<CompetitionImage> getAllImages(long id) {
+        Competition competition = findById(id);
+        if (competition == null) {
+            return null;
+        }
+
+        return competition.getImages();
     }
 
     @Transactional

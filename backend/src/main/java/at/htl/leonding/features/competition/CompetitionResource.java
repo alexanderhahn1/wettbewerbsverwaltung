@@ -1,12 +1,20 @@
 package at.htl.leonding.features.competition;
 
+import at.htl.leonding.features.competitionImage.CompetitionImage;
+import at.htl.leonding.features.competitionImage.CompetitionImageMapper;
+import at.htl.leonding.features.competitionImage.ImageUploadForm;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 
 @Path("/competitions")
@@ -18,6 +26,8 @@ public class CompetitionResource {
     CompetitionRepository competitionRepository;
     @Inject
     CompetitionMapper competitionMapper;
+    @Inject
+    CompetitionImageMapper competitionImageMapper;
 
     @GET
     public Response getAllCompetitions() {
@@ -55,6 +65,36 @@ public class CompetitionResource {
         return Response.ok(competitions
                 .stream()
                 .map(competitionMapper::toStatusResource)).build();
+    }
+
+    @GET
+    @Path("/{competitionId}/images")
+    public Response getCompetitionImages(@PathParam("competitionId") long competitionId) {
+        List<CompetitionImage> images = competitionRepository.getAllImages(competitionId);
+
+        return Response.ok(images.stream().map(competitionImageMapper::toResource)).build();
+    }
+
+    @POST
+    @Path("/{competitionId}/images")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({"admin"})
+    @Transactional
+    public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("competitionId") long competitionId) {
+        Competition competition = competitionRepository.findById(competitionId);
+
+        if (competition == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        CompetitionImage image = new CompetitionImage();
+        image.setCompetition(competition);
+        image.setData(form.file);
+        image.setPictureName(form.fileName);
+        image.setContentType(form.fileContentType);
+        competitionRepository.getEntityManager().persist(image);
+
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @POST
