@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, inject, OnInit} from '@angular/core';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 
@@ -19,6 +19,8 @@ export class NavBarComponent implements OnInit{
   userInitials: string | null = null;
   isUserAdmin: boolean = false;
 
+  constructor(private eRef: ElementRef) {}
+
   ngOnInit() {
     this.keycloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
@@ -32,6 +34,13 @@ export class NavBarComponent implements OnInit{
 
   toggleProfileDropdown() {
     this.isProfileOpen = !this.isProfileOpen
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.isProfileOpen = false;
+    }
   }
 
   toggleMobileMenu() {
