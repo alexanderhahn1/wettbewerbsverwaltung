@@ -134,23 +134,8 @@ public class CompetitionResource {
 
     @POST
     @RolesAllowed({"admin"})
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
-
-        if (dto.images() != null) {
-            for (ImageUploadForm form : dto.images()) {
-                CompetitionImage image = new CompetitionImage();
-                image.setCompetition(competition);
-                image.setData(form.file);
-                image.setPictureName(form.fileName);
-                image.setContentType(form.fileContentType);
-                competitionRepository.getEntityManager().persist(image);
-
-                changeRepository.create(new Change(competition, "image added", "null", image.pictureName,
-                        LocalDate.now(), ctx.getUserPrincipal().getName()));
-            }
-        }
 
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
     }
