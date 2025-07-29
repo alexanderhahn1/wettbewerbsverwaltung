@@ -25,6 +25,7 @@ export class EditCompetitionComponent implements OnInit{
   ngOnInit() {
     this.editCompetitionForm = new FormGroup({
       name: new FormControl(this.competition.name, [Validators.required]),
+      is_active: new FormControl(this.competition.is_active, [Validators.required]),
       school_year: new FormControl(this.competition.school_year, [Validators.required, Validators.pattern('[0-9]{4}')]),
       deadline: new FormControl(this.competition.deadline, [Validators.required]),
       prize: new FormControl(this.competition.prize, [Validators.required]),
@@ -42,8 +43,7 @@ export class EditCompetitionComponent implements OnInit{
   saveCompetition() {
     const updatedCompetition = {
       ...this.editCompetitionForm.value,
-      id: this.competition.id,
-      is_active: this.competition.is_active
+      id: this.competition.id
     }
 
     this.competitionService.updateCompetition(updatedCompetition).subscribe({
