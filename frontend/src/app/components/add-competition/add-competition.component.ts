@@ -3,6 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {CompetitionService} from '../../services/competition/competition.service';
 import {Competition} from '../../models/competition';
 import {ResponseComponent} from '../response/response.component';
+import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-add-competition',
@@ -39,29 +40,11 @@ export class AddCompetitionComponent implements OnInit{
 
   addCompetition(): void {
     const competitionData = this.addCompetitionForm.value;
-    const formData = new FormData();
-
-    for (const key in competitionData) {
-      if (competitionData.hasOwnProperty(key)) {
-        formData.append(key, competitionData[key]);
-      }
-    }
-
-    this.selectedFiles.forEach((file: File) => {
-      formData.append('images', file, file.name);
-    })
-
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: `, value);
-    }
-
-    this.competitionService.addCompetition(formData).subscribe({
+    this.competitionService.addCompetition(competitionData).subscribe({
       next: (createdCompetition: Competition) => {
         if (createdCompetition && createdCompetition.name) {
           this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!')
           this.addCompetitionForm.reset();
-          this.selectedFiles = [];
-          this.selectedFileNames = [];
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }
@@ -73,14 +56,36 @@ export class AddCompetitionComponent implements OnInit{
     console.log(this.addCompetitionForm.value);
   }
 
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFiles = Array.from(input.files)
-      this.selectedFileNames = this.selectedFiles.map(file => file.name);
+      this.selectedFiles = Array.from(input.files);
+      this.selectedFileNames = this.selectedFiles.map(f => f.name);
     } else {
       this.selectedFiles = []
-      this.selectedFileNames = []
+      this.selectedFileNames = this.selectedFiles.map(f => f.name);
     }
+  }
+
+  addImages(competitionId: number): Observable<boolean> {
+    if (this.selectedFiles.length === 0) {
+      return of(false);
+    }
+
+    const uploadObservables: Observable<void>[] = this.selectedFiles.map(file => {
+      const formData = new FormData()
+
+      formData.append('file', file, file.name)
+
+      return this.competitionService.addImagesToCompetition(formData, competitionId).subscribe(
+        err(() => {
+          console.error(`Error uploading image ${file.name}: ${error.message}`);
+        })
+      )
+    })
+
+    return forkJoin(uploadObservables).pipe(
+      map(() => true)
+    )
   }
 }

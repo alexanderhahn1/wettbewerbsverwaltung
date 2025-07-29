@@ -31,11 +31,11 @@ export class CompetitionService {
     return this.httpClient.get<Competition>(`${this.BASE_URL}/competitions/random`);
   }
 
-  addCompetition(formData: FormData): Observable<Competition> {
+  addCompetition(competition: Competition): Observable<Competition> {
     const headers = {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
     };
-    return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, formData, { headers });
+    return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, competition, { headers });
   }
 
   getAllSchoolYears(): Observable<string[]> {
@@ -64,5 +64,12 @@ export class CompetitionService {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
     }
     this.httpClient.delete(`${this.BASE_URL}/competitions/${competition.id}`, { headers }).subscribe();
+  }
+
+  addImagesToCompetition(formData: FormData, competitionId: number): Observable<any> {
+    const headers = {
+      Authorization: `Bearer ${this.keycloakService.getToken()}`
+    }
+    this.httpClient.post<void>(`${this.BASE_URL}/competitions/${competitionId}/images/multiple`, formData, { headers });
   }
 }
