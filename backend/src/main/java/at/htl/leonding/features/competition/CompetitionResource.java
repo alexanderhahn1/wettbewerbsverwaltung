@@ -1,5 +1,7 @@
 package at.htl.leonding.features.competition;
 
+import at.htl.leonding.features.change.Change;
+import at.htl.leonding.features.change.ChangeRepository;
 import at.htl.leonding.features.competitionImage.CompetitionImage;
 import at.htl.leonding.features.competitionImage.CompetitionImageMapper;
 import at.htl.leonding.features.competitionImage.ImageUploadForm;
@@ -14,6 +16,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,6 +31,8 @@ public class CompetitionResource {
     CompetitionMapper competitionMapper;
     @Inject
     CompetitionImageMapper competitionImageMapper;
+    @Inject
+    ChangeRepository changeRepository;
 
     @GET
     public Response getAllCompetitions() {
@@ -94,6 +99,36 @@ public class CompetitionResource {
         image.setContentType(form.fileContentType);
         competitionRepository.getEntityManager().persist(image);
 
+        changeRepository.create(new Change(competition, "image added", "null", image.pictureName,
+                LocalDate.now(), securityContext.getUserPrincipal().getName()));
+
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @POST
+    @Path("/{competitionId}/images/multiple")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({"admin"})
+    @Transactional
+    public Response uploadMultipleImages(@Context SecurityContext securityContext, @MultipartForm List<ImageUploadForm> forms, @PathParam("competitionId") long competitionId) {
+        Competition competition = competitionRepository.findById(competitionId);
+
+        if (competition == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        for (ImageUploadForm form : forms) {
+            CompetitionImage image = new CompetitionImage();
+            image.setCompetition(competition);
+            image.setData(form.file);
+            image.setPictureName(form.fileName);
+            image.setContentType(form.fileContentType);
+            competitionRepository.getEntityManager().persist(image);
+
+            changeRepository.create(new Change(competition, "image added", "null", image.pictureName,
+                    LocalDate.now(), securityContext.getUserPrincipal().getName()));
+        }
+
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -101,6 +136,21 @@ public class CompetitionResource {
     @RolesAllowed({"admin"})
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
+
+        if (dto.images() != null) {
+            for (ImageUploadForm form : dto.images()) {
+                CompetitionImage image = new CompetitionImage();
+                image.setCompetition(competition);
+                image.setData(form.file);
+                image.setPictureName(form.fileName);
+                image.setContentType(form.fileContentType);
+                competitionRepository.getEntityManager().persist(image);
+
+                changeRepository.create(new Change(competition, "image added", "null", image.pictureName,
+                        LocalDate.now(), ctx.getUserPrincipal().getName()));
+            }
+        }
+
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
     }
 
