@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {filter, map, Observable, Subject} from 'rxjs';
+import {filter, map, Observable, Subject, forkJoin} from 'rxjs';
 import {Competition} from '../../models/competition';
 import { KeycloakService } from 'keycloak-angular';
 
@@ -66,10 +66,21 @@ export class CompetitionService {
     this.httpClient.delete(`${this.BASE_URL}/competitions/${competition.id}`, { headers }).subscribe();
   }
 
-  addImagesToCompetition(formData: FormData, competitionId: number): Observable<any> {
+  addImagesToCompetition(files: File[], competitionId: number): Observable<any> {
     const headers = {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
-    }
-    this.httpClient.post<void>(`${this.BASE_URL}/competitions/${competitionId}/images/multiple`, formData, { headers });
+    };
+    const requests = files.map(file => {
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+      formData.append('fileName', file.name);
+      formData.append('fileContentType', file.type);
+      return this.httpClient.post<void>(
+        `${this.BASE_URL}/competitions/${competitionId}/images`,
+        formData,
+        { headers }
+      );
+    });
+    return forkJoin(requests);
   }
 }

@@ -43,8 +43,21 @@ export class AddCompetitionComponent implements OnInit{
     this.competitionService.addCompetition(competitionData).subscribe({
       next: (createdCompetition: Competition) => {
         if (createdCompetition && createdCompetition.name) {
+          if (this.selectedFiles.length > 0) {
+            this.competitionService
+              .addImagesToCompetition(this.selectedFiles, createdCompetition.id)
+              .subscribe({
+                next: () => this.responseComponent.trigger('Bilder erfolgreich hochgeladen!'),
+                error: (err) => {
+                  console.error('Upload-Fehler:', err);
+                  this.responseComponent.trigger('Fehler beim Hochladen der Bilder.');
+                }
+              });
+          }
           this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!')
           this.addCompetitionForm.reset();
+          this.selectedFiles = [];
+          this.selectedFileNames = [];
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }
@@ -67,25 +80,20 @@ export class AddCompetitionComponent implements OnInit{
     }
   }
 
-  addImages(competitionId: number): Observable<boolean> {
+  addImages(competitionId: number): void {
     if (this.selectedFiles.length === 0) {
-      return of(false);
+      return;
     }
-
-    const uploadObservables: Observable<void>[] = this.selectedFiles.map(file => {
-      const formData = new FormData()
-
-      formData.append('file', file, file.name)
-
-      return this.competitionService.addImagesToCompetition(formData, competitionId).subscribe(
-        err(() => {
-          console.error(`Error uploading image ${file.name}: ${error.message}`);
-        })
-      )
-    })
-
-    return forkJoin(uploadObservables).pipe(
-      map(() => true)
-    )
+    this.competitionService
+      .addImagesToCompetition(this.selectedFiles, competitionId)
+      .subscribe({
+        next: () => {
+          this.responseComponent.trigger('Bilder erfolgreich hochgeladen!');
+        },
+        error: (err) => {
+          console.error('Upload-Fehler:', err);
+          this.responseComponent.trigger('Fehler beim Hochladen der Bilder.');
+        }
+      });
   }
 }
