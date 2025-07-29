@@ -134,6 +134,7 @@ public class CompetitionResource {
 
     @POST
     @RolesAllowed({"admin"})
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
 
