@@ -29,6 +29,8 @@ export class CompetitionCardComponent implements OnInit {
   showEditImage: boolean = false;
   isModalOpen: boolean = false;
   images: CompetitionImage[] = [];
+  isLightboxOpen = false;
+  currentImageIndex = 0;
 
   ngOnInit() {
     if (this.keycloakService.getUserRoles().includes('admin') && this.isEditable) {
@@ -42,5 +44,22 @@ export class CompetitionCardComponent implements OnInit {
 
   handleBtnEditCompetition() {
     this.isModalOpen = true;
+  }
+
+  openLightbox(index: number): void {
+    this.currentImageIndex = index;
+    this.isLightboxOpen = true;
+  }
+
+  closeLightbox(): void {
+    this.isLightboxOpen = false;
+  }
+
+  prevImage(): void {
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  nextImage(): void {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
   }
 }
