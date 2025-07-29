@@ -5,6 +5,9 @@ import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school
 import {KeycloakService} from 'keycloak-angular';
 import {EditCompetitionComponent} from '../edit-competition/edit-competition.component';
 import {RouterLink} from '@angular/router';
+import {CompetitionImage} from '../../models/competition-image';
+import {CompetitionService} from '../../services/competition/competition.service';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-competition-card',
@@ -12,7 +15,8 @@ import {RouterLink} from '@angular/router';
     LinkifyPipe,
     FormatSchoolYearPipe,
     EditCompetitionComponent,
-    RouterLink
+    RouterLink,
+    NgOptimizedImage
   ],
   templateUrl: './competition-card.component.html',
   styleUrl: './competition-card.component.css'
@@ -21,13 +25,19 @@ export class CompetitionCardComponent implements OnInit {
   @Input() competition!: Competition;
   @Input() isEditable!: boolean;
   keycloakService: KeycloakService = inject(KeycloakService);
+  competitionService: CompetitionService = inject(CompetitionService);
   showEditImage: boolean = false;
   isModalOpen: boolean = false;
+  images: CompetitionImage[] = [];
 
   ngOnInit() {
     if (this.keycloakService.getUserRoles().includes('admin') && this.isEditable) {
       this.showEditImage = true;
     }
+
+    this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
+      this.images = images;
+    })
   }
 
   handleBtnEditCompetition() {

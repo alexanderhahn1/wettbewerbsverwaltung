@@ -13,7 +13,5 @@ export interface Competition {
   date_created: Date,
   last_update: Date,
   school_year: string,
-  created_by: string,
-  images?: CompetitionImage[]
-  imageFiles?: FormData
+  created_by: string
 }

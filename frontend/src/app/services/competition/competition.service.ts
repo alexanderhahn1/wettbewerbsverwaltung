@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {filter, map, Observable, Subject, forkJoin} from 'rxjs';
 import {Competition} from '../../models/competition';
 import { KeycloakService } from 'keycloak-angular';
+import {CompetitionImage} from '../../models/competition-image';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,9 @@ export class CompetitionService {
       );
     });
     return forkJoin(requests);
+  }
+
+  getImagesForCompetition(competitionId: number): Observable<CompetitionImage[]> {
+    return this.httpClient.get<CompetitionImage[]>(`${this.BASE_URL}/competitions/${competitionId}/images`)
   }
 }
