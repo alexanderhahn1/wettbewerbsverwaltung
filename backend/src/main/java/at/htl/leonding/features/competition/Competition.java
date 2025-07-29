@@ -30,7 +30,7 @@ public class Competition {
     @OneToMany(mappedBy = "competition", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     List<Change> changes;
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
     List<CompetitionImage> images;
 
     @Column(name = "name")

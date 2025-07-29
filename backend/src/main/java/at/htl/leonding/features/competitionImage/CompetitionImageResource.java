@@ -1,6 +1,7 @@
 package at.htl.leonding.features.competitionImage;
 
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -27,4 +28,15 @@ public class CompetitionImageResource {
                 .header("Content-Disposition", "inline; filename=\"" + image.pictureName + "\"")
                 .build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    @RolesAllowed({"admin"})
+    @Transactional
+    public Response deleteImageById(@PathParam("id") long id) {
+        competitionImageRepository.deleteById(id);
+
+        return Response.noContent().build();
+    }
+
 }

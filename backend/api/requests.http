@@ -106,3 +106,7 @@ Authorization: Bearer {{access_token}}
 ### Get all Changes for a competition
 GET http://localhost:8080/api/changes/competition/1
 Authorization: Bearer {{access_token}}
+
+### Delete image
+DELETE http://localhost:8080/api/images/1
+Authorization: Bearer {{access_token}}
