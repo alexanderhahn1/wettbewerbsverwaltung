@@ -31,11 +31,11 @@ export class CompetitionService {
     return this.httpClient.get<Competition>(`${this.BASE_URL}/competitions/random`);
   }
 
-  addCompetition(competition: Competition): Observable<Competition> {
+  addCompetition(formData: FormData): Observable<Competition> {
     const headers = {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
     };
-    return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, competition, { headers });
+    return this.httpClient.post<Competition>(`${this.BASE_URL}/competitions`, formData, { headers });
   }
 
   getAllSchoolYears(): Observable<string[]> {

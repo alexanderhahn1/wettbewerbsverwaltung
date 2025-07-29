@@ -18,6 +18,9 @@ export class AddCompetitionComponent implements OnInit{
   competitionService : CompetitionService = inject(CompetitionService);
   addCompetitionForm!: FormGroup;
 
+  selectedFiles: File[] = []
+  selectedFileNames: string[] = []
+
   ngOnInit() {
     this.addCompetitionForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -35,12 +38,30 @@ export class AddCompetitionComponent implements OnInit{
   }
 
   addCompetition(): void {
-    const competition: Competition = this.addCompetitionForm.value;
-    this.competitionService.addCompetition(competition).subscribe({
+    const competitionData = this.addCompetitionForm.value;
+    const formData = new FormData();
+
+    for (const key in competitionData) {
+      if (competitionData.hasOwnProperty(key)) {
+        formData.append(key, competitionData[key]);
+      }
+    }
+
+    this.selectedFiles.forEach((file: File) => {
+      formData.append('images', file, file.name);
+    })
+
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: `, value);
+    }
+
+    this.competitionService.addCompetition(formData).subscribe({
       next: (createdCompetition: Competition) => {
         if (createdCompetition && createdCompetition.name) {
           this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!')
           this.addCompetitionForm.reset();
+          this.selectedFiles = [];
+          this.selectedFileNames = [];
         } else {
           this.responseComponent.trigger('Etwas hat nicht funktioniert!')
         }
@@ -50,5 +71,16 @@ export class AddCompetitionComponent implements OnInit{
       }
     });
     console.log(this.addCompetitionForm.value);
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFiles = Array.from(input.files)
+      this.selectedFileNames = this.selectedFiles.map(file => file.name);
+    } else {
+      this.selectedFiles = []
+      this.selectedFileNames = []
+    }
   }
 }

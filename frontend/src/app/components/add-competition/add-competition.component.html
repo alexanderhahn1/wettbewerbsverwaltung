@@ -67,6 +67,22 @@
     }
   </div>
 
+  <div>
+    <label for="images" class="block font-medium text-gray-700 mb-1">Bilder</label>
+    <input type="file" id="images" accept="image/*" (change)="onFileSelected($event)" multiple class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <p class="text-sm text-gray-500 mt-1">Shift od. Strg gedrückt halten für mehrere Bilder</p>
+    @if (selectedFileNames.length > 0) {
+      <div class="mt-2 text-sm text-gray-600">
+        Ausgewählte Dateien:
+        <ul class="list-disc list-inside ml-4">
+          @for (fileName of selectedFileNames; track fileName) {
+            <li>{{ fileName }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+
   <button type="submit" [disabled]="addCompetitionForm.invalid"
           class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
     Hinzufügen
