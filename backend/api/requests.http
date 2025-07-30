@@ -25,6 +25,21 @@ password=admin
 
 > {% client.global.set("access_token", response.body.access_token); %}
 
+### Get access Token for creating and updating
+POST https://auth.htl-leonding.ac.at/realms/wettbewerbsdatenbank/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&
+client_id=quarkus-client&
+username=it210157&
+password=Hoppel.110406
+
+> {% client.global.set("access_token", response.body.access_token); %}
+
+### Test
+GET https://auth.htl-leonding.ac.at/admin/realms/wettbewerbsdatenbank/users/count?enabled=true
+Authorization: Bearer {{access_token}}
+
 ### Create a new competition
 POST http://localhost:8080/api/competitions
 Content-Type: application/json
