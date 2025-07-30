@@ -1,7 +1,6 @@
 import {Component, ElementRef, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {ExportService} from '../../services/export/export.service';
 import {CompetitionService} from '../../services/competition/competition.service';
-import html2pdf from 'html2pdf.js';
 import {Competition} from '../../models/competition';
 import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -43,7 +42,7 @@ export class ExportComponent implements OnInit{
   }
 
   generatePptxAsPdf(): void {
-    this.exportService.exportPPTXToPDF(this.filteredCompetitions);
+    //this.exportService.exportToPowerPoint(this.filteredCompetitions);
   }
 
   generateExcel(): void {
@@ -55,4 +54,5 @@ export class ExportComponent implements OnInit{
     print();
     //this.exportService.exportToPDF(this.pdfContent.nativeElement);
   }
+
 }

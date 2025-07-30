@@ -1,12 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Competition } from '../../models/competition';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
-import html2pdf from 'html2pdf.js';
+import { Competition } from '../../models/competition';;
 import PptxGenJS from 'pptxgenjs';
-import Slide = PptxGenJS.Slide;
 
 import { forkJoin } from 'rxjs';
 import {CompetitionService} from '../competition/competition.service';
@@ -88,8 +84,12 @@ export class ExportService {
         });
       });
 
+
+
       // Sobald alle Folien fertig sind, speichern
       pptx.writeFile({ fileName: 'competition_presentation.pptx' });
+
+
     });
   }
 
@@ -109,7 +109,4 @@ export class ExportService {
     saveAs(blob, 'competitions.xlsx');
   }
 
-  async exportPPTXToPDF(data: Competition[]) {
-    
-  }
 }
