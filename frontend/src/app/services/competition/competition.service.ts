@@ -88,4 +88,14 @@ export class CompetitionService {
   getImagesForCompetition(competitionId: number): Observable<CompetitionImage[]> {
     return this.httpClient.get<CompetitionImage[]>(`${this.BASE_URL}/competitions/${competitionId}/images`)
   }
+
+  deleteImage(imageId: number): Observable<void> {
+    const token = this.keycloakService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.httpClient.delete<void>(
+      `${this.BASE_URL}/images/${imageId}`,
+      { headers }
+    );
+  }
+
 }

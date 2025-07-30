@@ -1,5 +1,5 @@
 <div class="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
-  <div class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative">
+  <div class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative max-h-[80vh] overflow-y-auto">
     <h2 class="text-xl font-semibold mb-4">Wettbewerb bearbeiten</h2>
 
     <form [formGroup]="editCompetitionForm">
@@ -75,6 +75,62 @@
         }
       </div>
 
+      <div>
+        <label for="images" class="block font-medium text-gray-700 mb-1">Bilder hinzufügen</label>
+        <input
+          type="file"
+          id="images"
+          accept="image/png, image/jpg, image/jpeg, image/svg, image/webp, image/gif"
+          (change)="onFileSelected($event)"
+          multiple
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p class="text-sm text-gray-500 mt-1">
+          Shift oder Strg gedrückt halten für mehrere Bilder;
+          Nur jpg, jpeg, png, svg oder webp
+        </p>
+      </div>
+
+      @if (existingImages.length > 0) {
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">Vorhandene Bilder</h4>
+          <ul class="space-y-2">
+            @for (img of existingImages; track img.id) {
+              <li class="flex items-center">
+                <img
+                  [src]="img.url"
+                  [alt]="img.name"
+                  width="80"
+                  class="rounded mr-3"
+                />
+                <span class="flex-1">{{ img.name }}</span>
+                <button
+                  (click)="removeExistingImage(img)"
+                  class="text-red-600 hover:underline"
+                >Entfernen</button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (newFiles.length > 0) {
+        <div class="mt-4">
+          <h4 class="font-medium mb-2">Neue Bilder zum Hochladen</h4>
+          <ul class="space-y-2">
+            @for (file of newFiles; track file.name) {
+              <li class="flex items-center">
+                <span class="flex-1">{{ file.name }}</span>
+                <button
+                  (click)="removeNewFile(file)"
+                  class="text-red-600 hover:underline"
+                >Entfernen</button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
       <div class="mt-4 flex justify-end space-x-2">
         <button type="button" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-all active:bg-red-700" (click)="deleteCompetition()">Wettbewerb löschen</button>
         <button type="button" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-all active:bg-gray-500" (click)="close()">Abbrechen</button>
@@ -82,7 +138,7 @@
       </div>
     </form>
 
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800" (click)="close()">✖</button>
+    <button class="absolute top-2 right-3 text-gray-500 hover:text-gray-800" (click)="close()">✖</button>
   </div>
 </div>
 <app-response #response></app-response>
