@@ -44,10 +44,17 @@
   @if (isLightboxOpen) {
     <div class="fixed inset-0 flex items-center justify-center z-52">
       <div class="relative max-w-[50vw] max-h-[50vh]">
-        <button class="absolute top-2 right-2 text-white text-2xl hover:text-gray-400 transition-all bg-transparent focus:outline-none" (click)="closeLightbox()">✕</button>
-        <button class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white text-5xl hover:text-gray-400 transition-all bg-transparent focus:outline-non" (click)="prevImage()">‹</button>
-        <img src="{{images[currentImageIndex].url}}" [alt]="images[currentImageIndex].name" class="max-w-full max-h-[50vh] object-contain" />
-        <button class="absolute top-1/2 right-2 transform -translate-y-1/2 text-white text-5xl hover:text-gray-400 transition-all bg-transparent focus:outline-none" (click)="nextImage()">›</button>
+        <button class="absolute top-2 right-2 text-white text-2xl bg-black bg-opacity-50 hover:bg-opacity-70 p-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition" (click)="closeLightbox()">
+          ✕</button>
+
+        <button class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white text-5xl bg-black bg-opacity-50 hover:bg-opacity-70 p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition" (click)="prevImage()">
+          ‹</button>
+
+        <img src="{{images[currentImageIndex].url}}" [alt]="images[currentImageIndex].name" class="max-w-full max-h-[50vh] object-contain"/>
+
+        <button class="absolute top-1/2 right-2 transform -translate-y-1/2 text-white text-5xl bg-black bg-opacity-50 hover:bg-opacity-70 p-3 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition" (click)="nextImage()">
+          ›</button>
+
         <p class="mt-2 text-center text-white">{{ images[currentImageIndex].name }}</p>
       </div>
     </div>
