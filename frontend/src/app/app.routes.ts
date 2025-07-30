@@ -10,6 +10,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ExportComponent} from './components/export/export.component';
 import {ChangesComponent} from './components/changes/changes.component';
 import {ImageUploadComponent} from './components/image-upload/image-upload.component';
+import {ExportDashboardComponent} from './components/export-dashboard/export-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -57,7 +58,7 @@ export const routes: Routes = [
   },
   {
     path: 'export',
-    component: ExportComponent,
+    component: ExportDashboardComponent,
     title: 'Export',
     canActivate: [AuthGuard],
     data: { roles: ['admin'] }

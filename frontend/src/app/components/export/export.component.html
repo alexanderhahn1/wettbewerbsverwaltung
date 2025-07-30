@@ -1,12 +1,13 @@
-<div #pdfContent id="pdf-content" class="p-6 bg-white rounded-xl shadow-md text-center">
-  <h1 class="text-2xl font-bold text-blue-600 mb-4">My Tailwind PDF</h1>
-  <p class="text-gray-700">This content will be exported as a PDF with Tailwind styles.</p>
+<div class="border border-gray-200 bg-white p-4 rounded-lg shadow-md mt-6">
+  <div class="flex space-x-4 justify-center">
+    <button (click)="generatePowerPoint()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all">
+      Download PowerPoint
+    </button>
+    <button (click)="generateExcel()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all">
+      Download Excel
+    </button>
+    <button (click)="generatePtxAsPdf()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-all">
+      Download PowerPoint als PDF
+    </button>
+  </div>
 </div>
-
-<button (click)="generatePdf()" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Download PDF
-</button>
-
-<button (click)="generatePowerPoint()" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-  Download PowerPoint
-</button>

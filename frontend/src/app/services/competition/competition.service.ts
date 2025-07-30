@@ -15,6 +15,8 @@ export class CompetitionService {
   public searchCompetitionsSubject = new Subject<String>()
   public resetSearchCompetitionsSubject = new Subject<boolean>()
   public refreshCompetitionList = new Subject<boolean>()
+  public selectedExportSchoolYear = new Subject<string>();
+
 
   getAllCompetitions(): Observable<Competition[]> {
     return this.httpClient.get<Competition[]>(`${this.BASE_URL}/competitions`);
@@ -97,5 +99,4 @@ export class CompetitionService {
       { headers }
     );
   }
-
 }
