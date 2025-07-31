@@ -74,6 +74,7 @@ export class EditCompetitionComponent implements OnInit{
         // Immer Erfolg, da wir hier die Competition aus updateCompetition erhalten
         this.responseComponent.trigger('Wettbewerb erfolgreich bearbeitet!');
         setTimeout(() => {
+          this.competitionService.refreshCompetitionList.next(true);
           document.body.style.overflow = 'auto';
           this.closeModal.emit();
           this.competitionService.refreshCompetitionList.next(true);
@@ -83,6 +84,7 @@ export class EditCompetitionComponent implements OnInit{
         this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.');
       }
     });
+
   }
 
   deleteCompetition() {
