@@ -1,3 +1,11 @@
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  HeadingLevel,
+  ImageRun
+} from 'docx';
 import {inject, Injectable} from '@angular/core';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -108,5 +116,93 @@ export class ExportService {
     });
     saveAs(blob, 'competitions.xlsx');
   }
+
+  exportToWord(data: Competition[]): void {
+    const imageRequests = data.map(comp => this.competitionService.getImagesForCompetition(comp.id));
+
+    forkJoin(imageRequests).subscribe(async imagesArrays => {
+      const children: Paragraph[] = [];
+
+      // Fetch all images as blobs per competition
+      const allImageBlobs: (Blob[])[] = await Promise.all(
+        imagesArrays.map(images =>
+          Promise.all(
+            images.map(img =>
+              fetch(img.url).then(res => res.blob())
+            )
+          )
+        )
+      );
+
+      const allImageBuffers: (ArrayBuffer[])[] = await Promise.all(
+        allImageBlobs.map(blobs =>
+          Promise.all(blobs.map(blob => blob.arrayBuffer()))
+        )
+      );
+
+      data.forEach((competition, index) => {
+        const images = imagesArrays[index] || [];
+        const imageBuffers = allImageBuffers[index] || [];
+
+        children.push(
+          new Paragraph({
+            text: competition.name,
+            heading: HeadingLevel.HEADING_1,
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({ text: `📅 Einreichungsfrist: ${competition.deadline}`, break: 1 }),
+              new TextRun({ text: `🎁 Preis: ${competition.prize}`, break: 1 }),
+              new TextRun({ text: `📬 Kontakt: ${competition.contact}`, break: 1 }),
+              new TextRun({ text: `📚 Informations Material: ${competition.information_material}`, break: 1 }),
+              new TextRun({ text: `📝 Einreichungsformulare: ${competition.submission_forms}`, break: 1 }),
+              new TextRun({ text: `🔗 Link: ${competition.link}`, break: 1 }),
+              new TextRun({ text: `📆 Schuljahr: ${competition.school_year}`, break: 1 })
+            ]
+          })
+        );
+
+        images.forEach((img, imgIndex) => {
+          const buffer = imageBuffers[imgIndex];
+          const extension = img.url.split('.').pop()?.toLowerCase();
+          let format: 'png' | 'jpg' | 'gif' = 'png';
+          if (extension === 'jpg' || extension === 'jpeg') {
+            format = 'jpg';
+          } else if (extension === 'gif') {
+            format = 'gif';
+          }
+
+          children.push(
+            new Paragraph({
+              children: [
+                new ImageRun({
+                  data: buffer,
+                  transformation: {
+                    width: 300,
+                    height: 200
+                  },
+                  type: format
+                })
+              ]
+            })
+          );
+        });
+
+        children.push(new Paragraph({ text: "", spacing: { after: 200 } }));
+      });
+
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children
+        }]
+      });
+
+      Packer.toBlob(doc).then(blob => {
+        saveAs(blob, 'competitions.docx');
+      });
+    });
+  }
+
 
 }

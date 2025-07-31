@@ -55,4 +55,7 @@ export class ExportComponent implements OnInit{
     //this.exportService.exportToPDF(this.pdfContent.nativeElement);
   }
 
+  generateDocx() {
+    this.exportService.exportToWord(this.filteredCompetitions);
+  }
 }

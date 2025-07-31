@@ -9,7 +9,6 @@ import {KeycloakService} from 'keycloak-angular';
   selector: 'app-image-upload',
   imports: [
     FormsModule,
-    NgForOf
   ],
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.css'
