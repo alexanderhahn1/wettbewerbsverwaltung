@@ -1,0 +1,6 @@
+@media print {
+  #exportButton,
+  #searchBar {
+    display: none !important;
+  }
+}

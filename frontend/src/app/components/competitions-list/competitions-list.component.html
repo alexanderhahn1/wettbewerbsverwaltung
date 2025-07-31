@@ -1,4 +1,14 @@
-<app-competition-search-bar></app-competition-search-bar>
+@if (isUserAdmin) {
+  <button
+    (click)="exportPdf()"
+    id="exportButton"
+    class="inline-flex m-3 items-center gap-2 rounded-md bg-gray-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+  >
+    📄 Download PDF
+  </button>
+}
+
+<app-competition-search-bar id="searchBar"></app-competition-search-bar>
 <div class="grid justify-center gap-4 m-10">
   @for (competition of competitions; track competition.name) {
     <app-competition-card [competition]="competition" [isEditable]="true"></app-competition-card>
