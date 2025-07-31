@@ -33,6 +33,10 @@ export class CompetitionCardComponent implements OnInit {
   currentImageIndex = 0;
 
   ngOnInit() {
+    if (!this.competition) {
+      return;
+    }
+
     if (this.keycloakService.getUserRoles().includes('admin') && this.isEditable) {
       this.showEditImage = true;
     }

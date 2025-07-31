@@ -2,7 +2,7 @@
   @for (competition of competitions; track competition.name) {
     <app-competition-card [competition]="competition" [isEditable]="false"></app-competition-card>
   }
-  @if (competitions.length == 0) {
+  @if (competitions?.length == 0) {
     <p>Es wurde kein Wettbewerb mit diesem Name gefunden!</p>
   }
 </div>

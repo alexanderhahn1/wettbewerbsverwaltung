@@ -27,6 +27,9 @@ export class EditProjectComponent implements OnInit{
 
 
   ngOnInit() {
+    document.body.style.overflow = 'hidden';
+
+
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
         this.competitions = competitions;
@@ -44,6 +47,8 @@ export class EditProjectComponent implements OnInit{
   }
 
   close() {
+    document.body.style.overflow = 'auto';
+
     this.editProjectForm.reset();
     this.closeModal.emit();
   }
@@ -60,6 +65,7 @@ export class EditProjectComponent implements OnInit{
         if (updatedProject && updatedProject.name) {
           this.responseComponent.trigger('Projekt erfolgreich bearbeitet!')
           setTimeout(() => {
+            document.body.style.overflow = 'auto';
             this.editProjectForm.reset()
             this.closeModal.emit()
             this.projectService.refreshProjectList.next(true);
@@ -77,6 +83,8 @@ export class EditProjectComponent implements OnInit{
   deleteProject() {
     this.projectService.deleteProject(this.project)
     this.projectService.refreshProjectList.next(true);
+    document.body.style.overflow = 'auto';
+
     this.closeModal.emit()
   }
 }
