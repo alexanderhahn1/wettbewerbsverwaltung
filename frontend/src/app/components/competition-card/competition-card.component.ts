@@ -31,6 +31,7 @@ export class CompetitionCardComponent implements OnInit {
   images: CompetitionImage[] = [];
   isLightboxOpen = false;
   currentImageIndex = 0;
+  logoImage?: CompetitionImage | {url: string, name: string} | null = null;
 
   ngOnInit() {
     if (!this.competition) {
@@ -42,7 +43,15 @@ export class CompetitionCardComponent implements OnInit {
     }
 
     this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
-      this.images = images;
+      const foundImage = images.find(curImage => curImage.name.includes('logo'))
+      if (foundImage) {
+        this.logoImage = foundImage;
+        this.images = images.filter(image => image !== foundImage);
+        console.log(this.images);
+        console.log(this.logoImage)
+      } else {
+        this.images = images;
+      }
     })
   }
 

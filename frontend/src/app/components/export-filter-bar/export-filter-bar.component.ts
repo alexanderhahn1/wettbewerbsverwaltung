@@ -11,7 +11,6 @@ import {ProjectService} from '../../services/project/project.service';
   selector: 'app-export-filter-bar',
   imports: [
     FormsModule,
-    NgForOf,
     FormatSchoolYearPipe
   ],
   templateUrl: './export-filter-bar.component.html',

@@ -9,7 +9,6 @@ import {CompetitionCardComponent} from '../competition-card/competition-card.com
   imports: [
     ExportFilterBarComponent,
     ExportComponent,
-    CompetitionCardComponent
   ],
   templateUrl: './export-dashboard.component.html',
   styleUrl: './export-dashboard.component.css'
