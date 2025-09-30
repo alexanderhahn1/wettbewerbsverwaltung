@@ -80,6 +80,12 @@ export class EditProjectComponent implements OnInit{
     })
   }
 
+  confirmDeleteProject() {
+    const confirmed = window.confirm("Möchten Sie dieses Projekt wirklich löschen?");
+    if (confirmed) {
+      this.deleteProject();
+    }
+  }
   deleteProject() {
     this.projectService.deleteProject(this.project)
     this.projectService.refreshProjectList.next(true);

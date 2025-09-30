@@ -15,8 +15,7 @@ import {NgOptimizedImage} from '@angular/common';
     LinkifyPipe,
     FormatSchoolYearPipe,
     EditCompetitionComponent,
-    RouterLink,
-    NgOptimizedImage
+    RouterLink
   ],
   templateUrl: './competition-card.component.html',
   styleUrl: './competition-card.component.css'

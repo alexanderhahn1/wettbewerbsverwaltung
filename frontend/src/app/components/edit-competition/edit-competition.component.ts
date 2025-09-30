@@ -87,6 +87,13 @@ export class EditCompetitionComponent implements OnInit{
 
   }
 
+  confirmDeleteCompetition() {
+    const confirmed = window.confirm("Möchten Sie diesen Wettbewerb wirklich löschen?");
+    if (confirmed) {
+      this.deleteCompetition();
+    }
+  }
+
   deleteCompetition() {
     this.competitionService.deleteCompetition(this.competition)
     this.competitionService.refreshCompetitionList.next(true);
