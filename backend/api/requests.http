@@ -32,7 +32,7 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=password&
 client_id=quarkus-client&
 username=it210157&
-password=Hoppel.110406
+password=
 
 > {% client.global.set("access_token", response.body.access_token); %}
 
@@ -49,6 +49,7 @@ Authorization: Bearer {{access_token}}
   "name": "Project Award",
   "link": "https://htl-leonding.ac.at",
   "deadline": "Noch nicht freigegeben",
+  "deadline_date": "2026-01-01",
   "prize": "5€ mci Gutschein auf Bauer sein Nacken",
   "information_material": "https://edufs.edu.htl-leonding.ac.at",
   "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",
@@ -71,6 +72,7 @@ Authorization: Bearer {{access_token}}
   "name": "Project Award",
   "link": "https://htl-leonding.ac.at",
   "deadline": "Noch nicht freigegeben",
+  "deadline_date": "2026-01-01",
   "prize": "5€ mci Gutschein auf Bauer sein Nacken",
   "information_material": "https://edufs.edu.htl-leonding.ac.at",
   "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",

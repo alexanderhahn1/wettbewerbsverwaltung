@@ -1,8 +1,9 @@
-INSERT INTO competition (name, link, deadline, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant) VALUES
+INSERT INTO competition (name, link, deadline, deadline_date, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant) VALUES
 -- Austria Cyber Security Challenge
 ('Austria Cyber Security Challenge (ACSC)',
  'https://verbotengut.at/',
  'Anmeldung Online Qualifying Austria Cyber Security Challenge 2023 war bis 31.08. möglich. Ergebnisse noch unklar',
+ '2023-08-21',
  'NA',
  'https://verbotengut.at/anmeldung/',
  'https://google.com',
@@ -17,6 +18,7 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
 ('Austrian Skills',
  'https://www.wko.at/site/skillsaustria/start.html',
  'AustrianSkills 2023 findet am 4.–7.10.2023 in Wels und 23.–26.11.2023 in Salzburg statt',
+ '2023-08-21',
  'Gewinner kommt zum World Skills, zweiter zu Euro Skills',
  'NA',
  'NA',
@@ -31,6 +33,7 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
 ('HTL Coding Cup',
  'https://htlcodingcup.at',
  '31.12.2025',
+ '2023-08-21',
  'Sachpreise und Praktika bei IT-Firmen',
  'https://htlcodingcup.at/downloads/broschuere.pdf',
  'https://htlcodingcup.at/anmeldung',
@@ -44,6 +47,7 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
 ('European Robotics Competition',
  'https://robotics-europe.org',
  '15.08.2025',
+ '2023-08-21',
  'Teilnahme an der World Robotics Championship',
  'https://robotics-europe.org/info',
  'https://robotics-europe.org/register',
@@ -57,6 +61,7 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
 ('Young Engineers Challenge',
  'https://youngengineers.at',
  '01.09.2025',
+ '2023-08-21',
  'Stipendium für technische Studiengänge',
  'https://youngengineers.at/broschuere.pdf',
  'https://youngengineers.at/formular',

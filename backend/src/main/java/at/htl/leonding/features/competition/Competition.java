@@ -37,6 +37,8 @@ public class Competition {
     String competitionName;
     String link;
     String deadline;
+    @Column(name = "deadline_date")
+    LocalDate deadlineDate;
     String prize;
     @Column(name = "information_material")
     String informationMaterial;
@@ -64,10 +66,11 @@ public class Competition {
 
     public Competition() {}
 
-    public Competition(String competitionName, String link, String deadline, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy, Boolean isRelevant) {
+    public Competition(String competitionName, String link, String deadline, LocalDate deadlineDate, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy, Boolean isRelevant) {
         this.competitionName = competitionName;
         this.link = link;
         this.deadline = deadline;
+        this.deadlineDate = deadlineDate;
         this.prize = prize;
         this.informationMaterial = informationMaterial;
         this.submissionForms = submissionForms;
@@ -77,6 +80,14 @@ public class Competition {
         this.createdBy = createdBy;
         this.dateCreated = LocalDate.now();
         this.isRelevant = isRelevant;
+    }
+
+    public LocalDate getDeadlineDate() {
+        return deadlineDate;
+    }
+
+    public void setDeadlineDate(LocalDate deadlineDate) {
+        this.deadlineDate = deadlineDate;
     }
 
     public Boolean getRelevant() {

@@ -78,6 +78,8 @@ public class CompetitionRepository implements PanacheRepository<Competition> {
         trackChange(dto, competition, "contact", "contact", competition, changedBy);
         trackChange(dto, competition, "is_active", "active", competition, changedBy);
         trackChange(dto, competition, "school_year", "schoolYear", competition, changedBy);
+        trackChange(dto, competition, "deadline_date", "deadlineDate", competition, changedBy);
+        trackChange(dto, competition, "is_relevant", "relevant", competition, changedBy);
 
         persist(competition);
         return competition;

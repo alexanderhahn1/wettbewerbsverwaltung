@@ -6,6 +6,7 @@ public record CompetitionCreateDTO(
     String name,
     String link,
     String deadline,
+    LocalDate deadline_date,
     String prize,
     String information_material,
     String submission_forms,
