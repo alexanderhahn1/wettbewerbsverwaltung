@@ -45,7 +45,6 @@ export class CompetitionSearchBarComponent implements OnInit {
   }
 
   toggleRelevanceFilter() {
-
     this.isRelevantOnly = !this.isRelevantOnly
     this.competitionService.isCompetitionRelevantSubject.next(this.isRelevantOnly);
   }

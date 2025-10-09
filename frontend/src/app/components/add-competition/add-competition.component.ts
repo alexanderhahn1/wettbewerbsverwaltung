@@ -76,16 +76,32 @@ export class AddCompetitionComponent implements OnInit{
   }
 
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFiles = Array.from(input.files);
-      this.selectedFileNames = this.selectedFiles.map(f => f.name);
-    } else {
+    const input = event.target as HTMLInputElement
+    if (!input.files || input.files.length === 0) {
       this.selectedFiles = []
-      this.selectedFileNames = this.selectedFiles.map(f => f.name);
+      this.selectedFileNames = []
+      return
     }
+
+    const files = Array.from(input.files)
+
+    const hasLogo = files.some(f => f.name.toLowerCase().includes('logo'))
+
+    const maxFiles = hasLogo ? 9 : 8
+
+    if (files.length > maxFiles) {
+      this.responseComponent.trigger(
+        hasLogo
+          ? 'Maximal 9 Dateien erlaubt, wenn ein Logo dabei ist.'
+          : 'Maximal 8 Dateien erlaubt.'
+      )
+    }
+
+    this.selectedFiles = files.slice(0, maxFiles)
+    this.selectedFileNames = this.selectedFiles.map(f => f.name)
   }
 
+  /*
   addImages(competitionId: number): void {
     if (this.selectedFiles.length === 0) {
       return;
@@ -102,6 +118,7 @@ export class AddCompetitionComponent implements OnInit{
         }
       });
   }
+  */
 
   notPastDateValidator(control: AbstractControl) {
     const selectedDate = new Date(control.value)

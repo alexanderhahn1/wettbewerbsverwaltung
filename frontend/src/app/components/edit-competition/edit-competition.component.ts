@@ -106,16 +106,38 @@ export class EditCompetitionComponent implements OnInit{
   }
 
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if(!input.files) return;
+    const input = event.target as HTMLInputElement
+    if (!input.files) return
 
-    Array.from(input.files).forEach(file => {
-      const alreadyNew = this.newFiles.some(f => f.name === file.name);
-      const alreadyOld = this.existingImages.some(f => f.name === file.name);
-      if(!alreadyNew && !alreadyOld) {
-        this.newFiles.push(file)
+    const selectedFilesArray = Array.from(input.files)
+    const hasLogo = selectedFilesArray.some(file => file.name.toLowerCase().includes('logo'))
+
+    const maxFiles = hasLogo ? 9 : 8
+
+    const totalAlreadyUploaded = this.existingImages.length + this.newFiles.length
+
+    if (totalAlreadyUploaded >= maxFiles) {
+      this.responseComponent.trigger(`Es sind bereits ${maxFiles} Bilder hochgeladen. Weitere Uploads sind nicht möglich.`)
+      return
+    }
+
+    let newFilesToAdd: File[] = []
+    selectedFilesArray.forEach(file => {
+      const alreadyNew = this.newFiles.some(f => f.name === file.name)
+      const alreadyOld = this.existingImages.some(f => f.name === file.name)
+      if (!alreadyNew && !alreadyOld) {
+        newFilesToAdd.push(file)
       }
     })
+
+    const remainingSlots = maxFiles - totalAlreadyUploaded
+
+    if (newFilesToAdd.length > remainingSlots) {
+      this.responseComponent.trigger(`Maximale Anzahl an Bildern überschritten (maximal ${maxFiles} erlaubt).`)
+      newFilesToAdd = newFilesToAdd.slice(0, remainingSlots)
+    }
+
+    this.newFiles = [...this.newFiles, ...newFilesToAdd]
   }
 
   removeNewFile(file:File){

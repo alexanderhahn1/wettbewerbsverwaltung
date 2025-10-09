@@ -43,7 +43,7 @@ export class CompetitionCardComponent implements OnInit {
     }
 
     this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
-      const foundImage = images.find(curImage => curImage.name.includes('logo'))
+      const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
       if (foundImage) {
         this.logoImage = foundImage;
         this.images = images.filter(image => image !== foundImage);
