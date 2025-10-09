@@ -16,6 +16,7 @@ export class CompetitionService {
   public resetSearchCompetitionsSubject = new Subject<boolean>()
   public refreshCompetitionList = new Subject<boolean>()
   public selectedExportSchoolYear = new Subject<string>();
+  isCompetitionRelevantSubject = new Subject<boolean>();
 
 
   getAllCompetitions(): Observable<Competition[]> {

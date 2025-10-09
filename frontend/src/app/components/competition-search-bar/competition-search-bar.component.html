@@ -8,6 +8,15 @@
       placeholder="Wettbewerbsnamen eingeben"
     >
     <button
+      type="button"
+      class="px-3 py-2 rounded-md border border-gray-300 text-sm font-medium transition
+             hover:bg-gray-100"
+      [ngClass]="{ 'bg-green-100 text-green-700 border-green-400': isRelevantOnly }"
+      (click)="toggleRelevanceFilter()"
+    >
+      {{ isRelevantOnly ? 'Nur relevante' : 'Alle' }}
+    </button>
+    <button
       class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
       type="submit"
       [disabled]="searchCompetitionsForm.invalid"

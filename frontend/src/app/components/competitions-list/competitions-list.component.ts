@@ -25,7 +25,11 @@ export class CompetitionsListComponent implements OnInit{
 
     this.getAllCompetitions();
     this.competitionService.searchCompetitionsSubject.subscribe(searchValue => {
-      this.competitions = this.competitions.filter(competition => competition.name.toLowerCase().includes(searchValue.toLowerCase()));
+      this.competitionService.getAllCompetitions().subscribe(
+        (competitions: Competition[]) => {
+          this.competitions = competitions.filter(competition => competition.name.toLowerCase().includes(searchValue.toLowerCase()));;
+        }
+      )
     })
     this.competitionService.resetSearchCompetitionsSubject.subscribe(
       resetSearchCompetitions => {
@@ -39,6 +43,20 @@ export class CompetitionsListComponent implements OnInit{
           this.getAllCompetitions()
         }
     })
+
+    this.competitionService.isCompetitionRelevantSubject.subscribe(
+      competitionIsRelevant => {
+        if (competitionIsRelevant) {
+          this.competitionService.getAllCompetitions().subscribe(
+            (competitions: Competition[]) => {
+              this.competitions = competitions.filter(competition => competition.is_relevant);
+            }
+          )
+        } else {
+          this.getAllCompetitions();
+        }
+      }
+    )
   }
 
   getAllCompetitions() {
