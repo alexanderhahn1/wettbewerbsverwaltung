@@ -42,6 +42,22 @@
         <p class="italic text-sm text-gray-600 mt-1">
           erstellt von: {{ competition.created_by }}
         </p>
+
+        @if (competition.is_relevant) {
+          <div class="inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-md border border-green-200 bg-green-50 text-green-800 text-sm shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Dieser Wettbewerb ist für die Schule relevant</span>
+          </div>
+        } @else {
+          <div class="inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-md border border-red-200 bg-red-50 text-red-800 text-sm shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span>Dieser Wettbewerb ist für die Schule nicht relevant</span>
+          </div>
+        }
       </div>
     </div>
 
