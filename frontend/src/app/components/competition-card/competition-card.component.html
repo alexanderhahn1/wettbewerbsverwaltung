@@ -66,6 +66,8 @@
     <div class="mt-4 space-y-1 text-sm text-gray-800">
       <p><span class="font-semibold">Schuljahr:</span> {{ competition.school_year | formatSchoolYear}}</p>
       <p><span class="font-semibold">Einreichfrist:</span> {{competition.deadline}}</p>
+      <p><span class="font-semibold">Bis wann ist die Teilnahme am Wettbewerb möglich:</span> {{competition.date_created | date:'fullDate'}}</p>
+
 
       <p><span class="font-semibold">Preis:</span><br>
         {{ competition.prize }}

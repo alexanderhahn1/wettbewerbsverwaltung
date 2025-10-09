@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {Competition} from '../../models/competition';
 import {ResponseComponent} from '../response/response.component';
@@ -32,6 +32,10 @@ export class AddCompetitionComponent implements OnInit{
         Validators.pattern('[0-9]{4}'),
       ]),
       deadline: new FormControl('', [Validators.required]),
+      deadline_date: new FormControl('', [
+        Validators.required,
+        this.notPastDateValidator
+      ]),
       prize: new FormControl('', [Validators.required]),
       information_material: new FormControl('', [Validators.required]),
       submission_forms: new FormControl('', [Validators.required]),
@@ -98,4 +102,14 @@ export class AddCompetitionComponent implements OnInit{
         }
       });
   }
+
+  notPastDateValidator(control: AbstractControl) {
+    const selectedDate = new Date(control.value)
+    const today = new Date()
+    if (selectedDate < today) {
+      return { pastDate: true }
+    }
+    return null
+  }
 }
+

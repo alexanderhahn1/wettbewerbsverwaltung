@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Competition} from '../../models/competition';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ResponseComponent} from '../response/response.component';
 import {HttpClient} from '@angular/common/http';
 import {CompetitionService} from '../../services/competition/competition.service';
@@ -38,6 +38,10 @@ export class EditCompetitionComponent implements OnInit{
       is_relevant: new FormControl(this.competition.is_relevant, [Validators.required]),
       school_year: new FormControl(this.competition.school_year, [Validators.required, Validators.pattern('[0-9]{4}')]),
       deadline: new FormControl(this.competition.deadline, [Validators.required]),
+      deadline_date: new FormControl(this.competition.deadline_date, [
+        Validators.required,
+        this.notPastDateValidator
+      ]),
       prize: new FormControl(this.competition.prize, [Validators.required]),
       information_material: new FormControl(this.competition.information_material, [Validators.required]),
       submission_forms: new FormControl(this.competition.submission_forms, [Validators.required]),
@@ -124,5 +128,14 @@ export class EditCompetitionComponent implements OnInit{
     }, err => {
       console.error("Löschen des Bildes hat nicht funktioniert! Bitte erneut versuchen")
     })
+  }
+
+  notPastDateValidator(control: AbstractControl) {
+    const selectedDate = new Date(control.value)
+    const today = new Date()
+    if (selectedDate < today) {
+      return { pastDate: true }
+    }
+    return null
   }
 }

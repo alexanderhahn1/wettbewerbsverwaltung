@@ -7,7 +7,7 @@ import {EditCompetitionComponent} from '../edit-competition/edit-competition.com
 import {RouterLink} from '@angular/router';
 import {CompetitionImage} from '../../models/competition-image';
 import {CompetitionService} from '../../services/competition/competition.service';
-import {NgOptimizedImage} from '@angular/common';
+import {DatePipe, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-competition-card',
@@ -15,7 +15,8 @@ import {NgOptimizedImage} from '@angular/common';
     LinkifyPipe,
     FormatSchoolYearPipe,
     EditCompetitionComponent,
-    RouterLink
+    RouterLink,
+    DatePipe
   ],
   templateUrl: './competition-card.component.html',
   styleUrl: './competition-card.component.css'

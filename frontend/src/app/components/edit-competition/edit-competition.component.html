@@ -40,6 +40,14 @@
       </div>
 
       <div>
+        <label for="deadline_date" class="block font-medium text-gray-700 mb-1">Die Einreichfrist bestimmt, bis wann eine Teilnahme am Wettbewerb möglich ist.</label>
+        <input type="date" id="deadline_date" formControlName="deadline_date" class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        @if (editCompetitionForm.get('deadline_date')?.invalid && editCompetitionForm.get('deadline_date')?.touched) {
+          <div class="text-red-500 text-sm mt-1">Datum für Einreichfrist ist verpflichtend</div>
+        }
+      </div>
+
+      <div>
         <label for="prize" class="block font-medium text-gray-700 mb-1">Preis</label>
         <textarea id="prize" formControlName="prize" class="w-full border rounded px-3 py-2 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         @if (editCompetitionForm.get('prize')?.invalid && editCompetitionForm.get('prize')?.touched) {
