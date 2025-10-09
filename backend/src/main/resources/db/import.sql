@@ -1,4 +1,4 @@
-INSERT INTO competition (name, link, deadline, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by) VALUES
+INSERT INTO competition (name, link, deadline, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant) VALUES
 -- Austria Cyber Security Challenge
 ('Austria Cyber Security Challenge (ACSC)',
  'https://verbotengut.at/',
@@ -10,7 +10,8 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
  true,
  '2023-09-05',
  '2324',
- 'e.baar'),
+ 'e.baar',
+ true),
 
 -- Austrian Skills
 ('Austrian Skills',
@@ -23,7 +24,8 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
  true,
  '2023-09-05',
  '2324',
- 'e.baar'),
+ 'e.baar',
+ true),
 
 -- Fiktive Wettbewerbe
 ('HTL Coding Cup',
@@ -36,7 +38,8 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
  true,
  '2025-07-07',
  '2425',
- 'e.baar'),
+ 'e.baar',
+ false),
 
 ('European Robotics Competition',
  'https://robotics-europe.org',
@@ -48,7 +51,8 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
  true,
  '2025-07-07',
  '2425',
- 'e.baar'),
+ 'e.baar',
+ true),
 
 ('Young Engineers Challenge',
  'https://youngengineers.at',
@@ -60,7 +64,8 @@ INSERT INTO competition (name, link, deadline, prize, information_material, subm
  false,
  '2025-04-07',
  '2425',
- 'e.baar');
+ 'e.baar',
+ false);
 
 
 INSERT INTO project (competition_id, name, status, next_step, contributors) VALUES

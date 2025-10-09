@@ -54,7 +54,8 @@ Authorization: Bearer {{access_token}}
   "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",
   "contact": "p.bauer@htl-leonding.ac.at",
   "is_active": true,
-  "school_year": "2526"
+  "school_year": "2526",
+  "is_relevant": true
 }
 
 ### Delete competition
@@ -75,7 +76,8 @@ Authorization: Bearer {{access_token}}
   "submission_forms": "https://edufs.edu.htl-leonding.ac.at/moodle",
   "contact": "p.bauer@htl-leonding.ac.at",
   "is_active": true,
-  "school_year": "2526"
+  "school_year": "2526",
+  "is_relevant": false
 }
 
 

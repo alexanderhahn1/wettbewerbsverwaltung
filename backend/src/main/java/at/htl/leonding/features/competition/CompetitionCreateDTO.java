@@ -11,6 +11,7 @@ public record CompetitionCreateDTO(
     String submission_forms,
     String contact,
     boolean is_active,
-    String school_year
+    String school_year,
+    Boolean is_relevant
 ) {
 }

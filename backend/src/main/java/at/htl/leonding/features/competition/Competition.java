@@ -51,6 +51,8 @@ public class Competition {
     String schoolYear;
     @Column(name = "created_by")
     String createdBy;
+    @Column(name = "is_relevant")
+    Boolean isRelevant;
 
     public LocalDate getLastChangeDate() {
         if (changes == null || changes.isEmpty()) {
@@ -62,7 +64,7 @@ public class Competition {
 
     public Competition() {}
 
-    public Competition(String competitionName, String link, String deadline, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy) {
+    public Competition(String competitionName, String link, String deadline, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy, Boolean isRelevant) {
         this.competitionName = competitionName;
         this.link = link;
         this.deadline = deadline;
@@ -74,6 +76,15 @@ public class Competition {
         this.schoolYear = schoolYear;
         this.createdBy = createdBy;
         this.dateCreated = LocalDate.now();
+        this.isRelevant = isRelevant;
+    }
+
+    public Boolean getRelevant() {
+        return isRelevant;
+    }
+
+    public void setRelevant(Boolean relevant) {
+        isRelevant = relevant;
     }
 
     public List<CompetitionImage> getImages() {
