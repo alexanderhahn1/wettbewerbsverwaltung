@@ -22,7 +22,7 @@ export class CompetitionsListComponent implements OnInit{
 
   ngOnInit() {
     this.keycloakService.getUserRoles().includes('admin') ? this.isUserAdmin = true : this.isUserAdmin = false;
-
+    
     this.getAllCompetitions();
     this.competitionService.searchCompetitionsSubject.subscribe(searchValue => {
       this.competitionService.getAllCompetitions().subscribe(
