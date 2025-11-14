@@ -36,7 +36,14 @@ export class ExportService {
       const projectRequests = data.map(comp => this.projectService.getProjectsForCompetitions(comp.id));
       forkJoin(projectRequests).subscribe(projectsArrays => {
         data.forEach((competition, index) => {
-          const images = imagesArrays[index] || [];
+          let images = imagesArrays[index] || [];
+
+          images = images.sort((a, b) => {
+            const aIsLogo = a.name.toLowerCase().includes("logo");
+            const bIsLogo = b.name.toLowerCase().includes("logo");
+            return aIsLogo === bIsLogo ? 0 : aIsLogo ? -1 : 1;
+          });
+
           const projects = projectsArrays[index] || [];
           const slide = pptx.addSlide();
 
@@ -83,20 +90,29 @@ export class ExportService {
             lineSpacing: 18,
           });
 
-          // Wettbewerbsbilder in zwei Spalten und kleiner darstellen
+          // Wettbewerbsbilder in einem 4x2 Raster (max 8 Bilder) anordnen
           images.forEach((img, imgIndex) => {
-            const col = imgIndex % 2;
-            const row = Math.floor(imgIndex / 2);
-            const imgWidth = 2;
-            const imgHeight = 1.5;
-            const xPos = 5 + col * (imgWidth + 0.3);
-            const yPos = 1.5 + row * (imgHeight + 0.3);
+            console.log(img.name.toLowerCase(), imgIndex);
+            const cols = 3;
+            const imgWidth = 1.5;
+            const imgHeight = 0.9;
+
+            const col = imgIndex % cols;
+            const row = Math.floor(imgIndex / cols);
+
+            if (row >= 3) {
+              return;
+            }
+
+            const xPos = 5 + col * (imgWidth + 0.1);
+            const yPos = 1.5 + row * (imgHeight + 0.2);
+
             slide.addImage({
               path: img.url,
               x: xPos,
               y: yPos,
               w: imgWidth,
-              h: imgHeight,
+              h: undefined,
             });
           });
         });
