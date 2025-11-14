@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {filter, map, Observable, Subject, forkJoin} from 'rxjs';
+import {filter, map, Observable, Subject, forkJoin, BehaviorSubject} from 'rxjs';
 import {Competition} from '../../models/competition';
 import { KeycloakService } from 'keycloak-angular';
 import {CompetitionImage} from '../../models/competition-image';
@@ -15,7 +15,7 @@ export class CompetitionService {
   public searchCompetitionsSubject = new Subject<String>()
   public resetSearchCompetitionsSubject = new Subject<boolean>()
   public refreshCompetitionList = new Subject<boolean>()
-  public selectedExportSchoolYear = new Subject<string>();
+  public selectedExportSchoolYear = new BehaviorSubject<string>("");
   isCompetitionRelevantSubject = new Subject<boolean>();
 
 

@@ -19,5 +19,4 @@ export class KeycloakOperationService {
   getUserRoles(): string[] {
     return this.keycloak.getKeycloakInstance().realmAccess?.roles || [];
   }
-
 }

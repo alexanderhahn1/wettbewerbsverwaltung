@@ -23,13 +23,12 @@ export class ExportFilterBarComponent {
 
 
   ngOnInit() {
+    this.selectSchoolYear('')
     this.competitionService.getAllSchoolYears().subscribe(
       (schoolYears: string[]) => {
         this.schoolYears = schoolYears;
       }
     )
-
-    this.selectSchoolYear('')
   }
 
   selectSchoolYear(schoolYear: string) {
