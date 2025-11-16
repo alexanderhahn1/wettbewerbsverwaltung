@@ -9,11 +9,38 @@
 }
 
 <app-competition-search-bar id="searchBar"></app-competition-search-bar>
+@if (totalPages > 1) {
+  <div class="flex justify-center items-center gap-2 my-8 flex-wrap">
+
+    @for (pageNum of pageNumbers; track pageNum) {
+      <button
+        (click)="goToPage(pageNum)"
+        class="px-4 py-2 rounded-md border text-sm transition hover:bg-gray-200"
+        [ngClass]="{
+          'bg-gray-800 text-white font-semibold border-gray-900': pageNum === page,
+          'bg-white text-gray-800 border-gray-300': pageNum !== page
+        }"
+      >
+        {{ pageNum }}
+      </button>
+    }
+
+  </div>
+}
 <div class="grid justify-center gap-4 m-10">
-  @for (competition of competitions; track competition.name) {
+  @for (competition of paginatedCompetitions; track competition.name) {
     <app-competition-card [competition]="competition" [isEditable]="true"></app-competition-card>
   }
-  @if (competitions.length == 0) {
-    <p>Es wurde kein Wettbewerb mit diesem Name gefunden!</p>
+
+  @if (paginatedCompetitions.length == 0) {
+    <p>Es wurde kein Wettbewerb mit diesem Namen gefunden!</p>
   }
+</div>
+<div class="flex justify-center my-6">
+  <button
+    (click)="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    class="px-5 py-2.5 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
+  >
+    Nach oben ↑
+  </button>
 </div>

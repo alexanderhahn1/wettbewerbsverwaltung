@@ -53,23 +53,23 @@ export class AddCompetitionComponent implements OnInit{
             this.competitionService
               .addImagesToCompetition(this.selectedFiles, createdCompetition.id)
               .subscribe({
-                next: () => this.responseComponent.trigger('Bilder erfolgreich hochgeladen!'),
+                next: () => this.responseComponent.trigger('Bilder erfolgreich hochgeladen!', true),
                 error: (err) => {
                   console.error('Upload-Fehler:', err);
-                  this.responseComponent.trigger('Fehler beim Hochladen der Bilder.');
+                  this.responseComponent.trigger('Fehler beim Hochladen der Bilder.', false);
                 }
               });
           }
-          this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!')
+          this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!', true)
           this.addCompetitionForm.reset();
           this.selectedFiles = [];
           this.selectedFileNames = [];
         } else {
-          this.responseComponent.trigger('Etwas hat nicht funktioniert!')
+          this.responseComponent.trigger('Etwas hat nicht funktioniert!', false)
         }
       },
       error: (err) => {
-        this.responseComponent.trigger('Fehler beim Hinzufügen des Wettbewerbs. Bitte versuche es erneut.')
+        this.responseComponent.trigger('Fehler beim Hinzufügen des Wettbewerbs. Bitte versuche es erneut.', false);
       }
     });
     console.log(this.addCompetitionForm.value);
@@ -93,7 +93,7 @@ export class AddCompetitionComponent implements OnInit{
       this.responseComponent.trigger(
         hasLogo
           ? 'Maximal 9 Dateien erlaubt, wenn ein Logo dabei ist.'
-          : 'Maximal 8 Dateien erlaubt.'
+          : 'Maximal 8 Dateien erlaubt.', false
       )
     }
 

@@ -63,7 +63,7 @@ export class EditProjectComponent implements OnInit{
     this.projectService.updateProject(updatedProject).subscribe({
       next: (updatedProject: Project) => {
         if (updatedProject && updatedProject.name) {
-          this.responseComponent.trigger('Projekt erfolgreich bearbeitet!')
+          this.responseComponent.trigger('Projekt erfolgreich bearbeitet!', true)
           setTimeout(() => {
             document.body.style.overflow = 'auto';
             this.editProjectForm.reset()
@@ -71,11 +71,11 @@ export class EditProjectComponent implements OnInit{
             this.projectService.refreshProjectList.next(true);
           }, 500)
         } else {
-          this.responseComponent.trigger('Etwas hat nicht funktioniert!')
+          this.responseComponent.trigger('Etwas hat nicht funktioniert!', false)
         }
       },
       error: (err) => {
-        this.responseComponent.trigger('Fehler beim Bearbeiten des Projekts. Bitte versuche es erneut.')
+        this.responseComponent.trigger('Fehler beim Bearbeiten des Projekts. Bitte versuche es erneut.', false)
       }
     })
   }

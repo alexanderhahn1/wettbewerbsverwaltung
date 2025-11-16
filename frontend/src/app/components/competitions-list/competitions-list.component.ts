@@ -4,12 +4,14 @@ import {Competition} from '../../models/competition';
 import {CompetitionCardComponent} from '../competition-card/competition-card.component';
 import {CompetitionSearchBarComponent} from '../competition-search-bar/competition-search-bar.component';
 import {KeycloakService} from 'keycloak-angular';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-competitions-list',
   imports: [
     CompetitionCardComponent,
-    CompetitionSearchBarComponent
+    CompetitionSearchBarComponent,
+    NgClass
   ],
   templateUrl: './competitions-list.component.html',
   styleUrl: './competitions-list.component.css'
@@ -20,6 +22,9 @@ export class CompetitionsListComponent implements OnInit{
   competitions: Competition[] = [];
   isUserAdmin: boolean = false;
 
+  page = 1;
+  pageSize = 5;
+
   ngOnInit() {
     this.keycloakService.getUserRoles().includes('admin') ? this.isUserAdmin = true : this.isUserAdmin = false;
 
@@ -27,6 +32,7 @@ export class CompetitionsListComponent implements OnInit{
     this.competitionService.searchCompetitionsSubject.subscribe(searchValue => {
       this.competitionService.getAllCompetitions().subscribe(
         (competitions: Competition[]) => {
+          this.page = 1
           this.competitions = competitions.filter(competition => competition.name.toLowerCase().includes(searchValue.toLowerCase()));;
         }
       )
@@ -49,6 +55,7 @@ export class CompetitionsListComponent implements OnInit{
         if (competitionIsRelevant) {
           this.competitionService.getAllCompetitions().subscribe(
             (competitions: Competition[]) => {
+              this.page = 1
               this.competitions = competitions.filter(competition => competition.is_relevant);
             }
           )
@@ -63,6 +70,7 @@ export class CompetitionsListComponent implements OnInit{
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
         this.competitions = competitions;
+        console.log(this.competitions);
       }
     )
   }
@@ -81,4 +89,28 @@ export class CompetitionsListComponent implements OnInit{
     searchBar.style.display = '';
 
   }
+
+  get paginatedCompetitions() {
+    const start = (this.page - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.competitions.slice(start, end);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.competitions.length / this.pageSize);
+  }
+
+  goToPage(page: number) {
+    if (page > 1 || page < this.totalPages) {
+      this.page = page
+
+      window.scroll({top: 0, behavior: 'smooth'})
+    }
+  }
+
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1)
+  }
+
+  protected readonly window = window;
 }

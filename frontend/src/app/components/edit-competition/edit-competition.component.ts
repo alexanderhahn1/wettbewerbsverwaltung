@@ -64,7 +64,6 @@ export class EditCompetitionComponent implements OnInit{
       ...this.editCompetitionForm.value,
       id: this.competition.id
     }
-    // Update competition, then upload images if any, and propagate the original Competition object
     this.competitionService.updateCompetition(updatedCompetition).pipe(
       switchMap((comp: Competition) => {
         if (this.newFiles.length) {
@@ -76,8 +75,7 @@ export class EditCompetitionComponent implements OnInit{
       })
     ).subscribe({
       next: (comp: Competition) => {
-        // Immer Erfolg, da wir hier die Competition aus updateCompetition erhalten
-        this.responseComponent.trigger('Wettbewerb erfolgreich bearbeitet!');
+        this.responseComponent.trigger('Wettbewerb erfolgreich bearbeitet!', true);
         setTimeout(() => {
           this.competitionService.refreshCompetitionList.next(true);
           document.body.style.overflow = 'auto';
@@ -86,7 +84,7 @@ export class EditCompetitionComponent implements OnInit{
         }, 500);
       },
       error: (err) => {
-        this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.');
+        this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.', false);
       }
     });
 
@@ -95,6 +93,7 @@ export class EditCompetitionComponent implements OnInit{
   confirmDeleteCompetition() {
     const confirmed = window.confirm("Möchten Sie diesen Wettbewerb wirklich löschen?");
     if (confirmed) {
+      this.responseComponent.trigger("Wettbewerb erfolgreich gelöscht!", true);
       this.deleteCompetition();
     }
   }
@@ -117,7 +116,7 @@ export class EditCompetitionComponent implements OnInit{
     const totalAlreadyUploaded = this.existingImages.length + this.newFiles.length
 
     if (totalAlreadyUploaded >= maxFiles) {
-      this.responseComponent.trigger(`Es sind bereits ${maxFiles} Bilder hochgeladen. Weitere Uploads sind nicht möglich.`)
+      this.responseComponent.trigger(`Es sind bereits ${maxFiles} Bilder hochgeladen. Weitere Uploads sind nicht möglich.`, false)
       return
     }
 
@@ -133,7 +132,7 @@ export class EditCompetitionComponent implements OnInit{
     const remainingSlots = maxFiles - totalAlreadyUploaded
 
     if (newFilesToAdd.length > remainingSlots) {
-      this.responseComponent.trigger(`Maximale Anzahl an Bildern überschritten (maximal ${maxFiles} erlaubt).`)
+      this.responseComponent.trigger(`Maximale Anzahl an Bildern überschritten (maximal ${maxFiles} erlaubt).`, false)
       newFilesToAdd = newFilesToAdd.slice(0, remainingSlots)
     }
 
@@ -148,7 +147,7 @@ export class EditCompetitionComponent implements OnInit{
     this.competitionService.deleteImage(image.id).subscribe(() => {
       this.existingImages = this.existingImages.filter(i => i.id !== image.id)
     }, err => {
-      console.error("Löschen des Bildes hat nicht funktioniert! Bitte erneut versuchen")
+      this.responseComponent.trigger("Löschen des Bildes hat nicht funktioniert! Bitte erneut versuchen", false)
     })
   }
 

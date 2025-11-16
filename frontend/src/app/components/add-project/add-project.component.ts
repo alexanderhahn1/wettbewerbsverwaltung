@@ -27,7 +27,9 @@ export class AddProjectComponent implements OnInit{
   ngOnInit() {
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
-        this.competitions = competitions;
+        this.competitions = competitions.sort((a, b) => {
+          return Number(b.school_year) - Number(a.school_year);
+        });
       }
     )
 
@@ -45,14 +47,14 @@ export class AddProjectComponent implements OnInit{
     this.projectService.addProject(project).subscribe({
         next: (createdProject: Project) => {
           if (createdProject && createdProject.name) {
-            this.responseComponent.trigger('Projekt erfolgreich hinzugefügt!')
+            this.responseComponent.trigger('Projekt erfolgreich hinzugefügt!', true)
             this.addProjectForm.reset();
           } else {
-            this.responseComponent.trigger('Etwas hat nicht funktioniert!')
+            this.responseComponent.trigger('Etwas hat nicht funktioniert!', false)
           }
         },
         error: (err) => {
-          this.responseComponent.trigger('Fehler beim Hinzufügen des Projekts. Bitte versuche es erneut.')
+          this.responseComponent.trigger('Fehler beim Hinzufügen des Projekts. Bitte versuche es erneut.', false)
         }
     })
     console.log(this.addProjectForm.value);
