@@ -75,4 +75,19 @@ export class CompetitionCardComponent implements OnInit {
   nextImage(): void {
     this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
   }
+
+  modalClosed() {
+    this.isModalOpen = false;
+    this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
+      const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
+      if (foundImage) {
+        this.logoImage = foundImage;
+        this.images = images.filter(image => image !== foundImage);
+        console.log(this.images);
+        console.log(this.logoImage)
+      } else {
+        this.images = images;
+      }
+    })
+  }
 }

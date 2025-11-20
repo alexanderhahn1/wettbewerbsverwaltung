@@ -119,5 +119,5 @@
   </div>
 }
 @if (isModalOpen) {
-  <app-edit-competition [competition]="competition" (closeModal)="isModalOpen = false"></app-edit-competition>
+  <app-edit-competition [competition]="competition" (closeModal)="modalClosed()"></app-edit-competition>
 }
