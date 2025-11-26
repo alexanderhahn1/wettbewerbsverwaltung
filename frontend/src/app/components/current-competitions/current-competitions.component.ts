@@ -17,7 +17,7 @@ export class CurrentCompetitionsComponent implements OnInit{
   ngOnInit() {
     this.competitionService.getActiveCompetitions().subscribe(
       (competitions: Competition[]) => {
-        this.competitions = competitions;
+        this.competitions = competitions.filter(competition => new Date(competition.deadline_date) > new Date()).sort((a, b) => a.name.localeCompare(b.name));
       }
     )
   }

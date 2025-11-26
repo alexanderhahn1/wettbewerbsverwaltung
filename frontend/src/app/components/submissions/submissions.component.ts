@@ -45,7 +45,7 @@ export class SubmissionsComponent implements OnInit{
   getAllSubmissions() {
     this.submissionService.getAllSubmissions().subscribe(
       (submissions: Submission[]) => {
-        this.submissions = submissions;
+        this.submissions = submissions.sort((a, b) => a.name.localeCompare(b.name));
       }
     )
   }

@@ -69,8 +69,7 @@ export class CompetitionsListComponent implements OnInit{
   getAllCompetitions() {
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
-        this.competitions = competitions;
-        console.log(this.competitions);
+        this.competitions = competitions.sort((a, b) => a.name.localeCompare(b.name));
       }
     )
   }

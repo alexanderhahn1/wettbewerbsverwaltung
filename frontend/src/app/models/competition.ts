@@ -5,7 +5,7 @@ export interface Competition {
   name: string,
   link: string,
   deadline: string,
-  deadline_date: Date,
+  deadline_date: string,
   prize: string,
   information_material: string,
   submission_forms: string,
