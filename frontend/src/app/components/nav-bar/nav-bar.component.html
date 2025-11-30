@@ -1,4 +1,4 @@
-<nav class="bg-gray-800">
+<nav class="bg-gray-800" (click)="closeLogoutIfOpened()">
   <div class="mx-auto max-w-7xl px-2 md:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center [@media(min-width:1250px)]:hidden">
@@ -62,8 +62,8 @@
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 [@media(min-width:1250px)]:static [@media(min-width:1250px)]:inset-auto [@media(min-width:1250px)]:ml-6 [@media(min-width:1250px)]:pr-0">
         <div class="relative ml-3">
-          <button type="button" (click)="toggleProfileDropdown()"
-                  class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          <button type="button" (click)="toggleProfileDropdown(); $event.stopPropagation()"
+                  class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"> <!-- $event.stopPropagation stoppt das 'bubblen' von den click elements nach oben im DOM Baum, sodas closeLogoutIfOpened() nicht ausgeführt wird -->
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">Open user menu</span>
             <div class="size-8 rounded-full flex items-center justify-center bg-gray-600 text-white font-bold text-sm">
@@ -73,7 +73,7 @@
 
           @if (isProfileOpen) {
             <div
-              class="absolute right-0 z-10 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition transform scale-100 opacity-100"
+              class="absolute right-0 z-10 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition transform scale-100 opacity-100" (click)="$event.stopPropagation()"
               role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
               <a (click)="logout()"
                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"

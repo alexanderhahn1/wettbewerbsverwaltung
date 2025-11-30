@@ -1,3 +1,5 @@
+<!-- Vorerst deaktiviert, da export mit der Pagination nicht mehr funktioniert
+
 @if (isUserAdmin) {
   <button
     (click)="exportPdf()"
@@ -7,6 +9,8 @@
     📄 Download PDF
   </button>
 }
+
+-->
 
 <app-competition-search-bar id="searchBar"></app-competition-search-bar>
 @if (totalPages > 1) {
@@ -37,10 +41,23 @@
   }
 </div>
 <div class="flex justify-center my-6">
-  <button
-    (click)="window.scrollTo({ top: 0, behavior: 'smooth' })"
-    class="px-5 py-2.5 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition"
-  >
-    Nach oben ↑
-  </button>
+  @if (totalPages > 1) {
+    <div class="flex justify-center items-center gap-2 my-8 flex-wrap">
+
+      @for (pageNum of pageNumbers; track pageNum) {
+        <button
+          (click)="goToPage(pageNum)"
+          class="px-4 py-2 rounded-md border text-sm transition hover:bg-gray-200"
+          [ngClass]="{
+          'bg-gray-800 text-white font-semibold border-gray-900': pageNum === page,
+          'bg-white text-gray-800 border-gray-300': pageNum !== page
+        }"
+        >
+          {{ pageNum }}
+        </button>
+      }
+
+    </div>
+  }
 </div>
+

@@ -33,15 +33,17 @@ export class SubmissionService {
 
         const submissionObservables = competitions.map(competition =>
           this.projectsService.getProjectsForCompetitions(competition.id).pipe(
-            map(projects => ({
+            map(projects => projects.length > 0 ? {
               name: competition.name,
               school_year: competition.school_year,
               last_update: competition.last_update,
               projects: projects
-            }))
+            } : null)
           )
+        ).filter(obs => obs !== null);
+        return forkJoin(submissionObservables).pipe(
+          map(results => results.filter(r => r !== null))
         );
-        return forkJoin(submissionObservables);
       })
     );
   }

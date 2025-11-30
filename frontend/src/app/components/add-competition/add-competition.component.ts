@@ -3,7 +3,6 @@ import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators
 import {CompetitionService} from '../../services/competition/competition.service';
 import {Competition} from '../../models/competition';
 import {ResponseComponent} from '../response/response.component';
-import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-add-competition',

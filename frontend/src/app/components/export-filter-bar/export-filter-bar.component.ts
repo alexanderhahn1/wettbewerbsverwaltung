@@ -1,11 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { CompetitionService } from '../../services/competition/competition.service';
-import {Competition} from '../../models/competition';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
 import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school-year.pipe';
-import {SubmissionService} from '../../services/submission/submission.service';
-import {ProjectService} from '../../services/project/project.service';
 
 @Component({
   selector: 'app-export-filter-bar',

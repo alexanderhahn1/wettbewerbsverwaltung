@@ -50,4 +50,10 @@ export class NavBarComponent implements OnInit{
   logout() {
     this.keycloakService.logout();
   }
+
+  closeLogoutIfOpened() {
+    if (this.isProfileOpen) {
+      this.isProfileOpen = false;
+    }
+  }
 }

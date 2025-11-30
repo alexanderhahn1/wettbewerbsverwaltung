@@ -9,7 +9,7 @@ import {
 import {inject, Injectable} from '@angular/core';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { Competition } from '../../models/competition';;
+import { Competition } from '../../models/competition';
 import PptxGenJS from 'pptxgenjs';
 
 import { forkJoin } from 'rxjs';
@@ -62,7 +62,8 @@ export class ExportService {
             y: 0.5,
             w: '50%',
             fontSize: 28,
-            bold: true,
+            bold: false,
+            italic: true,
             color: '003366',
           });
 

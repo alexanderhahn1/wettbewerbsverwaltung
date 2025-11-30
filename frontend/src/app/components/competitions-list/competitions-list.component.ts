@@ -100,10 +100,12 @@ export class CompetitionsListComponent implements OnInit{
   }
 
   goToPage(page: number) {
-    if (page > 1 || page < this.totalPages) {
+    if (page >= 1 || page <= this.totalPages) {
       this.page = page
 
-      window.scroll({top: 0, behavior: 'smooth'})
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 5);
     }
   }
 
