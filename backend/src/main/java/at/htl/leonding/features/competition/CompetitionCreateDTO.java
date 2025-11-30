@@ -13,6 +13,7 @@ public record CompetitionCreateDTO(
     String contact,
     boolean is_active,
     String school_year,
-    Boolean is_relevant
+    Boolean is_relevant,
+    String is_not_relevant_info
 ) {
 }

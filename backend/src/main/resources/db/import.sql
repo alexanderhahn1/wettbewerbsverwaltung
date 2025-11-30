@@ -269,20 +269,20 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  false);
 
 
-INSERT INTO project (competition_id, name, status, next_step, contributors) VALUES
+INSERT INTO project (competition_id, name, status, next_step, contributors, date_created) VALUES
 -- Projekte für Austria Cyber Security Challenge (ID vermutlich 1)
-(1, 'Secure Login System', 'In Bearbeitung', 'Abschließender Sicherheitstest', 'Anna Meier, Lukas Schwarz'),
-(1, 'Phishing Awareness Kampagne', 'Abgeschlossen', 'Ergebnisse präsentieren', 'Tom Huber, Sophie Klein'),
+(1, 'Secure Login System', 'In Bearbeitung', 'Abschließender Sicherheitstest', 'Anna Meier, Lukas Schwarz', '2025-08-12'),
+(1, 'Phishing Awareness Kampagne', 'Abgeschlossen', 'Ergebnisse präsentieren', 'Tom Huber, Sophie Klein', '2025-08-12'),
 
 -- Projekte für Austrian Skills (ID vermutlich 2)
-(2, 'CNC Fräsmodul', 'In Bearbeitung', 'Prototyp testen', 'Max Berger, Julia Gruber'),
-(2, '3D-Druck Wettbewerbsobjekt', 'Idee eingereicht', 'Material beschaffen', 'Stefan Hofer'),
+(2, 'CNC Fräsmodul', 'In Bearbeitung', 'Prototyp testen', 'Max Berger, Julia Gruber', '2025-08-12'),
+(2, '3D-Druck Wettbewerbsobjekt', 'Idee eingereicht', 'Material beschaffen', 'Stefan Hofer', '2025-08-12'),
 
 -- Projekte für HTL Coding Cup (ID vermutlich 3)
-(3, 'Quiz-App für HTL Schüler', 'Abgeschlossen', 'Veröffentlichung im Play Store', 'Nina Wolf, Paul Leitner'),
+(3, 'Quiz-App für HTL Schüler', 'Abgeschlossen', 'Veröffentlichung im Play Store', 'Nina Wolf, Paul Leitner', '2025-08-12'),
 
 -- Projekte für European Robotics Competition (ID vermutlich 4)
-(4, 'Autonomer Linienfolger', 'In Bearbeitung', 'Kalibrierung optimieren', 'Fabian Bauer, Elena Fuchs'),
+(4, 'Autonomer Linienfolger', 'In Bearbeitung', 'Kalibrierung optimieren', 'Fabian Bauer, Elena Fuchs', '2025-08-12'),
 
 -- Projekte für Young Engineers Challenge (ID vermutlich 5)
-(5, 'Energieeffizientes Minihaus', 'Idee eingereicht', 'Pläne finalisieren', 'Laura Steiner, Markus Weber');
+(5, 'Energieeffizientes Minihaus', 'Idee eingereicht', 'Pläne finalisieren', 'Laura Steiner, Markus Weber', '2025-08-12');

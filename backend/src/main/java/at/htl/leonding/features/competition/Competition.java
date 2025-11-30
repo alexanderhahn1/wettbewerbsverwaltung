@@ -55,6 +55,8 @@ public class Competition {
     String createdBy;
     @Column(name = "is_relevant")
     Boolean isRelevant;
+    @Column(name = "is_not_relevant_info", nullable = true)
+    String isNotRelevantInfo;
 
     public LocalDate getLastChangeDate() {
         if (changes == null || changes.isEmpty()) {
@@ -66,7 +68,7 @@ public class Competition {
 
     public Competition() {}
 
-    public Competition(String competitionName, String link, String deadline, LocalDate deadlineDate, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy, Boolean isRelevant) {
+    public Competition(String competitionName, String link, String deadline, LocalDate deadlineDate, String prize, String informationMaterial, String submissionForms, String contact, Boolean isActive, String schoolYear, String createdBy, Boolean isRelevant, String isNotRelevantInfo) {
         this.competitionName = competitionName;
         this.link = link;
         this.deadline = deadline;
@@ -80,6 +82,7 @@ public class Competition {
         this.createdBy = createdBy;
         this.dateCreated = LocalDate.now();
         this.isRelevant = isRelevant;
+        this.isNotRelevantInfo = isNotRelevantInfo;
     }
 
     public LocalDate getDeadlineDate() {
@@ -88,6 +91,14 @@ public class Competition {
 
     public void setDeadlineDate(LocalDate deadlineDate) {
         this.deadlineDate = deadlineDate;
+    }
+
+    public String getIsNotRelevantInfo() {
+        return isNotRelevantInfo;
+    }
+
+    public void setIsNotRelevantInfo(String isNotRelevantInfo) {
+        this.isNotRelevantInfo = isNotRelevantInfo;
     }
 
     public Boolean getRelevant() {

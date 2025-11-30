@@ -3,6 +3,8 @@ package at.htl.leonding.features.project;
 import at.htl.leonding.features.competition.Competition;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Project {
     @Id
@@ -18,6 +20,8 @@ public class Project {
     @Column(name = "next_step")
     String nextStep;
     String contributors;
+    @Column(name = "date_created")
+    LocalDate dateCreated;
 
     public Project() {}
 
@@ -27,6 +31,7 @@ public class Project {
         this.status = status;
         this.nextStep = nextStep;
         this.contributors = contributors;
+        this.dateCreated = LocalDate.now();
     }
 
     public void setEverything(String projectName, String status, String nextStep, String contributors) {
@@ -34,6 +39,14 @@ public class Project {
         this.status = status;
         this.nextStep = nextStep;
         this.contributors = contributors;
+    }
+
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Long getId() {

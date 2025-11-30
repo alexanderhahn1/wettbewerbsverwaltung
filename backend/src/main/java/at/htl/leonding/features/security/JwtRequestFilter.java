@@ -31,8 +31,9 @@ import java.util.*;
 @Priority(Priorities.AUTHENTICATION)
 public class JwtRequestFilter implements ContainerRequestFilter {
 
-    @ConfigProperty(name = "keycloak.realm.public.key")
-    String REALM_PUBLIC_KEY;
+    /*@ConfigProperty(name = "keycloak.realm.public.key")
+    String REALM_PUBLIC_KEY;*/
+    String REALM_PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA807Sg8RdQUQxLkbWNgf9UPtCIpkFexHntpg/9xEykb1rKp8pKBC0fOgqrXpPgoT4bQVznd7gx28VLqZtWm1kDyI7BPjLox8PBIyEKIHcUgJ6r8Gx7z9FGmdxT1HxcEpetjqgplIxDm/8qMTDdcP7XMaVCuev6gXq0HQrnQvl3mOf7ZkUF8vByDXCHm+knvhnK8KASSFD390bMys6jf1Y+AkCvZoBTza4Ad+zhBm23HoWSDfkdT6DrPDnk0L4OVNtdhl6PiQ5BWh1dVmDEEmRIWAZtOAzImdfj4Kqri6aMjyoKfLQnwtAbwbzc2sa6h82shfKCYEBsFtpRu+ZBZGc3wIDAQAB";
 
     @Context
     private ResourceInfo resourceInfo;

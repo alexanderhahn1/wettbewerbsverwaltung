@@ -17,6 +17,7 @@ public record CompetitionDTO(
         LocalDate last_update,
         String school_year,
         String created_by,
-        Boolean is_relevant
+        Boolean is_relevant,
+        String is_not_relevant_info
 ) {
 }
