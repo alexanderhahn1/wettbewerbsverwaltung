@@ -15,6 +15,15 @@
     <label for="is_relevant" class="block font-medium text-gray-700 mb-1">Wettbewerb ist für die Schule relevant</label>
     <input type="checkbox" id="is_relevant" formControlName="is_relevant" class="h-5 w-5 border border-gray-300 rounded text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
   </div>
+  @if (addCompetitionForm.get('is_relevant')?.value == false) {
+    <div>
+      <label for="is_not_relevant_info" class="block font-medium text-gray-700 mb-1">Info, warum nicht relevant</label>
+      <input type="text" id="is_not_relevant_info" formControlName="is_not_relevant_info" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      @if (addCompetitionForm.get('is_not_relevant_info')?.invalid && addCompetitionForm.get('is_not_relevant_info')?.touched) {
+        <div class="text-red-500 text-sm mt-1">Info, warum Wettbewerb nicht relevant ist, ist bei nicht Relevanz verpflichtend</div>
+      }
+    </div>
+  }
 
   <div>
     <label for="school_year" class="block font-medium text-gray-700 mb-1">Schuljahr</label>

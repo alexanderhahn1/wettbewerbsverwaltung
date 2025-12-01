@@ -4,11 +4,13 @@ import {EditProjectComponent} from '../edit-project/edit-project.component';
 import {KeycloakService} from 'keycloak-angular';
 import {Project} from '../../models/project';
 import {SubmissionService} from '../../services/submission/submission.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-submission-card',
   imports: [
-    EditProjectComponent
+    EditProjectComponent,
+    DatePipe
   ],
   templateUrl: './submission-card.component.html',
   styleUrl: './submission-card.component.css'

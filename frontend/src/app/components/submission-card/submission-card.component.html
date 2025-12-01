@@ -7,10 +7,11 @@
     <table class="min-w-full table-auto border border-gray-300 mt-4">
       <thead class="bg-gray-100">
       <tr>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nächster Schritt</th>
-        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Mitwirkende</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 w-50">Name</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 w-30">Status</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 w-40">Nächster Schritt</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 w-50">Mitwirkende</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 w-32">Erstellt am</th>
         <th></th>
       </tr>
       </thead>
@@ -18,10 +19,11 @@
       <tbody>
       @for (project of submission.projects; track project.name) {
         <tr class="border-t">
-          <td class="px-4 py-2 text-sm text-gray-900">{{ project.name }}</td>
-          <td class="px-4 py-2 text-sm text-gray-900">{{ project.status }}</td>
-          <td class="px-4 py-2 text-sm text-gray-900">{{ project.next_step }}</td>
-          <td class="px-4 py-2 text-sm text-gray-900">{{ project.contributors }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900 w-50">{{ project.name }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900 w-30">{{ project.status }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900 w-40">{{ project.next_step }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900 w-50">{{ project.contributors }}</td>
+          <td class="px-4 py-2 text-sm text-gray-900 w-32">{{ project.date_created | date}}</td>
           @if (showEditImage) {
             <td><button (click)="handleBtnEditProject(project)" >📝</button></td>
           }
