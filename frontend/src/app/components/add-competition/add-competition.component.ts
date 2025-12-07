@@ -26,6 +26,7 @@ export class AddCompetitionComponent implements OnInit{
       name: new FormControl('', Validators.required),
       is_active: new FormControl(false, [Validators.required]),
       is_relevant: new FormControl(false, [Validators.required]),
+      is_not_relevant_info: new FormControl('', [Validators.required]),
       school_year: new FormControl('', [
         Validators.required,
         Validators.pattern('[0-9]{4}'),

@@ -3,6 +3,7 @@ import {KeycloakOperationService} from '../../services/keycloak/keycloak.service
 import {CompetitionCardComponent} from '../competition-card/competition-card.component';
 import {Competition} from '../../models/competition';
 import {CompetitionService} from '../../services/competition/competition.service';
+import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit{
   ngOnInit() {
     this.competitionService.getRandomCompetition().subscribe( c => {
       this.randomCompetition = c;
+      console.log(c)
     })
   }
 

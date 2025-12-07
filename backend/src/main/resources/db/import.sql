@@ -1,4 +1,4 @@
-INSERT INTO competition (name, link, deadline, deadline_date, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant) VALUES
+INSERT INTO competition (name, link, deadline, deadline_date, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant, is_not_relevant_info) VALUES
 -- Austria Cyber Security Challenge
 ('Austria Cyber Security Challenge (ACSC)',
  'https://verbotengut.at/',
@@ -12,7 +12,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2023-09-05',
  '2324',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 -- Austrian Skills
 ('Austrian Skills',
@@ -27,7 +28,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2023-09-05',
  '2324',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 -- Fiktive Wettbewerbe
 ('HTL Coding Cup',
@@ -42,7 +44,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-07-07',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('European Robotics Competition',
  'https://robotics-europe.org',
@@ -56,7 +59,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-07-07',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Young Engineers Challenge',
  'https://youngengineers.at',
@@ -70,7 +74,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-04-07',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('AI Innovation Sprint',
  'https://ai-sprint.eu',
@@ -84,7 +89,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-03-15',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('GreenTech Future Award',
  'https://greentechfuture.org',
@@ -98,7 +104,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-03-18',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Young Innovators Europe',
  'https://yinno.eu',
@@ -112,7 +119,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-04-10',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Space Engineering Challenge',
  'https://spacechallenge.eu',
@@ -126,7 +134,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-04-20',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Digital Health Hackathon',
  'https://healthhack.eu',
@@ -140,7 +149,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-05-11',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('European Renewable Energy Contest',
  'https://resenergy.eu',
@@ -154,7 +164,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-05-22',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Cyber Defense Junior League',
  'https://cdjl.eu',
@@ -168,7 +179,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-06-05',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Innovative Mobility Award',
  'https://mobilityaward.eu',
@@ -182,7 +194,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-06-18',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Junior Data Science Cup',
  'https://datasciencecup.eu',
@@ -196,7 +209,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-06-23',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Tech Entrepreneurs League',
  'https://tel-league.eu',
@@ -210,7 +224,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-07-01',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('European Drone Masters',
  'https://dronemasters.eu',
@@ -224,7 +239,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-07-12',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('Smart City Innovation Cup',
  'https://smartcitycup.eu',
@@ -238,7 +254,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-07-17',
  '2425',
  'e.baar',
- false),
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('NextGen Robotics League',
  'https://ng-robotics.eu',
@@ -252,7 +269,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-08-03',
  '2425',
  'e.baar',
- true),
+ true,
+ 'Wettbewerb ist ein externer Wettbewerb'),
 
 ('EcoTech Builders Challenge',
  'https://ecotechbuilders.eu',
@@ -266,7 +284,8 @@ INSERT INTO competition (name, link, deadline, deadline_date, prize, information
  '2025-08-12',
  '2425',
  'e.baar',
- false);
+ false,
+ 'Wettbewerb ist ein externer Wettbewerb');
 
 
 INSERT INTO project (competition_id, name, status, next_step, contributors, date_created) VALUES

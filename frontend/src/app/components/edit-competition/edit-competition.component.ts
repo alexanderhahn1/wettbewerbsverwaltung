@@ -36,6 +36,7 @@ export class EditCompetitionComponent implements OnInit{
       name: new FormControl(this.competition.name, [Validators.required]),
       is_active: new FormControl(this.competition.is_active, [Validators.required]),
       is_relevant: new FormControl(this.competition.is_relevant, [Validators.required]),
+      is_not_relevant_info: new FormControl(this.competition.is_not_relevant_info, [Validators.required]),
       school_year: new FormControl(this.competition.school_year, [Validators.required, Validators.pattern('[0-9]{4}')]),
       deadline: new FormControl(this.competition.deadline, [Validators.required]),
       deadline_date: new FormControl(this.competition.deadline_date, [

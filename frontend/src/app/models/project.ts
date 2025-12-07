@@ -4,5 +4,6 @@ export interface Project {
   name: string,
   status: string,
   next_step: string,
-  contributors: string
+  contributors: string,
+  date_created: Date,
 }
