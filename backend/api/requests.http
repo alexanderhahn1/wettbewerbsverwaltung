@@ -32,7 +32,7 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=password&
 client_id=quarkus-client&
 username=it210157&
-password=Hoppel.110406
+password=
 
 > {% client.global.set("access_token", response.body.access_token); %}
 
