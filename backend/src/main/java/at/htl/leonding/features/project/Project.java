@@ -1,9 +1,11 @@
 package at.htl.leonding.features.project;
 
 import at.htl.leonding.features.competition.Competition;
+import at.htl.leonding.features.projectImage.ProjectImage;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -13,6 +15,9 @@ public class Project {
 
     @ManyToOne
     Competition competition;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    List<ProjectImage> images;
 
     @Column(name = "name")
     String projectName;
@@ -39,6 +44,14 @@ public class Project {
         this.status = status;
         this.nextStep = nextStep;
         this.contributors = contributors;
+    }
+
+    public List<ProjectImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProjectImage> images) {
+        this.images = images;
     }
 
     public LocalDate getDateCreated() {

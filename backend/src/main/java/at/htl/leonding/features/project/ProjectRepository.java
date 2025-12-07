@@ -3,12 +3,14 @@ package at.htl.leonding.features.project;
 import at.htl.leonding.features.change.Change;
 import at.htl.leonding.features.change.ChangeRepository;
 import at.htl.leonding.features.competition.Competition;
+import at.htl.leonding.features.projectImage.ProjectImage;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @ApplicationScoped
 public class ProjectRepository implements PanacheRepository<Project> {
@@ -33,5 +35,15 @@ public class ProjectRepository implements PanacheRepository<Project> {
         project.setEverything(dto.name(), dto.status(), dto.next_step(), dto.contributors());
         persist(project);
         return project;
+    }
+
+    public List<ProjectImage> getAllImages(Long projectId) {
+        Project project = findById(projectId);
+
+        if (project == null) {
+            return null;
+        }
+
+        return project.getImages();
     }
 }
