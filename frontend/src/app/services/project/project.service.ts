@@ -1,9 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {filter, map, Observable, Subject} from 'rxjs';
+import {filter, forkJoin, map, Observable, Subject} from 'rxjs';
 import {Project} from '../../models/project';
 import {KeycloakService} from 'keycloak-angular';
 import {Competition} from '../../models/competition';
+import {Image} from '../../models/image';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,36 @@ export class ProjectService {
       Authorization: `Bearer ${this.keycloakService.getToken()}`
     }
     this.httpClient.delete(`${this.BASE_URL}/projects/${project.id}`, { headers }).subscribe();
+  }
+
+  addImagesToProject(files: File[], projectId: number): Observable<any> {
+    const headers = {
+      Authorization: `Bearer ${this.keycloakService.getToken()}`
+    };
+    const requests = files.map(file => {
+      const formData = new FormData();
+      formData.append('file', file, file.name);
+      formData.append('fileName', file.name);
+      formData.append('fileContentType', file.type);
+      return this.httpClient.post<void>(
+        `${this.BASE_URL}/projects/${projectId}/images`,
+        formData,
+        { headers }
+      );
+    });
+    return forkJoin(requests);
+  }
+
+  getImagesForProject(projectId: number): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(`${this.BASE_URL}/projects/${projectId}/images`)
+  }
+
+  deleteImage(imageId: number): Observable<void> {
+    const token = this.keycloakService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.httpClient.delete<void>(
+      `${this.BASE_URL}/project-images/${imageId}`,
+      { headers }
+    );
   }
 }

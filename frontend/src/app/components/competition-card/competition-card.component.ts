@@ -5,7 +5,7 @@ import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school
 import {KeycloakService} from 'keycloak-angular';
 import {EditCompetitionComponent} from '../edit-competition/edit-competition.component';
 import {RouterLink} from '@angular/router';
-import {CompetitionImage} from '../../models/competition-image';
+import {Image} from '../../models/image';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 
@@ -23,25 +23,24 @@ import {DatePipe, NgOptimizedImage} from '@angular/common';
 })
 export class CompetitionCardComponent implements OnInit {
   @Input() competition!: Competition;
-  @Input() isEditable!: boolean;
   keycloakService: KeycloakService = inject(KeycloakService);
   competitionService: CompetitionService = inject(CompetitionService);
   showEditImage: boolean = false;
   isModalOpen: boolean = false;
-  images: CompetitionImage[] = [];
+  images: Image[] = [];
   isLightboxOpen = false;
   currentImageIndex = 0;
-  logoImage?: CompetitionImage | {url: string, name: string} | null = null;
+  logoImage?: Image | {url: string, name: string} | null = null;
 
   ngOnInit() {
-    if (!this.competition) {
+    /*if (!this.competition) {
       return;
     }
+     */
 
-    if (this.keycloakService.getUserRoles().includes('admin') && this.isEditable) {
+    if (this.keycloakService.getUserRoles().includes('admin')) {
       this.showEditImage = true;
     }
-
 
     this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
       const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))

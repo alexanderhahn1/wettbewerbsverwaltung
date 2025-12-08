@@ -24,6 +24,9 @@ export class AddProjectComponent implements OnInit{
   competitions: Competition[] = [];
   addProjectForm!: FormGroup;
 
+  selectedFiles: File[] = []
+  selectedFileNames: string[] = []
+
   ngOnInit() {
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
@@ -42,7 +45,7 @@ export class AddProjectComponent implements OnInit{
     })
   }
 
-  addProject(): void {
+  /*addProject(): void {
     const project: Project = this.addProjectForm.value;
     this.projectService.addProject(project).subscribe({
         next: (createdProject: Project) => {
@@ -59,5 +62,64 @@ export class AddProjectComponent implements OnInit{
     })
     console.log(this.addProjectForm.value);
     console.log(project)
+  }
+  */
+
+
+  addProject(): void {
+    const projectData = this.addProjectForm.value;
+    this.projectService.addProject(projectData).subscribe({
+      next: (createdProject: Project) => {
+        if (createdProject && createdProject.name) {
+          if (this.selectedFiles.length > 0) {
+            this.projectService
+              .addImagesToProject(this.selectedFiles, createdProject.id)
+              .subscribe({
+                next: () => this.responseComponent.trigger('Bilder erfolgreich hochgeladen!', true),
+                error: (err) => {
+                  console.error('Upload-Fehler:', err);
+                  this.responseComponent.trigger('Fehler beim Hochladen der Bilder.', false);
+                }
+              });
+          }
+          this.responseComponent.trigger('Wettbewerb erfolgreich hinzugefügt!', true)
+          this.addProjectForm.reset();
+          this.selectedFiles = [];
+          this.selectedFileNames = [];
+        } else {
+          this.responseComponent.trigger('Etwas hat nicht funktioniert!', false)
+        }
+      },
+      error: (err) => {
+        this.responseComponent.trigger('Fehler beim Hinzufügen des Wettbewerbs. Bitte versuche es erneut.', false);
+      }
+    });
+    console.log(this.addProjectForm.value);
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement
+    if (!input.files || input.files.length === 0) {
+      this.selectedFiles = []
+      this.selectedFileNames = []
+      return
+    }
+
+    const files = Array.from(input.files)
+
+    const hasLogo = files.some(f => f.name.toLowerCase().includes('logo'))
+
+    const maxFiles = hasLogo ? 9 : 8
+
+    if (files.length > maxFiles) {
+      this.responseComponent.trigger(
+        hasLogo
+          ? 'Maximal 9 Dateien erlaubt, wenn ein Logo dabei ist.'
+          : 'Maximal 8 Dateien erlaubt.', false
+      )
+    }
+
+    this.selectedFiles = files.slice(0, maxFiles)
+    this.selectedFileNames = this.selectedFiles.map(f => f.name)
   }
 }

@@ -4,7 +4,7 @@ import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModul
 import {ResponseComponent} from '../response/response.component';
 import {HttpClient} from '@angular/common/http';
 import {CompetitionService} from '../../services/competition/competition.service';
-import {CompetitionImage} from '../../models/competition-image';
+import {Image} from '../../models/image';
 import {of, switchMap} from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -25,7 +25,7 @@ export class EditCompetitionComponent implements OnInit{
   @Output() closeModal = new EventEmitter<void>();
   editCompetitionForm!: FormGroup;
 
-  existingImages: CompetitionImage[] = [];
+  existingImages: Image[] = [];
   newFiles: File[] = [];
 
 
@@ -88,7 +88,6 @@ export class EditCompetitionComponent implements OnInit{
         this.responseComponent.trigger('Fehler beim Bearbeiten des Wettbewerbs. Bitte versuche es erneut.', false);
       }
     });
-
   }
 
   confirmDeleteCompetition() {
@@ -144,7 +143,7 @@ export class EditCompetitionComponent implements OnInit{
     this.newFiles = this.newFiles.filter( f => f !== file);
   }
 
-  removeExistingImage(image: CompetitionImage){
+  removeExistingImage(image: Image){
     this.competitionService.deleteImage(image.id).subscribe(() => {
       this.existingImages = this.existingImages.filter(i => i.id !== image.id)
     }, err => {

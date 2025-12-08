@@ -5,6 +5,8 @@ import {Project} from '../../models/project';
 import {Competition} from '../../models/competition';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {ProjectService} from '../../services/project/project.service';
+import {Image} from '../../models/image';
+import {map, of, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-edit-project',
@@ -25,10 +27,11 @@ export class EditProjectComponent implements OnInit{
   competitions: Competition[] = []
   editProjectForm!: FormGroup;
 
+  existingImages: Image[] = [];
+  newFiles: File[] = [];
 
   ngOnInit() {
     document.body.style.overflow = 'hidden';
-
 
     this.competitionService.getAllCompetitions().subscribe(
       (competitions: Competition[]) => {
@@ -43,7 +46,9 @@ export class EditProjectComponent implements OnInit{
       contributors: new FormControl(this.project.contributors, [Validators.required])
     })
 
-    console.log(this.project)
+    this.projectService.getImagesForProject(this.project.id).subscribe(images => {
+      this.existingImages = images
+    })
   }
 
   close() {
@@ -60,7 +65,16 @@ export class EditProjectComponent implements OnInit{
       competition_id: this.project.competition_id
     }
 
-    this.projectService.updateProject(updatedProject).subscribe({
+    this.projectService.updateProject(updatedProject).pipe(
+      switchMap((project: Project) => {
+        if (this.newFiles.length) {
+          return this.projectService.addImagesToProject(this.newFiles, this.project.id).pipe(
+            map(() => project)
+          );
+        }
+        return of(project)
+      })
+    ).subscribe({
       next: (updatedProject: Project) => {
         if (updatedProject && updatedProject.name) {
           this.responseComponent.trigger('Projekt erfolgreich bearbeitet!', true)
@@ -92,5 +106,54 @@ export class EditProjectComponent implements OnInit{
     document.body.style.overflow = 'auto';
 
     this.closeModal.emit()
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement
+    if (!input.files) return
+
+    const selectedFilesArray = Array.from(input.files)
+    const hasLogo = selectedFilesArray.some(file => file.name.toLowerCase().includes('logo'))
+
+    const maxFiles = hasLogo ? 9 : 8
+
+    const totalAlreadyUploaded = this.existingImages.length + this.newFiles.length
+
+    if (totalAlreadyUploaded >= maxFiles) {
+      this.responseComponent.trigger(`Es sind bereits ${maxFiles} Bilder hochgeladen. Weitere Uploads sind nicht möglich.`, false)
+      return
+    }
+
+    let newFilesToAdd: File[] = []
+    selectedFilesArray.forEach(file => {
+      const alreadyNew = this.newFiles.some(f => f.name === file.name)
+      const alreadyOld = this.existingImages.some(f => f.name === file.name)
+      if (!alreadyNew && !alreadyOld) {
+        newFilesToAdd.push(file)
+      }
+    })
+
+    const remainingSlots = maxFiles - totalAlreadyUploaded
+
+    if (newFilesToAdd.length > remainingSlots) {
+      this.responseComponent.trigger(`Maximale Anzahl an Bildern überschritten (maximal ${maxFiles} erlaubt).`, false)
+      newFilesToAdd = newFilesToAdd.slice(0, remainingSlots)
+    }
+
+    this.newFiles = [...this.newFiles, ...newFilesToAdd]
+  }
+
+  removeNewFile(file:File){
+    this.newFiles = this.newFiles.filter( f => f !== file);
+  }
+
+  removeExistingImage(image: Image){
+    this.projectService.deleteImage(image.id).subscribe(() => {
+      console.log(this.existingImages)
+      this.existingImages = this.existingImages.filter(i => i.id !== image.id)
+      console.log(this.existingImages)
+    }, err => {
+      this.responseComponent.trigger("Löschen des Bildes hat nicht funktioniert! Bitte erneut versuchen", false)
+    })
   }
 }

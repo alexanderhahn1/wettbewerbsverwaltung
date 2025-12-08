@@ -8,12 +8,13 @@ export function initializeKeycloak(keycloak: KeycloakService):() => Promise<bool
         realm: 'demo',
         clientId: 'demo-client',
       },
-      /*config: {
+      /*
+      config: {
         url: 'https://auth.htl-leonding.ac.at/',
         realm: 'wettbewerbsdatenbank',
         clientId: 'angular-client',
       },
-      */
+       */
       initOptions: {
         onLoad: 'login-required',
         checkLoginIframe: false,

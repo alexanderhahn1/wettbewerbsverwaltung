@@ -72,7 +72,7 @@ export class AddCompetitionComponent implements OnInit{
         this.responseComponent.trigger('Fehler beim Hinzufügen des Wettbewerbs. Bitte versuche es erneut.', false);
       }
     });
-    console.log(this.addCompetitionForm.value);
+    //console.log(this.addCompetitionForm.value);
   }
 
   onFileSelected(event: Event): void {

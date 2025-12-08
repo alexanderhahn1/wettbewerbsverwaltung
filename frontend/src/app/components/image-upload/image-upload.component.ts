@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {CompetitionImage} from '../../models/competition-image';
+import {Image} from '../../models/image';
 import {NgForOf} from '@angular/common';
 import {KeycloakService} from 'keycloak-angular';
 
@@ -18,7 +18,7 @@ export class ImageUploadComponent {
   keycloakService: KeycloakService = inject(KeycloakService);
 
   selectedFile: File | null = null;
-  images: CompetitionImage[] | null = null;
+  images: Image[] | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +30,7 @@ export class ImageUploadComponent {
   }
 
   getImages(): void {
-    this.http.get<CompetitionImage[]>('http://localhost:8080/api/competitions/1/images').subscribe(images => {
+    this.http.get<Image[]>('http://localhost:8080/api/competitions/1/images').subscribe(images => {
       this.images = images;
     })
   }

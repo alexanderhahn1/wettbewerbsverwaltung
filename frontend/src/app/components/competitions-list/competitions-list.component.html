@@ -33,7 +33,7 @@
 }
 <div class="grid justify-center gap-4 m-10">
   @for (competition of paginatedCompetitions; track competition.name) {
-    <app-competition-card [competition]="competition" [isEditable]="true"></app-competition-card>
+    <app-competition-card [competition]="competition"></app-competition-card>
   }
 
   @if (paginatedCompetitions.length == 0) {

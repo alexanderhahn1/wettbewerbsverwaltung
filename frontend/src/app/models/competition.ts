@@ -1,4 +1,4 @@
-import {CompetitionImage} from './competition-image';
+import {Image} from './image';
 
 export interface Competition {
   id: number,

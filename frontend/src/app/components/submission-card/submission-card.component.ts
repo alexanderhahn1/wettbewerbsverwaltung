@@ -5,12 +5,13 @@ import {KeycloakService} from 'keycloak-angular';
 import {Project} from '../../models/project';
 import {SubmissionService} from '../../services/submission/submission.service';
 import {DatePipe} from '@angular/common';
+import {ProjectService} from '../../services/project/project.service';
+import {SubmissionProjectItemComponent} from '../submission-project-item/submission-project-item.component';
 
 @Component({
   selector: 'app-submission-card',
   imports: [
-    EditProjectComponent,
-    DatePipe
+    SubmissionProjectItemComponent
   ],
   templateUrl: './submission-card.component.html',
   styleUrl: './submission-card.component.css'
@@ -18,22 +19,9 @@ import {DatePipe} from '@angular/common';
 export class SubmissionCardComponent implements OnInit{
   @Input() submission!: Submission;
   keycloakService: KeycloakService = inject(KeycloakService);
-  submissionService: SubmissionService = inject(SubmissionService);
-  isModalOpen: boolean = false;
-  showEditImage = false;
-  selectedProjectForEdit: Project | null = null;
+  showEditBtn = false;
 
   ngOnInit() {
-    this.keycloakService.getUserRoles().includes('admin') ? this.showEditImage = true : this.showEditImage = false;
-  }
-
-  handleBtnEditProject(project: Project) {
-    this.selectedProjectForEdit = project
-    this.isModalOpen = true;
-  }
-
-  closeEditModal() {
-    this.selectedProjectForEdit = null
-    this.submissionService.closeEditModalSubject.next(true)
+    this.keycloakService.getUserRoles().includes('admin') ? this.showEditBtn = true : this.showEditBtn = false;
   }
 }
