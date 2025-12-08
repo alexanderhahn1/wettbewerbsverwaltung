@@ -4,6 +4,8 @@ import {Change} from '../../models/change';
 import {ChangeService} from '../../services/change/change.service';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {routes} from '../../app.routes';
 
 @Component({
   selector: 'app-changes',
@@ -15,6 +17,8 @@ export class ChangesComponent implements OnInit{
   competitionService: CompetitionService = inject(CompetitionService);
   changeService: ChangeService = inject(ChangeService)
   route = inject(ActivatedRoute);
+  router: Router = inject(Router);
+  location: Location = inject(Location);
   //competition!: Competition;
   changes: Change[] = [];
   competitionName: string = "";
@@ -34,5 +38,9 @@ export class ChangesComponent implements OnInit{
     )
 
 
+  }
+
+  back() {
+    this.location.back();
   }
 }
