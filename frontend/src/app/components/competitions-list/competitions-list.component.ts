@@ -32,10 +32,14 @@ export class CompetitionsListComponent implements OnInit{
     this.competitionService.searchCompetitionsSubject.subscribe(searchValue => {
       this.competitionService.getAllCompetitions().subscribe(
         (competitions: Competition[]) => {
-          this.page = 1
-          this.competitions = competitions.filter(competition => competition.name.toLowerCase().includes(searchValue.toLowerCase()));;
+          this.page = 1;
+          const term = (searchValue ?? '').toString().toLowerCase();
+          this.competitions = competitions.filter(competition => {
+            const infoString = this.competitionService.getCompetitionInfoString(competition);
+            return infoString.includes(term);
+          });
         }
-      )
+      );
     })
     this.competitionService.resetSearchCompetitionsSubject.subscribe(
       resetSearchCompetitions => {

@@ -29,13 +29,16 @@ export class CompetitionSearchBarComponent implements OnInit {
 
   searchCompetitions() {
     if (this.searchCompetitionsForm.valid) {
-      this.competitionName = this.searchCompetitionsForm.value.competitionName;
-      if(this.competitionName.length > 0){
-        this.competitionService.searchCompetitionsSubject.next(this.competitionName);
+      const rawValue = this.searchCompetitionsForm.value.competitionName ?? '';
+      this.competitionName = rawValue.trim();
+
+      if (this.competitionName.length > 0) {
+        this.competitionService.searchCompetitionsSubject.next(this.competitionName.toLowerCase());
       } else {
         this.resetSearch();
       }
-      console.log(this.searchCompetitionsForm.value.competitionName);
+
+      console.log(this.competitionName);
     }
   }
 

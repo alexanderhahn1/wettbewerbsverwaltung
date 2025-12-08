@@ -100,4 +100,28 @@ export class CompetitionService {
       { headers }
     );
   }
+
+  getCompetitionInfoString(competition: Competition): string {
+    const parts: (string | number | Date)[] = [
+      competition.name,
+      competition.link,
+      competition.deadline,
+      competition.deadline_date,
+      competition.prize,
+      competition.information_material,
+      competition.submission_forms,
+      competition.contact,
+      competition.school_year,
+      competition.created_by,
+      competition.is_not_relevant_info,
+      competition.date_created,
+      competition.last_update
+    ];
+
+    return parts
+      .filter(value => value !== null && value !== undefined && value !== '')
+      .map(value => String(value).toLowerCase())
+      .join(' ');
+  }
+
 }
