@@ -1,3 +1,5 @@
 (Invoke-RestMethod -Method Post -Uri "http://localhost:8081/realms/demo/protocol/openid-connect/token" -ContentType "application/x-www-form-urlencoded" -Body "grant_type=password&client_id=quarkus-client&username=IT210157&password=Hoppel.110406").access_token
 
 curl.exe -H "Authorization: Bearer " http://127.0.0.1:8080/api/security; echo
+
+Public key des HTL-Keycloaks: https://auth.htl-leonding.ac.at/realms/wettbewerbsdatenbank
