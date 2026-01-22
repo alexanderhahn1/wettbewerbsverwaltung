@@ -7,19 +7,19 @@ import java.util.List;
 
 public class CustomSecurityContext implements SecurityContext {
 
-    private final String username;
+    private final Principal principal;
     private final List<String> roles;
     private final String fullName;
 
-    public CustomSecurityContext(String username, List<String> roles, String fullName) {
-        this.username = username;
+    public CustomSecurityContext(Principal principal, List<String> roles, String fullName) {
+        this.principal = principal;
         this.roles = roles;
         this.fullName = fullName;
     }
 
     @Override
     public Principal getUserPrincipal() {
-        return () -> username;
+        return principal;
     }
 
     public String getFullName() {

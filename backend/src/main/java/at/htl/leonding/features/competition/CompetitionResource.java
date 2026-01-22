@@ -5,16 +5,20 @@ import at.htl.leonding.features.change.ChangeRepository;
 import at.htl.leonding.features.competitionImage.CompetitionImage;
 import at.htl.leonding.features.competitionImage.CompetitionImageMapper;
 import at.htl.leonding.features.competitionImage.ImageUploadForm;
+import at.htl.leonding.features.security.CustomPrincipal;
+import at.htl.leonding.features.security.CustomSecurityContext;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -82,7 +86,6 @@ public class CompetitionResource {
     @POST
     @Path("/{competitionId}/images")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed({"admin"})
     @Transactional
     public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("competitionId") long competitionId) {
         Competition competition = competitionRepository.findById(competitionId);
@@ -132,8 +135,13 @@ public class CompetitionResource {
     }
 
     @POST
-    @RolesAllowed({"admin"})
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
 
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
