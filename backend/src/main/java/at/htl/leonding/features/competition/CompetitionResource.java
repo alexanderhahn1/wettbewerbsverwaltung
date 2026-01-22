@@ -88,6 +88,12 @@ public class CompetitionResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Transactional
     public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("competitionId") long competitionId) {
+
+        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Competition competition = competitionRepository.findById(competitionId);
 
         if (competition == null) {
@@ -113,6 +119,12 @@ public class CompetitionResource {
     @RolesAllowed({"admin"})
     @Transactional
     public Response uploadMultipleImages(@Context SecurityContext securityContext, @MultipartForm List<ImageUploadForm> forms, @PathParam("competitionId") long competitionId) {
+
+        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Competition competition = competitionRepository.findById(competitionId);
 
         if (competition == null) {
@@ -150,7 +162,13 @@ public class CompetitionResource {
     @DELETE
     @Path("/{competitionId}")
     @RolesAllowed({"admin"})
-    public Response deleteCompetition(@PathParam("competitionId") Long competitionId) {
+    public Response deleteCompetition(@PathParam("competitionId") Long competitionId, @Context SecurityContext ctx) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         competitionRepository.deleteCompetition(competitionId);
         return Response.noContent().build();
     }
@@ -159,6 +177,12 @@ public class CompetitionResource {
     @Path("/{competitionId}")
     @RolesAllowed({"admin"})
     public Response updateCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx, @PathParam("competitionId") Long competitionId) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Competition competition = competitionRepository.update(dto, competitionId, ctx.getUserPrincipal().getName());
 
         return Response.ok().entity(competitionMapper.toResource(competition)).build();

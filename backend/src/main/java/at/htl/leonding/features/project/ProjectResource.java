@@ -8,6 +8,7 @@ import at.htl.leonding.features.projectImage.ProjectImage;
 import at.htl.leonding.features.projectImage.ProjectImageDTO;
 import at.htl.leonding.features.projectImage.ProjectImageMapper;
 import at.htl.leonding.features.projectImage.ProjectImageRepository;
+import at.htl.leonding.features.security.CustomPrincipal;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -45,6 +46,12 @@ public class ProjectResource {
     @POST
     @RolesAllowed({"admin"})
     public Response createProject(ProjectDTO dto, @Context SecurityContext ctx) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Project project = projectRepository.create(dto, ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(projectMapper.toResource(project)).build();
     }
@@ -53,7 +60,13 @@ public class ProjectResource {
     @Path("/{projectId}")
     @RolesAllowed({"admin"})
     @Transactional
-    public Response deleteProject(@PathParam("projectId") Long projectId) {
+    public Response deleteProject(@PathParam("projectId") Long projectId, @Context SecurityContext ctx) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         projectRepository.deleteById(projectId);
         return Response.noContent().build();
     }
@@ -62,6 +75,12 @@ public class ProjectResource {
     @Path("/{projectId}")
     @RolesAllowed({"admin"})
     public Response updateProject(@PathParam("projectId") long projectId, ProjectDTO dto, @Context SecurityContext ctx) {
+
+        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Project project = projectRepository.update(dto, projectId, ctx.getUserPrincipal().getName());
         return Response.ok(projectMapper.toResource(project)).build();
     }
@@ -80,6 +99,12 @@ public class ProjectResource {
     @RolesAllowed({"admin"})
     @Transactional
     public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("projectId") long projectId) {
+
+        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Project project = projectRepository.findById(projectId);
 
         if (project == null) {
@@ -102,6 +127,12 @@ public class ProjectResource {
     @RolesAllowed({"admin"})
     @Transactional
     public Response uploadMultipleImages(@Context SecurityContext securityContext, @MultipartForm List<ImageUploadForm> forms, @PathParam("projectId") long competitionId) {
+
+        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
+        if (!p.isAdmin()) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
         Project project = projectRepository.findById(competitionId);
 
         if (project == null) {
