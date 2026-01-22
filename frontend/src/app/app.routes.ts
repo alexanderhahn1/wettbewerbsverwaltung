@@ -47,28 +47,28 @@ export const routes: Routes = [
     component: AddCompetitionComponent,
     title: 'Wettbewerb hinzufügen',
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['Teachers'] }
   },
   {
     path: 'add-project',
     component: AddProjectComponent,
     title: 'Projekt hinzufügen',
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['Teachers'] }
   },
   {
     path: 'export',
     component: ExportDashboardComponent,
     title: 'Export',
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['Teachers'] }
   },
   {
     path: 'changes/:id',
     component: ChangesComponent,
     title: 'Versionen',
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['Teachers'] }
   },
   {
     path: 'image-upload',

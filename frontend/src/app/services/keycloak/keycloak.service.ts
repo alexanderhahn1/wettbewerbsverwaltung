@@ -19,4 +19,16 @@ export class KeycloakOperationService {
   getUserRoles(): string[] {
     return this.keycloak.getKeycloakInstance().realmAccess?.roles || [];
   }
+  getDistinguishedName(): string {
+    const token = this.keycloak.getKeycloakInstance().tokenParsed as any
+    return token?.distinguishedName
+  }
+  getUserOUS(): string[] {
+    const dn = this.getDistinguishedName()
+    const ous = dn
+      ?.split(',')
+      .filter(p => p.startsWith('OU='))
+      .map(p => p.replace('OU=', ''))
+    return ous;
+  }
 }

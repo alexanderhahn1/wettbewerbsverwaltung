@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {Competition} from '../../models/competition';
@@ -21,11 +21,13 @@ export class AddCompetitionComponent implements OnInit{
   selectedFiles: File[] = []
   selectedFileNames: string[] = []
 
+  @ViewChild('submitButton') submitButton!: ElementRef;
+
   ngOnInit() {
     this.addCompetitionForm = new FormGroup({
       name: new FormControl('', Validators.required),
       is_active: new FormControl(false, [Validators.required]),
-      is_relevant: new FormControl(false, [Validators.required]),
+      is_relevant: new FormControl(false, []),
       is_not_relevant_info: new FormControl('', [Validators.required]),
       school_year: new FormControl('', [
         Validators.required,
@@ -41,6 +43,19 @@ export class AddCompetitionComponent implements OnInit{
       submission_forms: new FormControl('', [Validators.required]),
       contact: new FormControl('', [Validators.required]),
       link: new FormControl('', [Validators.required])
+    })
+    const isRelevantControl = this.addCompetitionForm.get('is_relevant')
+    const isNotRelevantInfoControl = this.addCompetitionForm.get('is_not_relevant_info')
+
+    isRelevantControl?.valueChanges.subscribe(isRelevant => {
+      if (isRelevant === false) {
+        isNotRelevantInfoControl?.clearValidators()
+        isNotRelevantInfoControl?.setValue('')
+        this.submitButton.nativeElement.disabled = true
+      } else {
+        isNotRelevantInfoControl?.setValidators([Validators.required])
+      }
+      isNotRelevantInfoControl?.updateValueAndValidity()
     })
   }
 

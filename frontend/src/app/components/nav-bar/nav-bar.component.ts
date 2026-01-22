@@ -18,18 +18,24 @@ export class NavBarComponent implements OnInit{
   userProfile: any | null = null;
   userInitials: string | null = null;
   isUserAdmin: boolean = false;
+  userOUS: string[] = [];
 
   constructor(private eRef: ElementRef) {}
 
   ngOnInit() {
+    this.userOUS = this.keycloakService.getUserOUS()
     this.keycloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
-      //console.table(this.userProfile);
-      if (this.keycloakService.getUserRoles().includes('admin')) {
-        this.isUserAdmin = true;
+      console.table(this.userProfile);
+      for (let ou of this.userOUS) {
+        if (ou == "Students") {
+          this.isUserAdmin = true;
+        }
       }
     })
+
+
   }
 
   toggleProfileDropdown() {
