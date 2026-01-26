@@ -43,14 +43,12 @@ public class ProjectResource {
                 .map(projectMapper::toResource)).build();
     }
 
-    @POST
-    @RolesAllowed({"admin"})
     public Response createProject(ProjectDTO dto, @Context SecurityContext ctx) {
 
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+        //CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        //if (!p.isAdmin()) {
+        //    return Response.status(Response.Status.UNAUTHORIZED).build();
+        //}
 
         Project project = projectRepository.create(dto, ctx.getUserPrincipal().getName());
         return Response.status(Response.Status.CREATED).entity(projectMapper.toResource(project)).build();
@@ -58,14 +56,8 @@ public class ProjectResource {
 
     @DELETE
     @Path("/{projectId}")
-    @RolesAllowed({"admin"})
     @Transactional
     public Response deleteProject(@PathParam("projectId") Long projectId, @Context SecurityContext ctx) {
-
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         projectRepository.deleteById(projectId);
         return Response.noContent().build();
@@ -73,13 +65,7 @@ public class ProjectResource {
 
     @PUT
     @Path("/{projectId}")
-    @RolesAllowed({"admin"})
     public Response updateProject(@PathParam("projectId") long projectId, ProjectDTO dto, @Context SecurityContext ctx) {
-
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         Project project = projectRepository.update(dto, projectId, ctx.getUserPrincipal().getName());
         return Response.ok(projectMapper.toResource(project)).build();
@@ -96,14 +82,8 @@ public class ProjectResource {
     @POST
     @Path("/{projectId}/images")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed({"admin"})
     @Transactional
     public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("projectId") long projectId) {
-
-        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         Project project = projectRepository.findById(projectId);
 
@@ -124,14 +104,8 @@ public class ProjectResource {
     @POST
     @Path("/{projectId}/images/multiple")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed({"admin"})
     @Transactional
     public Response uploadMultipleImages(@Context SecurityContext securityContext, @MultipartForm List<ImageUploadForm> forms, @PathParam("projectId") long competitionId) {
-
-        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         Project project = projectRepository.findById(competitionId);
 

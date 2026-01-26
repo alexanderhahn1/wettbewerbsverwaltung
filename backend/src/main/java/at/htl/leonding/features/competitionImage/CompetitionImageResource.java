@@ -34,14 +34,13 @@ public class CompetitionImageResource {
 
     @DELETE
     @Path("/{id}")
-    @RolesAllowed({"admin"})
     @Transactional
     public Response deleteImageById(@PathParam("id") long id, @Context SecurityContext ctx) {
 
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+        //CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        //if (!p.isAdmin()) {
+        //    return Response.status(Response.Status.UNAUTHORIZED).build();
+        //}
 
         competitionImageRepository.deleteById(id);
 

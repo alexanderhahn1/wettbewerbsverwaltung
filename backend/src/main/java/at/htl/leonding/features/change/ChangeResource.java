@@ -24,10 +24,10 @@ public class ChangeResource {
     @GET
     public Response getAllChanges(@Context SecurityContext ctx) {
 
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+        //CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
+        //if (!p.isAdmin()) {
+        //    return Response.status(Response.Status.UNAUTHORIZED).build();
+        //}
 
         return Response.ok(changeRepository.findAll().stream().map(changeMapper::toResource)).build();
     }
@@ -35,11 +35,6 @@ public class ChangeResource {
     @GET
     @Path("/competition/{competitionId}")
     public Response getChangesByCompetitionId(@PathParam("competitionId") long competitionId, @Context SecurityContext ctx) {
-
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         return Response.ok(changeRepository.getByCompetition(competitionId).stream().map(changeMapper::toResource)).build();
     }

@@ -89,10 +89,10 @@ public class CompetitionResource {
     @Transactional
     public Response uploadImage(@Context SecurityContext securityContext, @MultipartForm ImageUploadForm form, @PathParam("competitionId") long competitionId) {
 
-        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+        //CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
+        //if (!p.isAdmin()) {
+        //    return Response.status(Response.Status.UNAUTHORIZED).build();
+        //}
 
         Competition competition = competitionRepository.findById(competitionId);
 
@@ -116,14 +116,8 @@ public class CompetitionResource {
     @POST
     @Path("/{competitionId}/images/multiple")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed({"admin"})
     @Transactional
     public Response uploadMultipleImages(@Context SecurityContext securityContext, @MultipartForm List<ImageUploadForm> forms, @PathParam("competitionId") long competitionId) {
-
-        CustomPrincipal p = (CustomPrincipal) securityContext.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         Competition competition = competitionRepository.findById(competitionId);
 
@@ -149,11 +143,6 @@ public class CompetitionResource {
     @POST
     public Response createCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx) {
 
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-
         Competition competition = competitionMapper.toCompetition(dto,ctx.getUserPrincipal().getName());
 
         return Response.status(Response.Status.CREATED).entity(competitionMapper.toResource(competitionRepository.save(competition))).build();
@@ -161,13 +150,7 @@ public class CompetitionResource {
 
     @DELETE
     @Path("/{competitionId}")
-    @RolesAllowed({"admin"})
     public Response deleteCompetition(@PathParam("competitionId") Long competitionId, @Context SecurityContext ctx) {
-
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         competitionRepository.deleteCompetition(competitionId);
         return Response.noContent().build();
@@ -175,13 +158,7 @@ public class CompetitionResource {
 
     @PUT
     @Path("/{competitionId}")
-    @RolesAllowed({"admin"})
     public Response updateCompetition(CompetitionCreateDTO dto, @Context SecurityContext ctx, @PathParam("competitionId") Long competitionId) {
-
-        CustomPrincipal p = (CustomPrincipal) ctx.getUserPrincipal();
-        if (!p.isAdmin()) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
 
         Competition competition = competitionRepository.update(dto, competitionId, ctx.getUserPrincipal().getName());
 
