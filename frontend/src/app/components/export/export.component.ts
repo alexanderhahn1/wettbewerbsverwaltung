@@ -15,13 +15,9 @@ export class ExportComponent implements OnInit{
   @ViewChild('pdfContent', { static: false }) pdfContent!: ElementRef;
   exportService: ExportService = inject(ExportService);
   competitionService: CompetitionService = inject(CompetitionService);
-  selectedExportSchoolYear: string = "";
   filteredCompetitions: Competition[] = [];
 
   ngOnInit() {
-    /**
-     *
-     */
     combineLatest([
       this.competitionService.getAllCompetitions(),
       this.competitionService.selectedExportSchoolYear
@@ -45,5 +41,9 @@ export class ExportComponent implements OnInit{
 
   generateDocx() {
     this.exportService.exportToWord(this.filteredCompetitions);
+  }
+
+  generatePowerPointWithSubmissions() {
+    console.log(`generatePowerPointWithSubmissions`);
   }
 }

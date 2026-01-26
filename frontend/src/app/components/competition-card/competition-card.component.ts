@@ -2,12 +2,12 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import {Competition} from '../../models/competition';
 import {LinkifyPipe} from '../../pipes/linkify/linkify.pipe';
 import {FormatSchoolYearPipe} from '../../pipes/format-school-year/format-school-year.pipe';
-import {KeycloakService} from 'keycloak-angular';
 import {EditCompetitionComponent} from '../edit-competition/edit-competition.component';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, RouterLink} from '@angular/router';
 import {Image} from '../../models/image';
 import {CompetitionService} from '../../services/competition/competition.service';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
+import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-competition-card',
@@ -23,36 +23,31 @@ import {DatePipe, NgOptimizedImage} from '@angular/common';
 })
 export class CompetitionCardComponent implements OnInit {
   @Input() competition!: Competition;
-  keycloakService: KeycloakService = inject(KeycloakService);
+  keycloakService: KeycloakOperationService = inject(KeycloakOperationService);
   competitionService: CompetitionService = inject(CompetitionService);
+  activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   showEditImage: boolean = false;
   isModalOpen: boolean = false;
   images: Image[] = [];
   isLightboxOpen = false;
   currentImageIndex = 0;
   logoImage?: Image | {url: string, name: string} | null = null;
+  allowedRoles: string[] = [];
+  userOUs: string[] = [];
 
   ngOnInit() {
-    /*if (!this.competition) {
-      return;
-    }
-     */
+    this.userOUs = this.keycloakService.getUserOUS()
+    this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit']
 
-    if (this.keycloakService.getUserRoles().includes('admin')) {
-      this.showEditImage = true;
-    }
-
-    this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
-      const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
-      if (foundImage) {
-        this.logoImage = foundImage;
-        this.images = images.filter(image => image !== foundImage);
-        console.log(this.images);
-        console.log(this.logoImage)
-      } else {
-        this.images = images;
+    for (let ou of this.userOUs) {
+      for (let role of this.allowedRoles) {
+        if (ou == role) {
+          this.showEditImage = true;
+        }
       }
-    })
+    }
+
+    this.getImagesForCompetition(this.competition.id)
   }
 
   handleBtnEditCompetition() {
@@ -78,7 +73,11 @@ export class CompetitionCardComponent implements OnInit {
 
   modalClosed() {
     this.isModalOpen = false;
-    this.competitionService.getImagesForCompetition(this.competition.id).subscribe(images => {
+    this.getImagesForCompetition(this.competition.id)
+  }
+
+  getImagesForCompetition(compId: number) {
+    this.competitionService.getImagesForCompetition(compId).subscribe(images => {
       const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
       if (foundImage) {
         this.logoImage = foundImage;

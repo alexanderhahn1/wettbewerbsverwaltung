@@ -27,7 +27,8 @@ export const routes: Routes = [
     path: 'competitions',
     component: CompetitionsListComponent,
     title: 'Wettbewerbe',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {allowedForEdit: ['Students']}
   },
   {
     path: 'current-competitions',
@@ -39,7 +40,8 @@ export const routes: Routes = [
     path: 'submissions',
     component: SubmissionsComponent,
     title: 'Einreichungen',
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {allowedForEdit: ['Students']}
   },
 
   {
@@ -47,28 +49,28 @@ export const routes: Routes = [
     component: AddCompetitionComponent,
     title: 'Wettbewerb hinzufügen',
     canActivate: [AuthGuard],
-    data: { roles: ['Teachers'] }
+    data: { roles: ['Students'] }
   },
   {
     path: 'add-project',
     component: AddProjectComponent,
     title: 'Projekt hinzufügen',
     canActivate: [AuthGuard],
-    data: { roles: ['Teachers'] }
+    data: { roles: ['Students'] }
   },
   {
     path: 'export',
     component: ExportDashboardComponent,
     title: 'Export',
     canActivate: [AuthGuard],
-    data: { roles: ['Teachers'] }
+    data: { roles: ['Students'] }
   },
   {
     path: 'changes/:id',
     component: ChangesComponent,
     title: 'Versionen',
     canActivate: [AuthGuard],
-    data: { roles: ['Teachers'] }
+    data: { roles: ['Students'] }
   },
   {
     path: 'image-upload',

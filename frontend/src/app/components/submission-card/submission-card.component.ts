@@ -7,6 +7,8 @@ import {SubmissionService} from '../../services/submission/submission.service';
 import {DatePipe} from '@angular/common';
 import {ProjectService} from '../../services/project/project.service';
 import {SubmissionProjectItemComponent} from '../submission-project-item/submission-project-item.component';
+import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-submission-card',
@@ -16,12 +18,6 @@ import {SubmissionProjectItemComponent} from '../submission-project-item/submiss
   templateUrl: './submission-card.component.html',
   styleUrl: './submission-card.component.css'
 })
-export class SubmissionCardComponent implements OnInit{
+export class SubmissionCardComponent {
   @Input() submission!: Submission;
-  keycloakService: KeycloakService = inject(KeycloakService);
-  showEditBtn = false;
-
-  ngOnInit() {
-    this.keycloakService.getUserRoles().includes('admin') ? this.showEditBtn = true : this.showEditBtn = false;
-  }
 }

@@ -6,6 +6,7 @@ import {
 } from '@angular/router';
 import {KeycloakAuthGuard, KeycloakService} from 'keycloak-angular';
 import {KeycloakOperationService} from '../services/keycloak/keycloak.service';
+import {data} from 'autoprefixer';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +32,14 @@ export class AuthGuard extends KeycloakAuthGuard {
       return false;
     }
 
-    const requiredRoles = route.data['roles'] as string[];
+    const requiredRoles = route.data['roles'] as string;
     const userOUS = this.keycloakService.getUserOUS()
     if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
       return true;
     }
     let isRouteAllowed = false;
     for (let ou of userOUS) {
-      if (ou == "Students") {
+      if (ou == requiredRoles) {
         isRouteAllowed = true;
       }
     }

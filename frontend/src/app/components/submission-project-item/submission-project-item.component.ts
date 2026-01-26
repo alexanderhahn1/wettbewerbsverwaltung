@@ -6,6 +6,8 @@ import {Image} from '../../models/image';
 import {EditProjectComponent} from '../edit-project/edit-project.component';
 import {SubmissionService} from '../../services/submission/submission.service';
 import {DatePipe} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-submission-project-item',
@@ -17,13 +19,16 @@ import {DatePipe} from '@angular/common';
   styleUrl: './submission-project-item.component.css'
 })
 export class SubmissionProjectItemComponent implements OnInit {
-  keycloakService: KeycloakService = inject(KeycloakService);
+  keycloakService: KeycloakOperationService = inject(KeycloakOperationService);
   projectService: ProjectService = inject(ProjectService);
   submissionService: SubmissionService = inject(SubmissionService);
   @Input() project!: Project;
   showEditBtn: boolean = false;
   isModalOpen: boolean = false;
 
+  activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  allowedRoles: string[] = [];
+  userOUs: string[] = [];
 
   images: Image[] = [];
   isLightboxOpen = false;
@@ -35,26 +40,28 @@ export class SubmissionProjectItemComponent implements OnInit {
   modalClosed() {
     this.selectedProjectForEdit = null
     this.submissionService.closeEditModalSubject.next(true)
-    this.projectService.getImagesForProject(this.project.id).subscribe(images => {
-      const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
-      if (foundImage) {
-        this.logoImage = foundImage;
-        this.images = images.filter(image => image !== foundImage);
-        console.log(this.images);
-        console.log(this.logoImage)
-      } else {
-        this.images = images;
-      }
-    })
+
+    this.getImagesForProject(this.project.id)
   }
 
 
   ngOnInit() {
-    if (this.keycloakService.getUserRoles().includes('admin')) {
-      this.showEditBtn = true;
+    this.userOUs = this.keycloakService.getUserOUS()
+    this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit']
+
+    for (let ou of this.userOUs) {
+      for (let role of this.allowedRoles) {
+        if (ou == role) {
+          this.showEditBtn = true;
+        }
+      }
     }
 
-    this.projectService.getImagesForProject(this.project.id).subscribe(images => {
+    this.getImagesForProject(this.project.id)
+  }
+
+  getImagesForProject(projId: number) {
+    this.projectService.getImagesForProject(projId).subscribe(images => {
       const foundImage = images.find(curImage => curImage.name.toLowerCase().includes('logo'))
       if (foundImage) {
         this.logoImage = foundImage;

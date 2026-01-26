@@ -30,6 +30,10 @@ export class ExportService {
     if (data == null) {
       return;
     }
+    this.projectService.getImagesForProject(1).subscribe(images => {
+      console.log(images);
+    })
+
 
     const imageRequests = data.map(comp => this.competitionService.getImagesForCompetition(comp.id));
     forkJoin(imageRequests).subscribe(imagesArrays => {
@@ -47,7 +51,7 @@ export class ExportService {
           const projects = projectsArrays[index] || [];
           const slide = pptx.addSlide();
 
-          // ✅ Logo (oben rechts)
+          // Logo (oben rechts)
           slide.addImage({
             path: './htllogo_2022_black_v2.png',
             x: 5.5,
@@ -67,7 +71,8 @@ export class ExportService {
             color: '003366',
           });
 
-          const projectNames = projects.map(p => p.name).join(', ');
+          let projectNames = projects.map(p => p.name).join(', ');
+          projectNames.length == 0 ? projectNames += "Keine Projekte" : projectNames
 
           // Details-Box
           const details = [
@@ -82,12 +87,13 @@ export class ExportService {
           ].join('\n');
 
           slide.addText(details, {
-            x: 0.5,
-            y: 1.5,
-            w: 4,
-            h: 5,
+            x: 0.2,
+            y: 1,
+            w: 5,
+            h: 4.5,
             fontSize: 12,
             color: '222222',
+            bullet: true,
             lineSpacing: 18,
           });
 

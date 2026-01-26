@@ -1,6 +1,7 @@
 import {Component, ElementRef, HostListener, inject, OnInit} from '@angular/core';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, RouterLink, RouterLinkActive} from "@angular/router";
 import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
+import {AuthGuard} from '../../guard/auth.guard';
 
 @Component({
   selector: 'app-nav-bar',
@@ -19,6 +20,7 @@ export class NavBarComponent implements OnInit{
   userInitials: string | null = null;
   isUserAdmin: boolean = false;
   userOUS: string[] = [];
+  roles: string[] = [];
 
   constructor(private eRef: ElementRef) {}
 
@@ -29,13 +31,11 @@ export class NavBarComponent implements OnInit{
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
       console.table(this.userProfile);
       for (let ou of this.userOUS) {
-        if (ou == "Students") {
+        if (ou == 'Students') {
           this.isUserAdmin = true;
         }
       }
     })
-
-
   }
 
   toggleProfileDropdown() {
