@@ -12,10 +12,10 @@ import { saveAs } from 'file-saver';
 import { Competition } from '../../models/competition';
 import PptxGenJS from 'pptxgenjs';
 
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import {CompetitionService} from '../competition/competition.service';
 import { ProjectService } from '../project/project.service';
-import { Project } from '../../models/project';
+import {Image} from '../../models/image';
 
 @Injectable({
   providedIn: 'root'
@@ -25,43 +25,49 @@ export class ExportService {
   projectService: ProjectService = inject(ProjectService);
 
   exportToPowerPoint(data: Competition[]): void {
-    const pptx = new PptxGenJS();
+    const pptx = new PptxGenJS()
 
-    if (data == null) {
-      return;
+    if (data == null || data.length === 0) {
+      return
     }
-    this.projectService.getImagesForProject(1).subscribe(images => {
-      console.log(images);
-    })
 
+    const competitionImageRequests = data.map(comp => this.competitionService.getImagesForCompetition(comp.id))
+    const projectsRequests = data.map(comp => this.projectService.getProjectsForCompetitions(comp.id))
 
-    const imageRequests = data.map(comp => this.competitionService.getImagesForCompetition(comp.id));
-    forkJoin(imageRequests).subscribe(imagesArrays => {
-      const projectRequests = data.map(comp => this.projectService.getProjectsForCompetitions(comp.id));
-      forkJoin(projectRequests).subscribe(projectsArrays => {
+    forkJoin({
+      competitionImagesArrays: forkJoin(competitionImageRequests),
+      projectsArrays: forkJoin(projectsRequests)
+    }).subscribe(({competitionImagesArrays, projectsArrays}) => {
+      const projectImagesRequestsPerCompetition = projectsArrays.map(projects =>
+        projects.length > 0
+          ? forkJoin(projects.map(project => this.projectService.getImagesForProject(project.id)))
+          : of([] as Image[][])
+      )
+
+      forkJoin(projectImagesRequestsPerCompetition).subscribe(projectImagesArraysByCompetition => {
         data.forEach((competition, index) => {
-          let images = imagesArrays[index] || [];
+          let competitionImages = competitionImagesArrays[index] || []
 
-          images = images.sort((a, b) => {
-            const aIsLogo = a.name.toLowerCase().includes("logo");
-            const bIsLogo = b.name.toLowerCase().includes("logo");
-            return aIsLogo === bIsLogo ? 0 : aIsLogo ? -1 : 1;
-          });
+          competitionImages = competitionImages.sort((a, b) => {
+            const aIsLogo = a.name.toLowerCase().includes("logo")
+            const bIsLogo = b.name.toLowerCase().includes("logo")
+            return aIsLogo === bIsLogo ? 0 : aIsLogo ? -1 : 1
+          })
 
-          const projects = projectsArrays[index] || [];
-          const slide = pptx.addSlide();
+          const projects = projectsArrays[index] || []
+          const projectImagesArrays = projectImagesArraysByCompetition[index] || []
 
-          // Logo (oben rechts)
-          slide.addImage({
+          const competitionSlide = pptx.addSlide()
+
+          competitionSlide.addImage({
             path: './htllogo_2022_black_v2.png',
             x: 5.5,
             y: 0.1,
             w: 4.4248,
             h: 1.0,
-          });
+          })
 
-          // Titel
-          slide.addText(competition.name, {
+          competitionSlide.addText(competition.name, {
             x: 0.5,
             y: 0.5,
             w: '50%',
@@ -69,13 +75,12 @@ export class ExportService {
             bold: false,
             italic: true,
             color: '003366',
-          });
+          })
 
-          let projectNames = projects.map(p => p.name).join(', ');
+          let projectNames = projects.map(p => p.name).join(', ')
           projectNames.length == 0 ? projectNames += "Keine Projekte" : projectNames
 
-          // Details-Box
-          const details = [
+          const competitionDetails = [
             `📅 Einreichungsfrist: ${competition.deadline}`,
             `🎁 Preis: ${competition.prize}`,
             `📬 Kontakt: ${competition.contact}`,
@@ -84,9 +89,9 @@ export class ExportService {
             `🔗 Link: ${competition.link}`,
             `📆 Schuljahr: ${competition.school_year}`,
             `⚒️ Projekte: ${projectNames}`
-          ].join('\n');
+          ].join('\n')
 
-          slide.addText(details, {
+          competitionSlide.addText(competitionDetails, {
             x: 0.2,
             y: 1,
             w: 5,
@@ -95,41 +100,110 @@ export class ExportService {
             color: '222222',
             bullet: true,
             lineSpacing: 18,
-          });
+          })
 
-          // Wettbewerbsbilder in einem 4x2 Raster (max 8 Bilder) anordnen
-          images.forEach((img, imgIndex) => {
-            console.log(img.name.toLowerCase(), imgIndex);
-            const cols = 3;
-            const imgWidth = 1.5;
-            const imgHeight = 0.9;
+          competitionImages.forEach((img, imgIndex) => {
+            const cols = 3
+            const imgWidth = 1.5
+            const imgHeight = 0.9
 
-            const col = imgIndex % cols;
-            const row = Math.floor(imgIndex / cols);
+            const col = imgIndex % cols
+            const row = Math.floor(imgIndex / cols)
 
             if (row >= 3) {
-              return;
+              return
             }
 
-            const xPos = 5 + col * (imgWidth + 0.1);
-            const yPos = 1.5 + row * (imgHeight + 0.2);
+            const xPos = 5 + col * (imgWidth + 0.1)
+            const yPos = 1.5 + row * (imgHeight + 0.2)
 
-            slide.addImage({
+            competitionSlide.addImage({
               path: img.url,
               x: xPos,
               y: yPos,
               w: imgWidth,
               h: undefined,
-            });
-          });
-        });
+            })
+          })
 
+          projects.forEach((project, projectIndex) => {
+            let projectImages = projectImagesArrays[projectIndex] || []
 
+            projectImages = projectImages.sort((a, b) => {
+              const aIsLogo = a.name.toLowerCase().includes("logo")
+              const bIsLogo = b.name.toLowerCase().includes("logo")
+              return aIsLogo === bIsLogo ? 0 : aIsLogo ? -1 : 1
+            })
 
-        // Sobald alle Folien fertig sind, speichern
-        pptx.writeFile({ fileName: 'competition_presentation.pptx' });
-      });
-    });
+            const projectSlide = pptx.addSlide()
+
+            projectSlide.addImage({
+              path: './htllogo_2022_black_v2.png',
+              x: 5.5,
+              y: 0.1,
+              w: 4.4248,
+              h: 1.0,
+            })
+
+            projectSlide.addText(project.name, {
+              x: 0.5,
+              y: 0.5,
+              w: '50%',
+              fontSize: 24,
+              bold: false,
+              italic: true,
+              color: '003366',
+            })
+
+            const created = project.date_created ? new Date(project.date_created).toLocaleDateString('de-AT') : ''
+
+            const projectDetails = [
+              `⚒️ Status: ${project.status}`,
+              `➡️ Nächster Schritt: ${project.next_step}`,
+              `👥 Contributors: ${project.contributors}`,
+              `📅 Erstellt: ${created || '-'}`
+            ].join('\n')
+
+            projectSlide.addText(projectDetails, {
+              x: 0.2,
+              y: 1,
+              w: 5,
+              h: 4.5,
+              fontSize: 12,
+              color: '222222',
+              bullet: true,
+              lineSpacing: 18,
+            })
+
+            projectImages.forEach((img, imgIndex) => {
+              const cols = 3
+              const imgWidth = 1.5
+              const imgHeight = 0.9
+
+              const col = imgIndex % cols
+              const row = Math.floor(imgIndex / cols)
+
+              if (row >= 3) {
+                return
+              }
+
+              const xPos = 5 + col * (imgWidth + 0.1)
+              const yPos = 1.5 + row * (imgHeight + 0.2)
+
+              projectSlide.addImage({
+                path: img.url,
+                x: xPos,
+                y: yPos,
+                w: imgWidth,
+                h: undefined,
+              })
+            })
+          })
+        })
+
+        pptx.writeFile({ fileName: 'competition_presentation.pptx' })
+      })
+    })
   }
 
   exportToExcel(data: Competition[]): void {

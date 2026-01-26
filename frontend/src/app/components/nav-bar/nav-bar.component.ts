@@ -31,7 +31,7 @@ export class NavBarComponent implements OnInit{
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
       console.table(this.userProfile);
       for (let ou of this.userOUS) {
-        if (ou == 'Students') {
+        if (ou == 'Teachers') {
           this.isUserAdmin = true;
         }
       }
