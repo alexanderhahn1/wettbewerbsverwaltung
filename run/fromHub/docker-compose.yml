@@ -17,31 +17,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  
-  keycloak:
-    image: pfarrhoferphilip/wettbewerbs-keycloak
-    container_name: wettbewerbs-keycloak
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://db:5432/demo
-      KC_DB_USERNAME: demo
-      KC_DB_PASSWORD: demo
-      KC_HOSTNAME_STRICT: "false"
-      KC_HTTP_ENABLED: "true"
-      KC_PROXY: edge
-    depends_on:
-      db:
-        condition: service_healthy
-    ports:
-      - "8081:8080"
-    networks:
-      - backend
 
 
   app:
-    image: pfarrhoferphilip/wettbewerbs-backend
+    image: pfarrhoferphilip/wettbewerbs-backend:latest
     container_name: wettbewerbs-backend
     depends_on:
       db:
@@ -56,7 +35,7 @@ services:
       - backend
 
   frontend:
-    image: pfarrhoferphilip/wettbewerbs-frontend
+    image: pfarrhoferphilip/wettbewerbs-frontend:latest
     container_name: wettbewerbs-frontend
     ports:
       - "4200:80"  # Host port 4200 maps to nginx's port 80
