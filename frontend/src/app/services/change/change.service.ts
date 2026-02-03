@@ -4,13 +4,15 @@ import {HttpClient} from '@angular/common/http';
 import {Competition} from '../../models/competition';
 import {Change} from '../../models/change';
 import {Observable} from 'rxjs';
+import {ApiUrlService} from '../api-url/api-url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChangeService {
   keycloakService: KeycloakService = inject(KeycloakService);
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  apiService: ApiUrlService = inject(ApiUrlService);
+  private readonly BASE_URL = this.apiService.getApiUrl();
   httpClient: HttpClient = inject(HttpClient);
 
   getAllChangesForCompetition(competition: Competition): Observable<Change[]> {

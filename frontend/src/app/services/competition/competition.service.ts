@@ -4,13 +4,15 @@ import {filter, map, Observable, Subject, forkJoin, BehaviorSubject} from 'rxjs'
 import {Competition} from '../../models/competition';
 import { KeycloakService } from 'keycloak-angular';
 import {Image} from '../../models/image';
+import {ApiUrlService} from '../api-url/api-url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompetitionService {
   keycloakService: KeycloakService = inject(KeycloakService);
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  apiService: ApiUrlService = inject(ApiUrlService);
+  private readonly BASE_URL = this.apiService.getApiUrl();
   httpClient: HttpClient = inject(HttpClient);
   public searchCompetitionsSubject = new Subject<String>()
   public resetSearchCompetitionsSubject = new Subject<boolean>()

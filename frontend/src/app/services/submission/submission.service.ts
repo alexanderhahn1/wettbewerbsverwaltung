@@ -4,12 +4,14 @@ import {forkJoin, map, Observable, Subject, switchMap} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Competition } from '../../models/competition';
 import { ProjectService } from '../project/project.service';
+import {ApiUrlService} from '../api-url/api-url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubmissionService {
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  apiService: ApiUrlService = inject(ApiUrlService);
+  private readonly BASE_URL = this.apiService.getApiUrl();
   httpClient: HttpClient = inject(HttpClient);
   projectsService: ProjectService = inject(ProjectService)
   submissions: Submission[] = [];

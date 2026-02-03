@@ -5,13 +5,15 @@ import {Project} from '../../models/project';
 import {KeycloakService} from 'keycloak-angular';
 import {Competition} from '../../models/competition';
 import {Image} from '../../models/image';
+import {ApiUrlService} from '../api-url/api-url.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   keycloakService: KeycloakService = inject(KeycloakService);
-  private readonly BASE_URL = 'http://localhost:8080/api';
+  apiService: ApiUrlService = inject(ApiUrlService);
+  private readonly BASE_URL = this.apiService.getApiUrl();
   httpClient: HttpClient = inject(HttpClient);
   public refreshProjectList = new Subject<boolean>()
 
