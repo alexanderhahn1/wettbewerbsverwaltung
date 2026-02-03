@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: wettbewerbs-backend
-          image: ghcr.io/pfarrhoferphilip/wettbewerbs-server:latest
+          image: ghcr.io/pfarrhoferphilip/wettbewerbs-backend:latest
           imagePullPolicy: Always
           ports:
             - name: http

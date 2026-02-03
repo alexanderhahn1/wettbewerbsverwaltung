@@ -26,8 +26,8 @@ spec:
               value: 4DK88W61f56a17xK
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgres-data
+              name: wettbewerbs-postgres-data
       volumes:
-        - name: postgres-data
+        - name: wettbewerbs-postgres-data
           persistentVolumeClaim:
-            claimName: postgres-pvc
+            claimName: wettbewerbs-postgres-pvc
