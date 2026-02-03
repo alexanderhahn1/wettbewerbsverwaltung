@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wettbewerbs-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wettbewerbs-postgres
+  template:
+    metadata:
+      labels:
+        app: wettbewerbs-postgres
+    spec:
+      containers:
+        - name: wettbewerbs-postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: wettbewerbsverwaltung
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: 4DK88W61f56a17xK
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-data
+      volumes:
+        - name: postgres-data
+          persistentVolumeClaim:
+            claimName: postgres-pvc

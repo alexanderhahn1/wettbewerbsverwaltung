@@ -21,7 +21,7 @@ services:
   app:
     build:
       context: ./../backend
-    image: pfarrhoferphilip/wettbewerbs-backend
+    image: ghcr.io/pfarrhoferphilip/wettbewerbs-backend
     container_name: wettbewerbs-backend
     depends_on:
       db:
@@ -38,7 +38,7 @@ services:
   frontend:
     build:
       context: ./../frontend
-    image: pfarrhoferphilip/wettbewerbs-frontend
+    image: ghcr.io/pfarrhoferphilip/wettbewerbs-frontend
     container_name: wettbewerbs-frontend
     ports:
       - "4200:80"  # Host port 4200 maps to nginx's port 80

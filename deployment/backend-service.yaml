@@ -1,0 +1,15 @@
+# backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wettbewerbs-backend
+  labels:
+    app: wettbewerbs-backend
+spec:
+  selector:
+    app: wettbewerbs-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

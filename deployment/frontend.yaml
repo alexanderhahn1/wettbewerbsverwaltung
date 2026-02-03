@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wettbewerbs-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wettbewerbs-frontend
+  template:
+    metadata:
+      labels:
+        app: wettbewerbs-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/pfarrhoferphilip/wettbewerbs-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

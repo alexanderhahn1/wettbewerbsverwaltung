@@ -1,0 +1,37 @@
+# backend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wettbewerbs-backend
+  labels:
+    app: wettbewerbs-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wettbewerbs-backend
+  template:
+    metadata:
+      labels:
+        app: wettbewerbs-backend
+    spec:
+      containers:
+        - name: wettbewerbs-backend
+          image: ghcr.io/pfarrhoferphilip/wettbewerbs-server:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: QUARKUS_HTTP_HOST
+              value: "0.0.0.0"
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://postgres:5432/wettbewerbsverwaltung
+            - name: QUARKUS_DATASOURCE_USERNAME
+              value: admin
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              value: 4DK88W61f56a17xK
+            - name: QUARKUS_OIDC_AUTH_SERVER_URL
+              value: https://auth.htl-leonding.ac.at/realms/wettbewerbsdatenbank
+            - name: QUARKUS_OIDC_CLIENT_ID
+              value: backend
