@@ -33,6 +33,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     }
 
     const requiredRoles = route.data['roles'] as string;
+    console.log('guard ', requiredRoles);
     const userOUS = this.keycloakService.getUserOUS()
     if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
       return true;

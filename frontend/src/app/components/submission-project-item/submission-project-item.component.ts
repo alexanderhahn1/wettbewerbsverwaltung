@@ -27,7 +27,7 @@ export class SubmissionProjectItemComponent implements OnInit {
   isModalOpen: boolean = false;
 
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  allowedRoles: string[] = [];
+  allowedRoles!: string[]  = [];
   userOUs: string[] = [];
 
   images: Image[] = [];

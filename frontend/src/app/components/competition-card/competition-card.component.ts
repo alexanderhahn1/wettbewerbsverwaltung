@@ -32,7 +32,7 @@ export class CompetitionCardComponent implements OnInit {
   isLightboxOpen = false;
   currentImageIndex = 0;
   logoImage?: Image | {url: string, name: string} | null = null;
-  allowedRoles: string[] = [];
+  allowedRoles!: string[] = [];
   userOUs: string[] = [];
 
   ngOnInit() {

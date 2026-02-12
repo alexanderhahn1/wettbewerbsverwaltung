@@ -16,6 +16,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     title: 'Wettbewerbsverwaltung',
     canActivate: [AuthGuard],
+    data: {allowedForEdit: ['Teachers', 'Students']}
   },
   {
     path: 'dashboard',
