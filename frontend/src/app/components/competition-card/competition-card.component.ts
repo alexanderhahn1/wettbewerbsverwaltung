@@ -37,7 +37,7 @@ export class CompetitionCardComponent implements OnInit {
 
   ngOnInit() {
     this.userOUs = this.keycloakService.getUserOUS()
-    this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit']
+    this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit'] || [];
 
     for (let ou of this.userOUs) {
       for (let role of this.allowedRoles) {
