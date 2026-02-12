@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wettbewerbs-postgres
+  name: postgres
 spec:
   selector:
-    app: wettbewerbs-postgres
+    app: postgres
   ports:
     - port: 5432
       targetPort: 5432
