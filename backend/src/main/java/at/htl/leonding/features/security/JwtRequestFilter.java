@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.logging.Log;
 import jakarta.annotation.Priority;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -49,7 +50,7 @@ public class JwtRequestFilter implements ContainerRequestFilter {
     String realmPublicKey = "";
 
     public static String getRealmPublicKey() throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
+        /*HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("https://auth.htl-leonding.ac.at/realms/wettbewerbsdatenbank"))
@@ -63,7 +64,8 @@ public class JwtRequestFilter implements ContainerRequestFilter {
 
         String publicKey = root.get("public_key").asText();
 
-        return publicKey;
+        return publicKey;*/
+         return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvmMuCA54PcdWZf5QVCt9PXklklTBogQJ/xp3U3S1Za46I8wSESNBlA/o+rs2HkeaAoj5ZYLaUG3+fDhmHifvOhzEIHPqiAGZHqIrQj+GsTuAjXmGJaY0/zE2VJGzlpOgVjyEgSjYrl4k6zfXuNvcS95NMN7u73cr8B8SMgt0kMZyUYRAW02Mfg5ZB14MY83xXUXvogmyUfycSPWZCDVJ/WbOBSNk+oSfUKYD7lqt2vpI2Ex1C72Ei79erEKQ2/cHYQPlqyDV9AakeUyGbOcQlVP6byw05UjxytLa96m+CGlZwBv3DTqGNTqJqGjPCSS9xcAqRgXcB9DZo6CuSDSnVwIDAQAB";
     }
 
     @Override
@@ -90,6 +92,7 @@ public class JwtRequestFilter implements ContainerRequestFilter {
         try {
             realmPublicKey = getRealmPublicKey();
         } catch (Exception e) {
+            Log.info("Failed to Load: ", e);
             throw new RuntimeException(e);
         }
 

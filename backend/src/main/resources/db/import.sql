@@ -1,3 +1,6 @@
+
+
+
 INSERT INTO competition (name, link, deadline, deadline_date, prize, information_material, submission_forms, contact, is_active, date_created, school_year, created_by, is_relevant, is_not_relevant_info) VALUES
 -- Austria Cyber Security Challenge
 ('Austria Cyber Security Challenge (ACSC)',
