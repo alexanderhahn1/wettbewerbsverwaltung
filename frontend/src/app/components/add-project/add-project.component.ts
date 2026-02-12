@@ -94,7 +94,7 @@ export class AddProjectComponent implements OnInit{
         this.responseComponent.trigger('Fehler beim Hinzufügen des Wettbewerbs. Bitte versuche es erneut.', false);
       }
     });
-    console.log(this.addProjectForm.value);
+    //console.log(this.addProjectForm.value);
   }
 
   onFileSelected(event: Event): void {

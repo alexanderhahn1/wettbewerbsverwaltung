@@ -42,8 +42,4 @@ export class ExportComponent implements OnInit{
   generateDocx() {
     this.exportService.exportToWord(this.filteredCompetitions);
   }
-
-  generatePowerPointWithSubmissions() {
-    console.log(`generatePowerPointWithSubmissions`);
-  }
 }

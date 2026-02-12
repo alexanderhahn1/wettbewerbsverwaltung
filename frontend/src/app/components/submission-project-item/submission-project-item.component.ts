@@ -66,8 +66,8 @@ export class SubmissionProjectItemComponent implements OnInit {
       if (foundImage) {
         this.logoImage = foundImage;
         this.images = images.filter(image => image !== foundImage);
-        console.log(this.images);
-        console.log(this.logoImage)
+        //console.log(this.images);
+        //console.log(this.logoImage)
       } else {
         this.images = images;
       }

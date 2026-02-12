@@ -38,7 +38,7 @@ export class CompetitionSearchBarComponent implements OnInit {
         this.resetSearch();
       }
 
-      console.log(this.competitionName);
+      //console.log(this.competitionName);
     }
   }
 

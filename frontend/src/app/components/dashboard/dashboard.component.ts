@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit{
   ngOnInit() {
     this.competitionService.getRandomCompetition().subscribe( c => {
       this.randomCompetition = c;
-      console.log(c)
+      //console.log(c)
     })
   }
 

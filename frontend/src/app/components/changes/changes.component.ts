@@ -30,7 +30,7 @@ export class ChangesComponent implements OnInit{
         this.changeService.getAllChangesForCompetition(competition).subscribe(
           (changes: Change[]) => {
             this.changes = changes;
-            console.log(changes)
+            //console.log(changes)
           }
         )
         this.competitionName = competition.name;

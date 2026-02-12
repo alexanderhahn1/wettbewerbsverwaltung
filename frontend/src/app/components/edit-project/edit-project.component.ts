@@ -149,9 +149,9 @@ export class EditProjectComponent implements OnInit{
 
   removeExistingImage(image: Image){
     this.projectService.deleteImage(image.id).subscribe(() => {
-      console.log(this.existingImages)
+      //console.log(this.existingImages)
       this.existingImages = this.existingImages.filter(i => i.id !== image.id)
-      console.log(this.existingImages)
+      //console.log(this.existingImages)
     }, err => {
       this.responseComponent.trigger("Löschen des Bildes hat nicht funktioniert! Bitte erneut versuchen", false)
     })

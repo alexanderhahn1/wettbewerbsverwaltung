@@ -29,7 +29,7 @@ export class NavBarComponent implements OnInit{
     this.keycloakService.getUserProfile().then((data: any) => {
       this.userProfile = data;
       this.userInitials = this.userProfile.firstName.substring(0,1) + this.userProfile.lastName.substring(0,1);
-      console.table(this.userProfile);
+      //console.table(this.userProfile);
       for (let ou of this.userOUS) {
         if (ou == 'Teachers') {
           this.isUserAdmin = true;
