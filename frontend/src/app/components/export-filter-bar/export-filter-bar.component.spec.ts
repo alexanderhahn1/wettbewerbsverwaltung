@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExportFilterBarComponent } from './export-filter-bar.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('ExportFilterBarComponent', () => {
   let component: ExportFilterBarComponent;
@@ -8,7 +9,10 @@ describe('ExportFilterBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExportFilterBarComponent]
+      imports: [ExportFilterBarComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

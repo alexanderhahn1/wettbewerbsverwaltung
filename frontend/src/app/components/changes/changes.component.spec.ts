@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangesComponent } from './changes.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('ChangesComponent', () => {
   let component: ChangesComponent;
@@ -8,7 +9,10 @@ describe('ChangesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChangesComponent]
+      imports: [ChangesComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

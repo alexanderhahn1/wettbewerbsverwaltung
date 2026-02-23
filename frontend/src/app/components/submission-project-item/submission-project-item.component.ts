@@ -27,7 +27,7 @@ export class SubmissionProjectItemComponent implements OnInit {
   isModalOpen: boolean = false;
 
   activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  allowedRoles!: string[]  = [];
+  allowedRoles: string[]  = [];
   userOUs: string[] = [];
 
   images: Image[] = [];
@@ -46,7 +46,7 @@ export class SubmissionProjectItemComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userOUs = this.keycloakService.getUserOUS()
+    this.userOUs = this.keycloakService.getUserOUS() ?? []
     this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit'] || []
 
     for (let ou of this.userOUs) {

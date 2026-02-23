@@ -20,7 +20,6 @@
     "@angular/router": "^20.0.6",
     "@tailwindcss/cli": "^4.1.11",
     "@tailwindcss/postcss": "^4.1.11",
-    "@tailwindcss/vite": "^4.1.11",
     "buffer": "^6.0.3",
     "docx": "^9.5.1",
     "keycloak-angular": "^20.0.0",

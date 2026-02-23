@@ -1,9 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {KeycloakOperationService} from '../../services/keycloak/keycloak.service';
 import {CompetitionCardComponent} from '../competition-card/competition-card.component';
 import {Competition} from '../../models/competition';
 import {CompetitionService} from '../../services/competition/competition.service';
-import {KeycloakService} from 'keycloak-angular';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +14,7 @@ import {KeycloakService} from 'keycloak-angular';
 export class DashboardComponent implements OnInit{
   competitionService: CompetitionService = inject(CompetitionService);
   randomCompetition!: Competition;
+  userOUs: string[] = [];
 
   ngOnInit() {
     this.competitionService.getRandomCompetition().subscribe( c => {

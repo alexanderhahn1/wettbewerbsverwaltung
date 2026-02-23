@@ -7,7 +7,6 @@ import {provideClientHydration} from '@angular/platform-browser';
 import {initializeKeycloak} from './init/keycloak.init.factory';
 import {
   HTTP_INTERCEPTORS,
-  HttpClient,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';

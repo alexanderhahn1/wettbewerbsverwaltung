@@ -32,11 +32,11 @@ export class CompetitionCardComponent implements OnInit {
   isLightboxOpen = false;
   currentImageIndex = 0;
   logoImage?: Image | {url: string, name: string} | null = null;
-  allowedRoles!: string[] = [];
+  allowedRoles: string[] = [];
   userOUs: string[] = [];
 
   ngOnInit() {
-    this.userOUs = this.keycloakService.getUserOUS()
+    this.userOUs = this.keycloakService.getUserOUS() ?? []
     this.allowedRoles = this.activatedRoute.snapshot.data['allowedForEdit'] || [];
 
     for (let ou of this.userOUs) {

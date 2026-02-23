@@ -2,11 +2,10 @@ import {inject, Injectable} from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Router,
-  RouterStateSnapshot, UrlTree,
+  RouterStateSnapshot,
 } from '@angular/router';
 import {KeycloakAuthGuard, KeycloakService} from 'keycloak-angular';
 import {KeycloakOperationService} from '../services/keycloak/keycloak.service';
-import {data} from 'autoprefixer';
 
 @Injectable({
   providedIn: 'root'

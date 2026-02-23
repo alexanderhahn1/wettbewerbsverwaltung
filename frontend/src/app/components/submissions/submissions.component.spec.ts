@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubmissionsComponent } from './submissions.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('SubmissionsComponent', () => {
   let component: SubmissionsComponent;
@@ -8,7 +9,10 @@ describe('SubmissionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SubmissionsComponent]
+      imports: [SubmissionsComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

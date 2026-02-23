@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CompetitionSearchBarComponent } from './competition-search-bar.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('CompetitionSearchBarComponent', () => {
   let component: CompetitionSearchBarComponent;
@@ -8,7 +9,10 @@ describe('CompetitionSearchBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CompetitionSearchBarComponent]
+      imports: [CompetitionSearchBarComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExportDashboardComponent } from './export-dashboard.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('ExportDashboardComponent', () => {
   let component: ExportDashboardComponent;
@@ -8,7 +9,10 @@ describe('ExportDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExportDashboardComponent]
+      imports: [ExportDashboardComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

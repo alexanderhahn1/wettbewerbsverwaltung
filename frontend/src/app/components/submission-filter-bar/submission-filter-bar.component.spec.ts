@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubmissionFilterBarComponent } from './submission-filter-bar.component';
+import {provideTestCore} from '../../../test/test-providers';
 
 describe('SubmissionFilterBarComponent', () => {
   let component: SubmissionFilterBarComponent;
@@ -8,7 +9,10 @@ describe('SubmissionFilterBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SubmissionFilterBarComponent]
+      imports: [SubmissionFilterBarComponent],
+      providers: [
+        ...provideTestCore()
+      ]
     })
     .compileComponents();
 

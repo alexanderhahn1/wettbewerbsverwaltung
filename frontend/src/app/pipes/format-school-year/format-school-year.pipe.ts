@@ -1,19 +1,23 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Pipe({
   name: 'formatSchoolYear'
 })
 export class FormatSchoolYearPipe implements PipeTransform {
-  transform(value: unknown): SafeHtml {
+  transform(value: unknown): string {
     if (!value) {
       return '';
     }
 
-    const schoolYear = String(value)
+    const schoolYear = String(value);
 
-    const firstYear = schoolYear.substring(0, schoolYear.length - 2);
-    const secondYear = schoolYear.substring(schoolYear.length-2, schoolYear.length);
+    if (!/^\d{4}$/.test(schoolYear)) {
+      return schoolYear;
+    }
+
+    const firstYear = schoolYear.substring(0, 2);
+    const secondYear = schoolYear.substring(2);
+
     return `20${firstYear}/${secondYear}`;
   }
 
